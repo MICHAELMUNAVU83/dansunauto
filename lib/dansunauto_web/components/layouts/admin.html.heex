@@ -1,0 +1,23 @@
+<div class="flex h-screen overflow-hidden">
+  <.admin_sidebar
+    current_path={@current_path}
+    current_user={Map.get(assigns, :current_user)}
+    counts={
+      Map.merge(
+        %{
+          products: Dansunauto.Repo.aggregate(Dansunauto.Products.Product, :count),
+          collections: Dansunauto.Repo.aggregate(Dansunauto.Collections.Collection, :count),
+          bundles: Dansunauto.Repo.aggregate(Dansunauto.Bundles.Bundle, :count),
+          orders: Map.get(Dansunauto.Orders.count_by_status(), "all", 0),
+          customers: Dansunauto.Customers.count_customers(),
+          promotions: Dansunauto.Promotions.count_promo_codes(),
+          open_chats: Dansunauto.Chat.count_open_sessions()
+        },
+        Map.get(assigns, :counts, %{})
+      )
+    }
+  />
+  <main class="flex-1 p-4 overflow-y-auto">
+    {@inner_content}
+  </main>
+</div>
