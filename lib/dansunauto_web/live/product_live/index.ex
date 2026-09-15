@@ -54,16 +54,23 @@ defmodule DansunautoWeb.ProductLive.Index do
   def render(assigns) do
     ~H"""
     <%!-- Page Header --%>
-    <div class="relative mb-6 overflow-hidden rounded-3xl bg-gradient-to-r from-[#C8001F] to-[#8b0014] px-7 py-6 text-white shadow-md">
-      <div class="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/5"></div>
+    <div class="relative mb-6 overflow-hidden rounded-3xl bg-gradient-to-r from-brand to-[#8b0014] px-7 py-6 text-white shadow-md">
+      <div class="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/5">
+      </div>
       <div class="flex items-center justify-between">
         <div>
           <p class="text-xs font-medium uppercase tracking-widest text-red-200">Catalogue</p>
-          <h1 class="mt-0.5 font-serif text-2xl font-bold">Products</h1>
+          <h1 class="mt-0.5 font-display uppercase tracking-wide text-2xl font-bold">Products</h1>
         </div>
         <.link patch={~p"/admin/products/new"}>
-          <button class="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-[#C8001F] transition hover:bg-red-50 shadow-sm">
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <button class="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-brand transition hover:bg-red-50 shadow-sm">
+            <svg
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
             </svg>
             New Product
@@ -73,15 +80,17 @@ defmodule DansunautoWeb.ProductLive.Index do
     </div>
 
     <%!-- Table Card --%>
-    <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
-      <div class="border-b border-gray-100 px-5 py-4">
-        <p class="font-serif text-sm font-semibold text-gray-700">All Products</p>
+    <div class="overflow-hidden rounded-3xl border border-line bg-white shadow-sm">
+      <div class="border-b border-line px-5 py-4">
+        <p class="font-display uppercase tracking-wide text-sm font-semibold text-gray-700">
+          All Products
+        </p>
       </div>
 
       <div class="overflow-x-auto">
         <table class="w-full">
           <thead>
-            <tr class="border-b border-gray-100 bg-gray-50/80">
+            <tr class="border-b border-line bg-gray-50/80">
               <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-gray-400">
                 Product
               </th>
@@ -110,24 +119,20 @@ defmodule DansunautoWeb.ProductLive.Index do
             <tr
               :for={{id, product} <- @streams.products}
               id={id}
-              class="group border-b border-gray-100 transition-colors last:border-0 hover:bg-gray-50"
+              class="group border-b border-line transition-colors last:border-0 hover:bg-gray-50"
             >
               <%!-- Product name + slug --%>
               <td class="px-5 py-3.5">
                 <.link navigate={~p"/admin/products/#{product}"} class="flex items-center gap-3">
                   <div class="h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
                     <%= if product.image not in [nil, ""] do %>
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        class="h-full w-full object-cover"
-                      />
+                      <img src={product.image} alt={product.name} class="h-full w-full object-cover" />
                     <% else %>
-                      <div class="flex h-full w-full items-center justify-center text-base">👗</div>
+                      <div class="flex h-full w-full items-center justify-center text-base">🔧</div>
                     <% end %>
                   </div>
                   <div>
-                    <p class="text-sm font-semibold text-gray-900">{product.name}</p>
+                    <p class="text-sm font-semibold text-ink">{product.name}</p>
                     <p class="text-xs text-gray-400">{product.slug}</p>
                   </div>
                 </.link>
@@ -135,7 +140,7 @@ defmodule DansunautoWeb.ProductLive.Index do
 
               <%!-- Price --%>
               <td class="px-5 py-3.5">
-                <span class="text-sm font-semibold text-gray-900">
+                <span class="text-sm font-semibold text-ink">
                   Ksh {product.base_price}
                 </span>
               </td>
@@ -208,7 +213,7 @@ defmodule DansunautoWeb.ProductLive.Index do
               <td class="px-5 py-3.5">
                 <div class="flex items-center justify-end gap-1 opacity-0 transition-opacity group-hover:opacity-100">
                   <.link navigate={~p"/admin/products/#{product}"}>
-                    <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
+                    <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
                       <svg
                         class="h-3.5 w-3.5"
                         viewBox="0 0 24 24"
@@ -223,7 +228,7 @@ defmodule DansunautoWeb.ProductLive.Index do
                   </.link>
 
                   <.link patch={~p"/admin/products/#{product}/edit"}>
-                    <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
+                    <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
                       <svg
                         class="h-3.5 w-3.5"
                         viewBox="0 0 24 24"
@@ -240,7 +245,7 @@ defmodule DansunautoWeb.ProductLive.Index do
                   <button
                     phx-click={JS.push("delete", value: %{id: product.id}) |> hide("##{id}")}
                     data-confirm="Are you sure you want to delete this product?"
-                    class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-400 transition hover:border-red-200 hover:bg-red-50 hover:text-red-500"
+                    class="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-gray-400 transition hover:border-red-200 hover:bg-red-50 hover:text-red-500"
                   >
                     <svg
                       class="h-3.5 w-3.5"
@@ -286,7 +291,7 @@ defmodule DansunautoWeb.ProductLive.Index do
         <p class="mt-4 text-sm font-semibold text-gray-700">No products yet</p>
         <p class="mt-1 text-sm text-gray-400">Add your first product to get started.</p>
         <.link patch={~p"/admin/products/new"} class="mt-6">
-          <button class="rounded-xl bg-[#C8001F] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#a8001a]">
+          <button class="rounded-xl bg-brand px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#a8001a]">
             New Product
           </button>
         </.link>

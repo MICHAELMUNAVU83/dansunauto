@@ -8,8 +8,8 @@ defmodule Dansunauto.Gmail do
 
   @api_url "https://app.nexuscale.ai/api/v1/email/send"
   @from_email "notifications@callwisely.ai"
-  @brand_color "#C8001F"
-  @brand_name "Dansunauto's Closet"
+  @brand_color "#BB0A07"
+  @brand_name "Dansun Auto Care"
   @support_whatsapp "https://wa.me/254796770862"
   @support_instagram "https://www.instagram.com/dansunautos.closet/"
 
@@ -27,20 +27,26 @@ defmodule Dansunauto.Gmail do
     Logger.info("[Gmail] Sending \"#{subject}\" → #{to_email}")
 
     case Req.post(@api_url,
-      headers: [{"Content-Type", "application/json"}],
-      json: payload,
-      receive_timeout: 60_000
-    ) do
+           headers: [{"Content-Type", "application/json"}],
+           json: payload,
+           receive_timeout: 60_000
+         ) do
       {:ok, %{status: status}} when status in 200..299 ->
         Logger.info("[Gmail] Delivered \"#{subject}\" → #{to_email} (HTTP #{status})")
         {:ok, status}
 
       {:ok, %{status: status, body: body}} ->
-        Logger.error("[Gmail] API error #{status} for \"#{subject}\" → #{to_email}: #{inspect(body)}")
+        Logger.error(
+          "[Gmail] API error #{status} for \"#{subject}\" → #{to_email}: #{inspect(body)}"
+        )
+
         {:error, {status, body}}
 
       {:error, reason} ->
-        Logger.error("[Gmail] HTTP error sending \"#{subject}\" → #{to_email}: #{inspect(reason)}")
+        Logger.error(
+          "[Gmail] HTTP error sending \"#{subject}\" → #{to_email}: #{inspect(reason)}"
+        )
+
         {:error, reason}
     end
   end
@@ -62,7 +68,7 @@ defmodule Dansunauto.Gmail do
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <!--[if !mso]><!-->
       <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
       </style>
       <!--<![endif]-->
       <title>#{@brand_name}</title>
@@ -82,7 +88,7 @@ defmodule Dansunauto.Gmail do
                 <p style="margin:0 0 6px;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.6);">
                   #{if header_label != "", do: header_label, else: ""}
                 </p>
-                <h1 style="margin:0;font-family:'Playfair Display',Georgia,serif;font-size:26px;font-weight:700;color:#ffffff;letter-spacing:1px;">
+                <h1 style="margin:0;font-family:'Saira Condensed','Arial Narrow',Arial,sans-serif;font-size:26px;font-weight:700;color:#ffffff;letter-spacing:1px;">
                   #{@brand_name}
                 </h1>
               </td>
@@ -97,11 +103,11 @@ defmodule Dansunauto.Gmail do
                 <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
                   <tr>
                     <td align="center" style="padding-bottom:20px;">
-                      <p style="margin:0;font-family:'Playfair Display',Georgia,serif;font-size:18px;color:#ffffff;">
+                      <p style="margin:0;font-family:'Saira Condensed','Arial Narrow',Arial,sans-serif;font-size:18px;color:#ffffff;">
                         #{@brand_name}
                       </p>
                       <p style="margin:4px 0 0;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);">
-                        Everyday Fashion, Effortlessly You
+                        Garage &amp; Spare Parts &middot; Umoja I, Nairobi
                       </p>
                     </td>
                   </tr>

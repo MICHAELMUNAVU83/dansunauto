@@ -114,7 +114,7 @@ defmodule DansunautoWeb.BundleLive.Show do
     <div class="mb-8 flex items-center justify-between">
       <div class="flex items-center gap-4">
         <.link navigate={~p"/admin/bundles"}>
-          <button class="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
+          <button class="flex h-10 w-10 items-center justify-center rounded-xl border border-line text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
             <svg
               class="h-5 w-5"
               viewBox="0 0 24 24"
@@ -128,7 +128,7 @@ defmodule DansunautoWeb.BundleLive.Show do
         </.link>
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Catalogue</p>
-          <h1 class="mt-0.5 text-3xl font-bold text-gray-900">{@bundle.title}</h1>
+          <h1 class="mt-0.5 text-3xl font-bold text-ink">{@bundle.title}</h1>
         </div>
       </div>
 
@@ -144,7 +144,7 @@ defmodule DansunautoWeb.BundleLive.Show do
     </div>
 
     <%!-- Bundle summary card --%>
-    <div class="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+    <div class="mb-8 overflow-hidden rounded-2xl border border-line bg-white">
       <div class="flex gap-8 p-8">
         <%!-- Image --%>
         <div class="flex-shrink-0">
@@ -152,10 +152,10 @@ defmodule DansunautoWeb.BundleLive.Show do
             <img
               src={@bundle.image}
               alt={@bundle.title}
-              class="h-48 w-48 rounded-2xl border border-gray-200 object-cover object-top shadow-sm"
+              class="h-48 w-48 rounded-2xl border border-line object-cover object-top shadow-sm"
             />
           <% else %>
-            <div class="flex h-48 w-48 items-center justify-center rounded-2xl border border-gray-200 bg-gray-50 text-6xl">
+            <div class="flex h-48 w-48 items-center justify-center rounded-2xl border border-line bg-gray-50 text-6xl">
               🎁
             </div>
           <% end %>
@@ -164,7 +164,7 @@ defmodule DansunautoWeb.BundleLive.Show do
         <%!-- Details --%>
         <div class="min-w-0 flex-1 py-1">
           <div class="flex flex-wrap items-start justify-between gap-3">
-            <h2 class="text-2xl font-bold text-gray-900">{@bundle.title}</h2>
+            <h2 class="text-2xl font-bold text-ink">{@bundle.title}</h2>
 
             <span class={[
               "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold",
@@ -187,15 +187,15 @@ defmodule DansunautoWeb.BundleLive.Show do
             <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">
               Items in Bundle
             </p>
-            <p class="mt-1 text-2xl font-bold text-gray-900">{length(@bundle_items)}</p>
+            <p class="mt-1 text-2xl font-bold text-ink">{length(@bundle_items)}</p>
           </div>
         </div>
       </div>
     </div>
 
     <%!-- Bundle items panel --%>
-    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white">
-      <div class="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+    <div class="overflow-hidden rounded-2xl border border-line bg-white">
+      <div class="flex items-center justify-between border-b border-line px-6 py-5">
         <p class="text-base font-semibold text-gray-700">
           Bundle Items
           <span class="ml-2 rounded-full bg-gray-100 px-2.5 py-0.5 text-sm font-medium text-gray-500">
@@ -209,7 +209,7 @@ defmodule DansunautoWeb.BundleLive.Show do
             "flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition",
             if(@show_item_form,
               do: "border-gray-300 bg-gray-100 text-gray-700",
-              else: "border-gray-200 text-gray-600 hover:border-gray-300 hover:text-gray-900"
+              else: "border-line text-gray-600 hover:border-gray-300 hover:text-ink"
             )
           ]}
         >
@@ -241,7 +241,7 @@ defmodule DansunautoWeb.BundleLive.Show do
 
       <%!-- Add item form --%>
       <%= if @show_item_form do %>
-        <div class="border-b border-gray-100 bg-gray-50 px-6 py-6">
+        <div class="border-b border-line bg-gray-50 px-6 py-6">
           <p class="mb-4 text-xs font-semibold uppercase tracking-widest text-gray-400">
             Add Product to Bundle
           </p>
@@ -255,10 +255,10 @@ defmodule DansunautoWeb.BundleLive.Show do
                 <select
                   name="bundle_item[product_id]"
                   class={[
-                    "w-full rounded-xl border bg-white px-3.5 py-2.5 text-sm text-gray-900 transition focus:outline-none focus:ring-0",
+                    "w-full rounded-xl border bg-white px-3.5 py-2.5 text-sm text-ink transition focus:outline-none focus:ring-0",
                     if(@item_error,
                       do: "border-red-300 focus:border-red-400",
-                      else: "border-gray-200 focus:border-gray-400"
+                      else: "border-line focus:border-gray-400"
                     )
                   ]}
                 >
@@ -309,7 +309,7 @@ defmodule DansunautoWeb.BundleLive.Show do
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
-              <tr class="border-b border-gray-100 bg-gray-50">
+              <tr class="border-b border-line bg-gray-50">
                 <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
                   Product
                 </th>
@@ -326,7 +326,7 @@ defmodule DansunautoWeb.BundleLive.Show do
             <tbody>
               <tr
                 :for={item <- @bundle_items}
-                class="group border-b border-gray-100 last:border-0 hover:bg-gray-50"
+                class="group border-b border-line last:border-0 hover:bg-gray-50"
               >
                 <%!-- Product --%>
                 <td class="px-6 py-4">
@@ -338,15 +338,15 @@ defmodule DansunautoWeb.BundleLive.Show do
                       <img
                         src={item.product.image}
                         alt={item.product.name}
-                        class="h-11 w-11 flex-shrink-0 rounded-xl border border-gray-200 object-cover"
+                        class="h-11 w-11 flex-shrink-0 rounded-xl border border-line object-cover"
                       />
                     <% else %>
                       <div class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gray-100 text-xl">
-                        👗
+                        🔧
                       </div>
                     <% end %>
                     <div>
-                      <p class="text-sm font-semibold text-gray-900">{item.product.name}</p>
+                      <p class="text-sm font-semibold text-ink">{item.product.name}</p>
                       <p class="text-xs text-gray-400">{item.product.slug}</p>
                     </div>
                   </.link>
@@ -354,7 +354,7 @@ defmodule DansunautoWeb.BundleLive.Show do
 
                 <%!-- Price --%>
                 <td class="px-6 py-4">
-                  <span class="text-sm font-semibold text-gray-900">
+                  <span class="text-sm font-semibold text-ink">
                     Ksh {item.product.base_price}
                   </span>
                 </td>
@@ -385,7 +385,7 @@ defmodule DansunautoWeb.BundleLive.Show do
                     phx-click="delete_item"
                     phx-value-id={item.id}
                     data-confirm="Remove this product from the bundle?"
-                    class="ml-auto flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-400 opacity-0 transition group-hover:opacity-100 hover:border-red-200 hover:bg-red-50 hover:text-red-500"
+                    class="ml-auto flex h-8 w-8 items-center justify-center rounded-lg border border-line text-gray-400 opacity-0 transition group-hover:opacity-100 hover:border-red-200 hover:bg-red-50 hover:text-red-500"
                   >
                     <svg
                       class="h-3.5 w-3.5"

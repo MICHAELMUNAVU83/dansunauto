@@ -6,8 +6,8 @@ defmodule Dansunauto.SiteSettings.Setting do
     field :site_name, :string, default: "Dansunauto"
     field :site_tagline, :string, default: "Auto Repair and Parts Store"
     field :primary_color, :string, default: "#BB0A07"
-    field :font_heading, :string, default: "Manrope"
-    field :font_body, :string, default: "Lexend"
+    field :font_heading, :string, default: "Saira Condensed"
+    field :font_body, :string, default: "Barlow"
     field :font_script, :string, default: "Dancing Script"
     field :logo_url, :string
     field :instagram_url, :string

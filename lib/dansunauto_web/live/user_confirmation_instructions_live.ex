@@ -5,14 +5,12 @@ defmodule DansunautoWeb.UserConfirmationInstructionsLive do
 
   def render(assigns) do
     ~H"""
-    <div class="mx-auto max-w-sm">
-      <.header class="text-center">
-        No confirmation instructions received?
-        <:subtitle>We'll send a new confirmation link to your inbox</:subtitle>
-      </.header>
-
+    <.auth_shell
+      title="No confirmation instructions received?"
+      subtitle="We'll send a new confirmation link to your inbox."
+    >
       <.simple_form for={@form} id="resend_confirmation_form" phx-submit="send_instructions">
-        <.input field={@form[:email]} type="email" placeholder="Email" required />
+        <.input field={@form[:email]} type="email" label="Email" required />
         <:actions>
           <.button phx-disable-with="Sending..." class="w-full">
             Resend confirmation instructions
@@ -20,11 +18,12 @@ defmodule DansunautoWeb.UserConfirmationInstructionsLive do
         </:actions>
       </.simple_form>
 
-      <p class="text-center mt-4">
-        <.link href={~p"/users/register"}>Register</.link>
-        | <.link href={~p"/users/log_in"}>Log in</.link>
-      </p>
-    </div>
+      <:links>
+        <.auth_link href={~p"/users/register"}>Register</.auth_link>
+        <span class="mx-2">·</span>
+        <.auth_link href={~p"/users/log_in"}>Log in</.auth_link>
+      </:links>
+    </.auth_shell>
     """
   end
 

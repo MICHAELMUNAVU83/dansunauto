@@ -1,6 +1,9 @@
 defmodule DansunautoWeb.InfoLive.Show do
   use DansunautoWeb, :live_view
 
+  # Module-qualified: HomeComponents (imported via `use`) defines a clashing footer/1.
+  alias DansunautoWeb.AutoComponents
+
   alias Dansunauto.InfoPages
   alias Dansunauto.Shop
 
@@ -28,13 +31,15 @@ defmodule DansunautoWeb.InfoLive.Show do
   def render(assigns) do
     ~H"""
     <div class="page-typography min-h-screen bg-white">
-      <.navbar collections={@nav_collections} />
+      <AutoComponents.top_bar />
+      <AutoComponents.header_info />
+      <AutoComponents.primary_nav />
 
       <%!-- Hero banner --%>
       <div class="bg-gradient-to-r from-[#C8001F] to-red-800 px-4 py-14 sm:px-6 lg:px-8">
         <div class="mx-auto max-w-3xl text-center">
           <p class="text-sm font-semibold uppercase tracking-widest text-red-200">
-            Dansunauto's Closet
+            Dansun Auto Care
           </p>
           <h1 class="mt-3 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
             {@page.title}
@@ -45,7 +50,6 @@ defmodule DansunautoWeb.InfoLive.Show do
       <%!-- Main layout: sidebar nav + content --%>
       <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div class="flex flex-col gap-10 lg:flex-row lg:gap-16">
-
           <%!-- Sidebar: other pages --%>
           <aside class="w-full flex-shrink-0 lg:w-56">
             <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">
@@ -108,7 +112,9 @@ defmodule DansunautoWeb.InfoLive.Show do
         </div>
       </div>
 
-      <.footer />
+      <AutoComponents.footer />
+      <AutoComponents.back_to_top />
+      <AutoComponents.cart_drawer />
     </div>
     """
   end
@@ -133,11 +139,15 @@ defmodule DansunautoWeb.InfoLive.Show do
   defp parse_lines([], acc), do: Enum.reverse(acc)
 
   defp parse_lines(["## " <> heading | rest], acc) do
-    parse_lines(rest, ["<h2 class=\"text-2xl font-bold text-gray-900 mt-8 mb-3\">#{escape(heading)}</h2>" | acc])
+    parse_lines(rest, [
+      "<h2 class=\"text-2xl font-bold text-gray-900 mt-8 mb-3\">#{escape(heading)}</h2>" | acc
+    ])
   end
 
   defp parse_lines(["### " <> heading | rest], acc) do
-    parse_lines(rest, ["<h3 class=\"text-lg font-semibold text-gray-800 mt-6 mb-2\">#{escape(heading)}</h3>" | acc])
+    parse_lines(rest, [
+      "<h3 class=\"text-lg font-semibold text-gray-800 mt-6 mb-2\">#{escape(heading)}</h3>" | acc
+    ])
   end
 
   defp parse_lines(["" | rest], acc) do
@@ -153,9 +163,16 @@ defmodule DansunautoWeb.InfoLive.Show do
         |> Enum.map(fn "- " <> text -> "<li class=\"ml-4\">#{inline(text)}</li>" end)
         |> Enum.join("\n")
 
-      parse_lines(rest, ["<ul class=\"list-disc space-y-1.5 pl-4 text-gray-700\">#{items_html}</ul>" | acc])
+      parse_lines(rest, [
+        "<ul class=\"list-disc space-y-1.5 pl-4 text-gray-700\">#{items_html}</ul>" | acc
+      ])
     else
-      {para_lines, rest} = Enum.split_while(lines, &(&1 != "" and not String.starts_with?(&1, "## ") and not String.starts_with?(&1, "### ") and not String.starts_with?(&1, "- ")))
+      {para_lines, rest} =
+        Enum.split_while(
+          lines,
+          &(&1 != "" and not String.starts_with?(&1, "## ") and
+              not String.starts_with?(&1, "### ") and not String.starts_with?(&1, "- "))
+        )
 
       if para_lines != [] do
         text = para_lines |> Enum.join(" ") |> inline()

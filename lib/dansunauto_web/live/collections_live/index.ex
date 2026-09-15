@@ -1,6 +1,10 @@
 defmodule DansunautoWeb.CollectionsLive.Index do
   use DansunautoWeb, :live_view
 
+  # Module-qualified for the same reason as HomeLive: HomeComponents (imported
+  # by `use DansunautoWeb, :live_view`) defines a clashing footer/1.
+  alias DansunautoWeb.AutoComponents
+
   alias Dansunauto.Shop
 
   @impl true
@@ -9,22 +13,27 @@ defmodule DansunautoWeb.CollectionsLive.Index do
 
     {:ok,
      socket
-     |> assign(:page_title, "All Collections — Dansunauto's Closet")
+     |> assign(:page_title, "Spare Part Categories — Dansun Auto Care")
      |> assign(:collections, collections)}
   end
 
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="min-h-screen bg-white">
-      <.navbar collections={@collections} />
+    <div
+      id="collections-page"
+      class="min-h-screen bg-white font-sans text-[16px] font-light leading-[1.6] text-body antialiased"
+    >
+      <AutoComponents.top_bar />
+      <AutoComponents.header_info />
+      <AutoComponents.primary_nav />
 
       <%!-- Hero strip --%>
-      <div class="bg-[#f5f5f3]">
-        <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="border-b border-line bg-[#F7F7F7]">
+        <div class="mx-auto max-w-wrap px-4 py-14">
           <a
             href="/"
-            class="inline-flex items-center gap-1 text-xs font-medium text-gray-400 hover:text-gray-700 transition mb-6"
+            class="mb-6 inline-flex items-center gap-1.5 text-[13px] font-semibold uppercase tracking-wide text-mute transition hover:text-brand"
           >
             <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -36,49 +45,42 @@ defmodule DansunautoWeb.CollectionsLive.Index do
             </svg>
             Home
           </a>
-          <p class="text-xs font-semibold uppercase tracking-widest text-[#C8001F]">
-            Fashion's Gallery
+          <p class="text-[13px] font-semibold uppercase tracking-[0.2em] text-brand">
+            Shop Spare Parts
           </p>
-          <h1 class="mt-2 text-4xl font-bold text-gray-900 sm:text-5xl">All Collections</h1>
-          <p class="mt-3 text-sm text-gray-500">
-            {length(@collections)} curated collections — find your style.
+          <h1 class="mt-2 font-display text-4xl font-extrabold text-ink sm:text-5xl">
+            All Part Categories
+          </h1>
+          <p class="mt-3 text-[15px]">
+            {length(@collections)} {if length(@collections) == 1,
+              do: "category",
+              else: "categories"} of quality parts for a wide range of makes and models.
           </p>
         </div>
       </div>
 
       <%!-- Collections grid --%>
-      <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div class="grid gap-5 w-[100%] sm:grid-cols-2 lg:grid-cols-3">
-          <%= for {collection, index} <- Enum.with_index(@collections, 1) do %>
-            <a
-              href={collection.href}
-              class="group relative overflow-hidden rounded-2xl bg-gray-100 transition hover:shadow-xl"
-            >
-              <%!-- Cover image --%>
-              <%= if collection.image not in [nil, ""] do %>
-                <img
-                  src={collection.image}
-                  alt={collection.name}
-                  class="aspect-[4/3] w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                />
-              <% else %>
-                <div class="aspect-[4/3] w-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                  <span class="text-5xl opacity-30">👗</span>
-                </div>
-              <% end %>
-
-              <%!-- Gradient overlay --%>
-              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-
-              <%!-- Text --%>
-              <div class="absolute inset-x-0 bottom-0 p-5">
-                <span class="text-xs font-semibold text-white/50">
-                  {String.pad_leading("#{index}", 2, "0")}
-                </span>
-                <h2 class="mt-1 text-xl font-bold text-white leading-tight">{collection.name}</h2>
-                <div class="mt-2 flex items-center justify-between">
-                  <span class="text-xs text-white/70">{collection.item_count} items</span>
-                  <span class="inline-flex items-center gap-1 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm transition group-hover:bg-[#C8001F]">
+      <div class="mx-auto max-w-wrap px-4 py-16">
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <a :for={collection <- @collections} href={collection.href} class="group block">
+            <div class="relative aspect-[4/3] overflow-hidden bg-ink">
+              <img
+                :if={collection.image not in [nil, ""]}
+                src={collection.image}
+                alt={collection.name}
+                loading="lazy"
+                class="h-full w-full object-cover opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-90"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent"></div>
+              <div class="absolute inset-x-0 bottom-0 p-6">
+                <h2 class="font-display text-xl font-extrabold text-white">{collection.name}</h2>
+                <div class="mt-2 flex items-center justify-between gap-4">
+                  <span class="text-[13px] uppercase tracking-widest text-white/70">
+                    {collection.item_count} {if collection.item_count == 1,
+                      do: "part",
+                      else: "parts"}
+                  </span>
+                  <span class="inline-flex items-center gap-1.5 bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-white backdrop-blur-sm transition group-hover:bg-brand">
                     Shop
                     <svg
                       class="h-3 w-3 transition-transform group-hover:translate-x-0.5"
@@ -96,20 +98,26 @@ defmodule DansunautoWeb.CollectionsLive.Index do
                   </span>
                 </div>
               </div>
-            </a>
-          <% end %>
+            </div>
+          </a>
         </div>
 
-        <%= if @collections == [] do %>
-          <div class="flex flex-col items-center justify-center py-24 text-center">
-            <span class="text-6xl">🛍️</span>
-            <p class="mt-4 text-lg font-semibold text-gray-700">No collections yet</p>
-            <p class="mt-1 text-sm text-gray-400">Check back soon — new styles drop monthly.</p>
-          </div>
-        <% end %>
+        <div
+          :if={@collections == []}
+          class="flex flex-col items-center justify-center py-24 text-center"
+        >
+          <p class="font-display text-2xl font-extrabold text-ink">No part categories yet</p>
+          <p class="mt-2 text-[15px]">
+            Can&#8217;t find what you need? Call us on
+            <a href="tel:+254724335924" class="font-semibold text-brand">+254 724 335924</a>
+            and we&#8217;ll source the part for you.
+          </p>
+        </div>
       </div>
 
-      <.footer />
+      <AutoComponents.footer />
+      <AutoComponents.back_to_top />
+      <AutoComponents.cart_drawer />
     </div>
     """
   end

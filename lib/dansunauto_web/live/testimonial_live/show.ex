@@ -33,7 +33,7 @@ defmodule DansunautoWeb.TestimonialLive.Show do
     <div class="mb-8 flex items-center justify-between">
       <div class="flex items-center gap-4">
         <.link navigate={~p"/admin/testimonials"}>
-          <button class="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
+          <button class="flex h-10 w-10 items-center justify-center rounded-xl border border-line text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
             <svg
               class="h-5 w-5"
               viewBox="0 0 24 24"
@@ -47,7 +47,7 @@ defmodule DansunautoWeb.TestimonialLive.Show do
         </.link>
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Testimonials</p>
-          <h1 class="mt-0.5 text-2xl font-bold text-gray-900">{@testimonial.name}</h1>
+          <h1 class="mt-0.5 text-2xl font-bold text-ink">{@testimonial.name}</h1>
         </div>
       </div>
 
@@ -64,9 +64,9 @@ defmodule DansunautoWeb.TestimonialLive.Show do
 
     <%!-- Testimonial card --%>
     <div class="mx-auto max-w-2xl">
-      <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white">
+      <div class="overflow-hidden rounded-2xl border border-line bg-white">
         <%!-- Status bar --%>
-        <div class="flex items-center justify-between border-b border-gray-100 px-6 py-4">
+        <div class="flex items-center justify-between border-b border-line px-6 py-4">
           <span class={[
             "inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold",
             if(@testimonial.is_active,
@@ -112,12 +112,12 @@ defmodule DansunautoWeb.TestimonialLive.Show do
         </div>
 
         <%!-- Author --%>
-        <div class="flex items-center gap-4 border-t border-gray-100 px-8 py-5">
+        <div class="flex items-center gap-4 border-t border-line px-8 py-5">
           <%= if @testimonial.image && @testimonial.image != "" do %>
             <img
               src={@testimonial.image}
               alt={@testimonial.name}
-              class="h-14 w-14 rounded-full border border-gray-200 object-cover object-top shadow-sm"
+              class="h-14 w-14 rounded-full border border-line object-cover object-top shadow-sm"
             />
           <% else %>
             <div class="flex h-14 w-14 items-center justify-center rounded-full bg-gray-100 text-xl font-bold text-gray-400">
@@ -125,34 +125,34 @@ defmodule DansunautoWeb.TestimonialLive.Show do
             </div>
           <% end %>
           <div>
-            <p class="text-base font-semibold text-gray-900">{@testimonial.name}</p>
+            <p class="text-base font-semibold text-ink">{@testimonial.name}</p>
             <p class="text-sm text-gray-400">Verified Customer</p>
           </div>
         </div>
 
         <%!-- Linked product --%>
         <%= if @testimonial.product do %>
-          <div class="border-t border-gray-100 px-8 py-5">
+          <div class="border-t border-line px-8 py-5">
             <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-400">
               Linked Product
             </p>
             <.link
               navigate={~p"/admin/products/#{@testimonial.product}"}
-              class="flex items-center gap-4 rounded-xl border border-gray-200 bg-gray-50 p-4 transition hover:bg-gray-100"
+              class="flex items-center gap-4 rounded-xl border border-line bg-gray-50 p-4 transition hover:bg-gray-100"
             >
               <%= if @testimonial.product.image && @testimonial.product.image != "" do %>
                 <img
                   src={@testimonial.product.image}
                   alt={@testimonial.product.name}
-                  class="h-14 w-14 flex-shrink-0 rounded-xl border border-gray-200 object-cover"
+                  class="h-14 w-14 flex-shrink-0 rounded-xl border border-line object-cover"
                 />
               <% else %>
                 <div class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-gray-200 text-2xl">
-                  👗
+                  🔧
                 </div>
               <% end %>
               <div class="min-w-0 flex-1">
-                <p class="font-semibold text-gray-900">{@testimonial.product.name}</p>
+                <p class="font-semibold text-ink">{@testimonial.product.name}</p>
                 <p class="text-sm text-gray-400">{@testimonial.product.slug}</p>
               </div>
               <span class="text-sm font-semibold text-gray-700">

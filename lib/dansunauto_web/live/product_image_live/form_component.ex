@@ -41,7 +41,9 @@ defmodule DansunautoWeb.ProductImageLive.FormComponent do
 
   @impl true
   def handle_event("validate", %{"product_image" => product_image_params}, socket) do
-    changeset = ProductImages.change_product_image(socket.assigns.product_image, product_image_params)
+    changeset =
+      ProductImages.change_product_image(socket.assigns.product_image, product_image_params)
+
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
   end
 

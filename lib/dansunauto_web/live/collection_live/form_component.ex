@@ -130,7 +130,7 @@ defmodule DansunautoWeb.CollectionLive.FormComponent do
       <div class="mb-6 flex items-start justify-between">
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Catalogue</p>
-          <h2 class="mt-1 text-xl font-bold text-gray-900">{@title}</h2>
+          <h2 class="mt-1 text-xl font-bold text-ink">{@title}</h2>
         </div>
       </div>
 
@@ -153,13 +153,13 @@ defmodule DansunautoWeb.CollectionLive.FormComponent do
                 <img
                   src={@saved_image}
                   alt="Current collection image"
-                  class="h-36 w-36 rounded-xl border border-gray-200 object-cover object-top shadow-sm"
+                  class="h-36 w-36 rounded-xl border border-line object-cover object-top shadow-sm"
                 />
                 <button
                   type="button"
                   phx-click="clear_image"
                   phx-target={@myself}
-                  class="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-400 shadow-sm transition hover:border-red-200 hover:bg-red-50 hover:text-red-500"
+                  class="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full border border-line bg-white text-gray-400 shadow-sm transition hover:border-red-200 hover:bg-red-50 hover:text-red-500"
                 >
                   <svg
                     class="h-3 w-3"
@@ -179,7 +179,7 @@ defmodule DansunautoWeb.CollectionLive.FormComponent do
               <div class="relative w-fit">
                 <.live_img_preview
                   entry={entry}
-                  class="h-36 w-36 rounded-xl border border-gray-200 object-cover object-top shadow-sm"
+                  class="h-36 w-36 rounded-xl border border-line object-cover object-top shadow-sm"
                 />
                 <%!-- Progress bar --%>
                 <%= if entry.progress > 0 and not entry.done? do %>
@@ -198,7 +198,7 @@ defmodule DansunautoWeb.CollectionLive.FormComponent do
                   phx-click="cancel_upload"
                   phx-value-ref={entry.ref}
                   phx-target={@myself}
-                  class="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-400 shadow-sm transition hover:border-red-200 hover:bg-red-50 hover:text-red-500"
+                  class="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full border border-line bg-white text-gray-400 shadow-sm transition hover:border-red-200 hover:bg-red-50 hover:text-red-500"
                 >
                   <svg
                     class="h-3 w-3"
@@ -247,7 +247,7 @@ defmodule DansunautoWeb.CollectionLive.FormComponent do
             id={@form[:title].id}
             phx-debounce="blur"
             placeholder="e.g. Summer Dresses"
-            class="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition focus:border-gray-400 focus:outline-none focus:ring-0"
+            class="w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none focus:ring-0"
           />
           <.error :for={msg <- Enum.map(@form[:title].errors, &translate_error/1)}>
             {msg}
@@ -257,8 +257,8 @@ defmodule DansunautoWeb.CollectionLive.FormComponent do
         <%!-- ── Slug ──────────────────────────────────────────── --%>
         <div>
           <label class="mb-1.5 block text-sm font-semibold text-gray-700">Slug</label>
-          <div class="flex items-center overflow-hidden rounded-lg border border-gray-200 bg-white transition focus-within:border-gray-400">
-            <span class="select-none border-r border-gray-200 bg-gray-50 px-3.5 py-2.5 text-sm text-gray-400">
+          <div class="flex items-center overflow-hidden rounded-lg border border-line bg-white transition focus-within:border-gray-400">
+            <span class="select-none border-r border-line bg-gray-50 px-3.5 py-2.5 text-sm text-gray-400">
               /collections/
             </span>
             <input
@@ -268,7 +268,7 @@ defmodule DansunautoWeb.CollectionLive.FormComponent do
               id={@form[:slug].id}
               phx-debounce="blur"
               placeholder="summer-dresses"
-              class="flex-1 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
+              class="flex-1 bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 focus:outline-none"
             />
           </div>
           <.error :for={msg <- Enum.map(@form[:slug].errors, &translate_error/1)}>
@@ -287,7 +287,7 @@ defmodule DansunautoWeb.CollectionLive.FormComponent do
               id={@form[:position].id}
               min="1"
               placeholder="1"
-              class="w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition focus:border-gray-400 focus:outline-none focus:ring-0"
+              class="w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none focus:ring-0"
             />
             <.error :for={msg <- Enum.map(@form[:position].errors, &translate_error/1)}>
               {msg}
@@ -296,7 +296,7 @@ defmodule DansunautoWeb.CollectionLive.FormComponent do
 
           <div>
             <label class="mb-1.5 block text-sm font-semibold text-gray-700">Status</label>
-            <label class="flex h-[42px] cursor-pointer items-center gap-3 rounded-lg border border-gray-200 bg-white px-3.5 transition hover:bg-gray-50">
+            <label class="flex h-[42px] cursor-pointer items-center gap-3 rounded-lg border border-line bg-white px-3.5 transition hover:bg-gray-50">
               <input type="hidden" name={@form[:is_active].name} value="false" />
               <input
                 type="checkbox"
@@ -304,7 +304,7 @@ defmodule DansunautoWeb.CollectionLive.FormComponent do
                 checked={@form[:is_active].value}
                 id={@form[:is_active].id}
                 value="true"
-                class="h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-0 focus:ring-offset-0"
+                class="h-4 w-4 rounded border-gray-300 text-ink focus:ring-0 focus:ring-offset-0"
               />
               <span class="text-sm text-gray-700">Active</span>
             </label>
@@ -312,11 +312,11 @@ defmodule DansunautoWeb.CollectionLive.FormComponent do
         </div>
 
         <%!-- ── Footer actions ────────────────────────────────── --%>
-        <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+        <div class="flex items-center justify-between border-t border-line pt-4">
           <.link patch={@patch}>
             <button
               type="button"
-              class="rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-600 transition hover:border-gray-300 hover:text-gray-900"
+              class="rounded-lg border border-line px-4 py-2.5 text-sm font-semibold text-gray-600 transition hover:border-gray-300 hover:text-ink"
             >
               Cancel
             </button>

@@ -12,8 +12,8 @@ defmodule Dansunauto.SiteSettings do
     site_name: "Dansunauto",
     site_tagline: "Auto Repair and Parts Store",
     primary_color: "#BB0A07",
-    font_heading: "Manrope",
-    font_body: "Lexend",
+    font_heading: "Saira Condensed",
+    font_body: "Barlow",
     font_script: "Dancing Script",
     logo_url: nil,
     instagram_url: nil,
@@ -53,6 +53,9 @@ defmodule Dansunauto.SiteSettings do
 
   @font_map %{
     "Dancing Script" => "Dancing+Script:wght@600;700",
+    # Wordmark-matching pair: heavy condensed display + neutral grotesque body.
+    "Saira Condensed" => "Saira+Condensed:wght@500;600;700;800;900",
+    "Barlow" => "Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400",
     "Manrope" => "Manrope:wght@500;800",
     "Lexend" => "Lexend:wght@300;400;500;600;700",
     "Libre Baskerville" => "Libre+Baskerville:ital@0;1",
@@ -88,6 +91,7 @@ defmodule Dansunauto.SiteSettings do
   def font_options do
     %{
       body: [
+        "Barlow",
         "Lexend",
         "Instrument Sans",
         "Inter",
@@ -96,6 +100,7 @@ defmodule Dansunauto.SiteSettings do
         "Lato"
       ],
       heading: [
+        "Saira Condensed",
         "Manrope",
         "Libre Baskerville",
         "Playfair Display",

@@ -35,7 +35,7 @@ defmodule DansunautoWeb.CollectionLive.Show do
     <div class="mb-8 flex items-center justify-between">
       <div class="flex items-center gap-4">
         <.link navigate={~p"/admin/collections"}>
-          <button class="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
+          <button class="flex h-10 w-10 items-center justify-center rounded-xl border border-line text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
             <svg
               class="h-5 w-5"
               viewBox="0 0 24 24"
@@ -49,7 +49,7 @@ defmodule DansunautoWeb.CollectionLive.Show do
         </.link>
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Collections</p>
-          <h1 class="mt-0.5 text-3xl font-bold text-gray-900">{@collection.title}</h1>
+          <h1 class="mt-0.5 text-3xl font-bold text-ink">{@collection.title}</h1>
         </div>
       </div>
 
@@ -65,7 +65,7 @@ defmodule DansunautoWeb.CollectionLive.Show do
     </div>
 
     <%!-- Collection summary card --%>
-    <div class="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+    <div class="mb-8 overflow-hidden rounded-2xl border border-line bg-white">
       <div class="flex gap-8 p-8">
         <%!-- Cover image --%>
         <div class="flex-shrink-0">
@@ -73,10 +73,10 @@ defmodule DansunautoWeb.CollectionLive.Show do
             <img
               src={@collection.image}
               alt={@collection.title}
-              class="h-48 w-48 rounded-2xl border border-gray-200 object-cover object-top shadow-sm"
+              class="h-48 w-48 rounded-2xl border border-line object-cover object-top shadow-sm"
             />
           <% else %>
-            <div class="flex h-48 w-48 items-center justify-center rounded-2xl border border-gray-200 bg-gray-50 text-5xl">
+            <div class="flex h-48 w-48 items-center justify-center rounded-2xl border border-line bg-gray-50 text-5xl">
               🗂️
             </div>
           <% end %>
@@ -86,7 +86,7 @@ defmodule DansunautoWeb.CollectionLive.Show do
         <div class="min-w-0 flex-1 py-1">
           <div class="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <h2 class="text-2xl font-bold text-gray-900">{@collection.title}</h2>
+              <h2 class="text-2xl font-bold text-ink">{@collection.title}</h2>
               <div class="mt-1 flex items-center gap-2">
                 <code class="text-sm text-gray-400">/collections/{@collection.slug}</code>
               </div>
@@ -110,11 +110,11 @@ defmodule DansunautoWeb.CollectionLive.Show do
           <div class="mt-6 flex flex-wrap gap-6">
             <div>
               <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Position</p>
-              <p class="mt-1 text-base font-semibold text-gray-900">{@collection.position}</p>
+              <p class="mt-1 text-base font-semibold text-ink">{@collection.position}</p>
             </div>
             <div>
               <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Products</p>
-              <p class="mt-1 text-base font-semibold text-gray-900">{length(@products)}</p>
+              <p class="mt-1 text-base font-semibold text-ink">{length(@products)}</p>
             </div>
           </div>
         </div>
@@ -122,8 +122,8 @@ defmodule DansunautoWeb.CollectionLive.Show do
     </div>
 
     <%!-- Products in collection --%>
-    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white">
-      <div class="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+    <div class="overflow-hidden rounded-2xl border border-line bg-white">
+      <div class="flex items-center justify-between border-b border-line px-6 py-5">
         <p class="text-base font-semibold text-gray-700">
           Products
           <span class="ml-2 rounded-full bg-gray-100 px-2.5 py-0.5 text-sm font-medium text-gray-500">
@@ -131,7 +131,7 @@ defmodule DansunautoWeb.CollectionLive.Show do
           </span>
         </p>
         <.link patch={~p"/admin/products/new"}>
-          <button class="flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 transition hover:border-gray-300 hover:text-gray-900">
+          <button class="flex items-center gap-2 rounded-xl border border-line px-4 py-2 text-sm font-semibold text-gray-600 transition hover:border-gray-300 hover:text-ink">
             <svg
               class="h-4 w-4"
               viewBox="0 0 24 24"
@@ -178,7 +178,7 @@ defmodule DansunautoWeb.CollectionLive.Show do
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead>
-              <tr class="border-b border-gray-100 bg-gray-50">
+              <tr class="border-b border-line bg-gray-50">
                 <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
                   Product
                 </th>
@@ -205,7 +205,7 @@ defmodule DansunautoWeb.CollectionLive.Show do
             <tbody>
               <tr
                 :for={product <- @products}
-                class="group border-b border-gray-100 transition-colors last:border-0 hover:bg-gray-50"
+                class="group border-b border-line transition-colors last:border-0 hover:bg-gray-50"
               >
                 <%!-- Product name + image --%>
                 <td class="px-6 py-4">
@@ -214,15 +214,15 @@ defmodule DansunautoWeb.CollectionLive.Show do
                       <img
                         src={product.image}
                         alt={product.name}
-                        class="h-11 w-11 flex-shrink-0 rounded-xl border border-gray-200 object-cover"
+                        class="h-11 w-11 flex-shrink-0 rounded-xl border border-line object-cover"
                       />
                     <% else %>
                       <div class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gray-100 text-xl">
-                        👗
+                        🔧
                       </div>
                     <% end %>
                     <div>
-                      <p class="text-sm font-semibold text-gray-900">{product.name}</p>
+                      <p class="text-sm font-semibold text-ink">{product.name}</p>
                       <p class="text-xs text-gray-400">{product.slug}</p>
                     </div>
                   </.link>
@@ -230,7 +230,7 @@ defmodule DansunautoWeb.CollectionLive.Show do
 
                 <%!-- Price --%>
                 <td class="px-6 py-4">
-                  <span class="text-sm font-semibold text-gray-900">Ksh {product.base_price}</span>
+                  <span class="text-sm font-semibold text-ink">Ksh {product.base_price}</span>
                 </td>
 
                 <%!-- Badge --%>
@@ -301,7 +301,7 @@ defmodule DansunautoWeb.CollectionLive.Show do
                 <td class="px-6 py-4">
                   <div class="flex items-center justify-end gap-1 opacity-0 transition-opacity group-hover:opacity-100">
                     <.link navigate={~p"/admin/products/#{product}"}>
-                      <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
+                      <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
                         <svg
                           class="h-3.5 w-3.5"
                           viewBox="0 0 24 24"
@@ -315,7 +315,7 @@ defmodule DansunautoWeb.CollectionLive.Show do
                       </button>
                     </.link>
                     <.link patch={~p"/admin/products/#{product}/edit"}>
-                      <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
+                      <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
                         <svg
                           class="h-3.5 w-3.5"
                           viewBox="0 0 24 24"

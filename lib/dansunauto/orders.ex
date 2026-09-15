@@ -18,8 +18,11 @@ defmodule Dansunauto.Orders do
         if order.promo_code not in [nil, ""] do
           Task.start(fn -> Dansunauto.Promotions.record_usage(order.promo_code) end)
         end
+
         result
-      error -> error
+
+      error ->
+        error
     end
   end
 

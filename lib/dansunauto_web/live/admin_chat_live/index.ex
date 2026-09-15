@@ -22,7 +22,9 @@ defmodule DansunautoWeb.AdminChatLive.Index do
     sessions =
       socket.assigns.sessions
       |> Enum.map(fn s ->
-        if s.id == session.id, do: %{s | last_message_at: session.last_message_at, status: "active"}, else: s
+        if s.id == session.id,
+          do: %{s | last_message_at: session.last_message_at, status: "active"},
+          else: s
       end)
       |> then(fn list ->
         if Enum.any?(list, &(&1.id == session.id)) do
@@ -69,9 +71,9 @@ defmodule DansunautoWeb.AdminChatLive.Index do
     <div class="mb-8 flex items-center justify-between">
       <div>
         <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Support</p>
-        <h1 class="mt-0.5 text-3xl font-bold text-gray-900">Live Chat</h1>
+        <h1 class="mt-0.5 text-3xl font-bold text-ink">Live Chat</h1>
       </div>
-      <div class="flex items-center gap-2 rounded-xl border border-gray-200 bg-white p-1">
+      <div class="flex items-center gap-2 rounded-xl border border-line bg-white p-1">
         <%= for {label, val} <- [{"Active", "open"}, {"Closed", "closed"}, {"All", "all"}] do %>
           <button
             phx-click="set_filter"
@@ -80,7 +82,7 @@ defmodule DansunautoWeb.AdminChatLive.Index do
               "rounded-lg px-4 py-1.5 text-sm font-semibold transition",
               if(@filter == val,
                 do: "bg-gray-900 text-white",
-                else: "text-gray-500 hover:text-gray-900"
+                else: "text-gray-500 hover:text-ink"
               )
             ]}
           >
@@ -93,20 +95,27 @@ defmodule DansunautoWeb.AdminChatLive.Index do
       </div>
     </div>
 
-    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white">
+    <div class="overflow-hidden rounded-2xl border border-line bg-white">
       <% visible = filtered_sessions(@sessions, @filter) %>
       <%= if Enum.empty?(visible) do %>
         <div class="flex flex-col items-center justify-center py-20 text-center">
           <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100">
             <svg class="h-7 w-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+              />
             </svg>
           </div>
           <p class="mt-4 text-base font-semibold text-gray-700">No chats yet</p>
-          <p class="mt-1.5 text-sm text-gray-400">Visitor conversations will appear here in real-time.</p>
+          <p class="mt-1.5 text-sm text-gray-400">
+            Visitor conversations will appear here in real-time.
+          </p>
         </div>
       <% else %>
-        <div class="divide-y divide-gray-100">
+        <div class="divide-y divide-line">
           <%= for session <- visible do %>
             <.link
               navigate={~p"/admin/chat/#{session.id}"}
@@ -115,7 +124,7 @@ defmodule DansunautoWeb.AdminChatLive.Index do
               <%!-- Avatar --%>
               <div class={[
                 "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold text-white",
-                if(session.status in ["open", "active"], do: "bg-[#C8001F]", else: "bg-gray-400")
+                if(session.status in ["open", "active"], do: "bg-brand", else: "bg-gray-400")
               ]}>
                 {String.first(session.visitor_name || "?") |> String.upcase()}
               </div>
@@ -123,7 +132,7 @@ defmodule DansunautoWeb.AdminChatLive.Index do
               <%!-- Info --%>
               <div class="min-w-0 flex-1">
                 <div class="flex items-center gap-2">
-                  <p class="truncate text-sm font-semibold text-gray-900">
+                  <p class="truncate text-sm font-semibold text-ink">
                     {session.visitor_name || "Visitor"}
                   </p>
                   <%= if session.status in ["open", "active"] do %>
@@ -141,7 +150,7 @@ defmodule DansunautoWeb.AdminChatLive.Index do
               <div class="flex flex-shrink-0 flex-col items-end gap-1">
                 <span class="text-xs text-gray-400">{time_ago(session.last_message_at)}</span>
                 <%= if session.status == "open" do %>
-                  <span class="inline-flex items-center rounded-full bg-[#C8001F] px-2 py-0.5 text-[10px] font-bold text-white">
+                  <span class="inline-flex items-center rounded-full bg-brand px-2 py-0.5 text-[10px] font-bold text-white">
                     New
                   </span>
                 <% end %>

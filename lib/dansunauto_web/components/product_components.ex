@@ -215,7 +215,7 @@ defmodule DansunautoWeb.ProductComponents do
         <%= if @product[:size_advice] not in [nil, ""] do %>
           <.accordion_item
             id="size_advice"
-            title="Fitment &amp; Availability"
+            title="Fitment & Availability"
             icon="ruler"
             open={@accordion_open == "size_advice"}
             section="size_advice"
@@ -229,7 +229,7 @@ defmodule DansunautoWeb.ProductComponents do
         <%= if @product[:shipping_returns] not in [nil, ""] do %>
           <.accordion_item
             id="shipping"
-            title="Stock &amp; Sourcing"
+            title="Stock & Sourcing"
             icon="info"
             open={@accordion_open == "shipping"}
             section="shipping"
@@ -288,83 +288,75 @@ defmodule DansunautoWeb.ProductComponents do
 
   def related_products_section(assigns) do
     ~H"""
-    <section class="border-t border-gray-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-7xl">
-        <h2 class="text-center text-2xl font-bold text-gray-900 sm:text-3xl">Related Products</h2>
-        <div class="relative mt-8">
-          <button
-            type="button"
-            id="related-products-prev"
-            class="related-products-nav-btn absolute -left-3 top-1/3 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md transition hover:border-gray-900 hover:text-gray-900 sm:-left-5 xl:-left-12"
-            aria-label="Previous"
+    <section :if={@products != []} class="border-t border-line bg-white py-20">
+      <div class="mx-auto max-w-wrap px-4">
+        <p class="mb-3 text-[13px] font-semibold uppercase tracking-[0.2em] text-brand">
+          You may also need
+        </p>
+        <h2 class="font-display text-3xl font-extrabold text-ink sm:text-4xl">Related parts</h2>
+
+        <ul class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <li
+            :for={product <- @products}
+            class="group flex flex-col border border-line bg-white transition hover:-translate-y-1 hover:border-brand hover:shadow-2xl"
           >
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            id="related-products-next"
-            class="related-products-nav-btn absolute -right-3 top-1/3 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md transition hover:border-gray-900 hover:text-gray-900 sm:-right-5 xl:-right-12"
-            aria-label="Next"
-          >
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-          <div
-            class="swiper related-products-swiper overflow-hidden"
-            id="swiper-related-products"
-            phx-hook="SwiperRelatedProducts"
-          >
-            <div class="swiper-wrapper">
-              <%= for product <- @products do %>
-                <div class="swiper-slide">
-                  <a href={"/products/#{product.slug}"} class="group block">
-                    <div class="relative overflow-hidden rounded-lg bg-gray-100">
-                      <%= if product.badge do %>
-                        <span class={"absolute left-3 top-3 z-10 rounded px-2 py-1 text-xs font-semibold text-white #{if product.badge == "Sale", do: "bg-green-600", else: "bg-red-500"}"}>
-                          {product.badge}
-                        </span>
-                      <% end %>
-                      <img
-                        src={product.main_image}
-                        alt={product.name}
-                        class="aspect-[3/4] w-full object-cover object-top object-top transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
-                    <div class="mt-4 flex gap-2">
-                      <%= for color <- product.colors do %>
-                        <span
-                          class={"inline-block h-5 w-5 rounded-full border-2 #{if color.selected, do: "border-gray-900", else: "border-transparent"}"}
-                          style={"background-color: #{color.hex}"}
-                        >
-                        </span>
-                      <% end %>
-                    </div>
-                    <h3 class="mt-3 text-sm font-medium text-gray-900">{product.name}</h3>
-                    <div class="mt-1 flex items-center gap-2">
-                      <span class={
-                        if product.original_price,
-                          do: "font-semibold text-red-500",
-                          else: "font-semibold text-gray-900"
-                      }>
-                        KES {DansunautoWeb.Format.price(product.price)}
-                      </span>
-                      <%= if product.original_price do %>
-                        <span class="text-sm text-gray-400 line-through">
-                          KES {DansunautoWeb.Format.price(product.original_price)}
-                        </span>
-                      <% end %>
-                    </div>
-                  </a>
-                </div>
-              <% end %>
+            <a href={"/products/#{product.slug}"} class="block">
+              <div class="relative aspect-square overflow-hidden bg-[#F7F7F7]">
+                <span
+                  :if={product.badge}
+                  class="absolute left-0 top-4 z-10 bg-brand px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-white"
+                >
+                  {product.badge}
+                </span>
+                <img
+                  src={product.main_image}
+                  alt={product.name}
+                  loading="lazy"
+                  class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                />
+              </div>
+            </a>
+
+            <div class="flex flex-1 flex-col p-6">
+              <a href={"/products/#{product.slug}"} class="block">
+                <h3 class="font-display text-[17px] font-extrabold leading-snug text-ink transition group-hover:text-brand">
+                  {product.name}
+                </h3>
+              </a>
+              <p class="mt-3 flex items-baseline gap-2">
+                <span class="font-display text-xl font-extrabold text-brand">
+                  KES {DansunautoWeb.Format.price(product.price)}
+                </span>
+                <span :if={product.original_price} class="text-[14px] text-mute line-through">
+                  KES {DansunautoWeb.Format.price(product.original_price)}
+                </span>
+              </p>
+
+              <button
+                type="button"
+                id={"related-add-to-cart-#{product.id}"}
+                phx-hook="AddSingleToCart"
+                data-product={cart_payload(product)}
+                class="mt-auto w-full border border-ink px-5 py-3 pt-3 text-[13px] font-semibold uppercase tracking-wide text-ink transition hover:bg-ink hover:text-white"
+              >
+                Add to Cart
+              </button>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </section>
     """
+  end
+
+  # The shape assets/js/cart.js expects for a cart line.
+  defp cart_payload(product) do
+    Jason.encode!(%{
+      id: product.id,
+      slug: product.slug,
+      name: product.name,
+      image: product.main_image,
+      price: product.price
+    })
   end
 end

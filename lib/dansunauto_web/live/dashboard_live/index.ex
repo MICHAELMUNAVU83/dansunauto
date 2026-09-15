@@ -57,13 +57,13 @@ defmodule DansunautoWeb.DashboardLive.Index do
           %{
             label: "Revenue",
             data: values,
-            borderColor: "#C8001F",
+            borderColor: "#BB0A07",
             backgroundColor: "rgba(200,0,31,0.08)",
             fill: true,
             tension: 0.45,
             pointRadius: 0,
             pointHoverRadius: 5,
-            pointHoverBackgroundColor: "#C8001F",
+            pointHoverBackgroundColor: "#BB0A07",
             borderWidth: 2.5
           }
         ]
@@ -106,12 +106,12 @@ defmodule DansunautoWeb.DashboardLive.Index do
     values = Enum.map(statuses, &Map.get(status_counts, &1, 0))
 
     colors = %{
-      "paid" => "#C8001F",
-      "processing" => "#e879a0",
-      "shipped" => "#f9a8c9",
-      "delivered" => "#86efac",
-      "cancelled" => "#d1d5db",
-      "failed" => "#fca5a5"
+      "paid" => "#BB0A07",
+      "processing" => "#B45309",
+      "shipped" => "#1F3A5F",
+      "delivered" => "#0F7B6C",
+      "cancelled" => "#B9BBBC",
+      "failed" => "#7A0014"
     }
 
     %{
@@ -159,15 +159,16 @@ defmodule DansunautoWeb.DashboardLive.Index do
           %{
             label: "Revenue",
             data: values,
+            # Single-hue sequential ramp: darkest bar = most revenue.
             backgroundColor: [
-              "#C8001F",
-              "#d4174e",
-              "#e03070",
-              "#e8588e",
-              "#ef7faa",
-              "#f5a6c5",
-              "#f9c9de",
-              "#fde8f0"
+              "#7A0014",
+              "#93000F",
+              "#A80013",
+              "#BB0A07",
+              "#C8362C",
+              "#D4685C",
+              "#E09A92",
+              "#ECC9C6"
             ],
             borderRadius: 6,
             barThickness: 16
@@ -209,24 +210,24 @@ defmodule DansunautoWeb.DashboardLive.Index do
 
   defp status_pill(status) do
     case status do
-      "paid" -> "bg-red-50 text-[#C8001F]"
-      "processing" -> "bg-pink-50 text-pink-700"
-      "shipped" -> "bg-indigo-50 text-indigo-600"
-      "delivered" -> "bg-green-50 text-green-700"
-      "cancelled" -> "bg-gray-100 text-gray-500"
-      "failed" -> "bg-red-50 text-red-400"
+      "paid" -> "bg-brand-50 text-brand"
+      "processing" -> "bg-amber-50 text-amber-700"
+      "shipped" -> "bg-[#1F3A5F]/10 text-[#1F3A5F]"
+      "delivered" -> "bg-[#0F7B6C]/10 text-[#0F7B6C]"
+      "cancelled" -> "bg-line text-mute"
+      "failed" -> "bg-brand-50 text-brand-800"
       _ -> "bg-gray-100 text-gray-500"
     end
   end
 
   defp status_dot(status) do
     case status do
-      "paid" -> "bg-[#C8001F]"
-      "processing" -> "bg-pink-500"
-      "shipped" -> "bg-indigo-500"
-      "delivered" -> "bg-green-500"
-      "cancelled" -> "bg-gray-400"
-      "failed" -> "bg-red-400"
+      "paid" -> "bg-brand"
+      "processing" -> "bg-amber-600"
+      "shipped" -> "bg-[#1F3A5F]"
+      "delivered" -> "bg-[#0F7B6C]"
+      "cancelled" -> "bg-mute"
+      "failed" -> "bg-brand-800"
       _ -> "bg-gray-400"
     end
   end
@@ -250,7 +251,7 @@ defmodule DansunautoWeb.DashboardLive.Index do
     <div class="space-y-7">
       
     <!-- ── Hero greeting banner ── -->
-      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#C8001F] via-[#a8001a] to-[#6b0010] p-7 text-white shadow-lg">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand via-brand-700 to-brand-900 p-7 text-white shadow-lg">
         <!-- Decorative circles -->
         <div class="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full bg-white/5">
         </div>
@@ -261,22 +262,24 @@ defmodule DansunautoWeb.DashboardLive.Index do
 
         <div class="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p class="text-sm font-medium text-red-200">{greeting()}, welcome back ✨</p>
-            <h1 class="mt-1 font-serif text-3xl font-bold tracking-tight">
-              Dansunauto's Closet
+            <p class="text-sm font-medium text-brand-100">{greeting()}, welcome back</p>
+            <h1 class="mt-1 font-display text-3xl uppercase tracking-wide">
+              Dansun Auto Care
             </h1>
-            <p class="mt-2 text-sm text-red-200 max-w-xs">
-              Here's what's happening in your store today. Fashion .
+            <p class="mt-2 max-w-xs text-sm text-brand-100">
+              Garage &amp; spare parts shop, Umoja I &mdash; here's today's activity.
             </p>
           </div>
           
     <!-- Revenue highlight -->
           <div class="flex-shrink-0 rounded-2xl bg-white/10 px-6 py-4 backdrop-blur-sm border border-white/20">
-            <p class="text-xs font-semibold uppercase tracking-widest text-red-200">Total Revenue</p>
-            <p class="mt-1 font-serif text-3xl font-bold tabular-nums">
+            <p class="text-xs font-semibold uppercase tracking-widest text-brand-100">
+              Total Revenue
+            </p>
+            <p class="mt-1 font-display tracking-wide text-3xl font-bold tabular-nums">
               KES {@total_revenue |> fmt()}
             </p>
-            <p class="mt-1 text-xs text-red-200">
+            <p class="mt-1 text-xs text-brand-100">
               {@total_orders} confirmed {if @total_orders == 1, do: "order", else: "orders"}
             </p>
           </div>
@@ -289,33 +292,29 @@ defmodule DansunautoWeb.DashboardLive.Index do
           label="Orders"
           value={to_string(@total_orders)}
           sub="confirmed"
-          icon="🛍️"
-          accent="bg-rose-50 border-rose-100"
-          value_class="text-rose-600"
+          icon="hero-clipboard-document-list"
+          icon_class="bg-brand/10 text-brand"
         />
         <.kpi_card
           label="Customers"
           value={to_string(@total_customers)}
           sub="unique buyers"
-          icon="👥"
-          accent="bg-violet-50 border-violet-100"
-          value_class="text-violet-600"
+          icon="hero-users"
+          icon_class="bg-[#1F3A5F]/10 text-[#1F3A5F]"
         />
         <.kpi_card
           label="Avg. Order"
           value={"KES #{fmt(@avg_order_value)}"}
           sub="per transaction"
-          icon="💎"
-          accent="bg-amber-50 border-amber-100"
-          value_class="text-amber-600"
+          icon="hero-banknotes"
+          icon_class="bg-[#0F7B6C]/10 text-[#0F7B6C]"
         />
         <.kpi_card
-          label="Products"
+          label="Parts"
           value={to_string(@total_products)}
-          sub={"#{@total_collections} collections"}
-          icon="👗"
-          accent="bg-pink-50 border-pink-100"
-          value_class="text-pink-600"
+          sub={"#{@total_collections} categories"}
+          icon="hero-wrench-screwdriver"
+          icon_class="bg-ink/10 text-ink"
         />
       </div>
       
@@ -323,13 +322,15 @@ defmodule DansunautoWeb.DashboardLive.Index do
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
         
     <!-- Revenue chart — 2/3 -->
-        <div class="lg:col-span-2 overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
-          <div class="flex items-center justify-between border-b border-gray-50 px-6 py-5">
+        <div class="lg:col-span-2 overflow-hidden rounded-3xl border border-line bg-white shadow-sm">
+          <div class="flex items-center justify-between border-b border-line px-6 py-5">
             <div>
-              <h2 class="font-serif text-base font-semibold text-gray-900">Revenue Trend</h2>
-              <p class="text-xs text-gray-400">Last 30 days · confirmed orders only</p>
+              <h2 class="font-display uppercase tracking-wide text-base font-semibold text-ink">
+                Revenue Trend
+              </h2>
+              <p class="text-xs text-mute">Last 30 days · confirmed orders only</p>
             </div>
-            <span class="rounded-full bg-[#C8001F]/10 px-3 py-1 text-xs font-semibold text-[#C8001F]">
+            <span class="rounded-full bg-brand/10 px-3 py-1 text-xs font-semibold text-brand">
               KES {fmt(@total_revenue)}
             </span>
           </div>
@@ -346,10 +347,12 @@ defmodule DansunautoWeb.DashboardLive.Index do
         </div>
         
     <!-- Status doughnut — 1/3 -->
-        <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
-          <div class="border-b border-gray-50 px-6 py-5">
-            <h2 class="font-serif text-base font-semibold text-gray-900">Orders by Status</h2>
-            <p class="text-xs text-gray-400">Distribution breakdown</p>
+        <div class="overflow-hidden rounded-3xl border border-line bg-white shadow-sm">
+          <div class="border-b border-line px-6 py-5">
+            <h2 class="font-display uppercase tracking-wide text-base font-semibold text-ink">
+              Orders by Status
+            </h2>
+            <p class="text-xs text-mute">Distribution breakdown</p>
           </div>
           <div class="px-6 pb-4 pt-2">
             <div class="h-52">
@@ -368,16 +371,15 @@ defmodule DansunautoWeb.DashboardLive.Index do
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
         
     <!-- Top products — 2/3 -->
-        <div class="lg:col-span-2 overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
-          <div class="flex items-center justify-between border-b border-gray-50 px-6 py-5">
+        <div class="lg:col-span-2 overflow-hidden rounded-3xl border border-line bg-white shadow-sm">
+          <div class="flex items-center justify-between border-b border-line px-6 py-5">
             <div>
-              <h2 class="font-serif text-base font-semibold text-gray-900">Best-Selling Products</h2>
-              <p class="text-xs text-gray-400">By total revenue across all orders</p>
+              <h2 class="font-display uppercase tracking-wide text-base font-semibold text-ink">
+                Best-Selling Products
+              </h2>
+              <p class="text-xs text-mute">By total revenue across all orders</p>
             </div>
-            <.link
-              navigate="/admin/products"
-              class="text-xs font-semibold text-[#C8001F] hover:underline"
-            >
+            <.link navigate="/admin/products" class="text-xs font-semibold text-brand hover:underline">
               Browse all →
             </.link>
           </div>
@@ -394,31 +396,30 @@ defmodule DansunautoWeb.DashboardLive.Index do
         </div>
         
     <!-- Recent orders — 1/3 -->
-        <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
-          <div class="flex items-center justify-between border-b border-gray-50 px-5 py-5">
-            <h2 class="font-serif text-base font-semibold text-gray-900">Recent Orders</h2>
-            <.link
-              navigate="/admin/orders"
-              class="text-xs font-semibold text-[#C8001F] hover:underline"
-            >
+        <div class="overflow-hidden rounded-3xl border border-line bg-white shadow-sm">
+          <div class="flex items-center justify-between border-b border-line px-5 py-5">
+            <h2 class="font-display uppercase tracking-wide text-base font-semibold text-ink">
+              Recent Orders
+            </h2>
+            <.link navigate="/admin/orders" class="text-xs font-semibold text-brand hover:underline">
               View all →
             </.link>
           </div>
 
-          <div class="divide-y divide-gray-50">
+          <div class="divide-y divide-line">
             <%= if @recent_orders == [] do %>
               <div class="flex flex-col items-center py-12 text-center">
-                <span class="text-4xl">🛍️</span>
-                <p class="mt-3 text-sm text-gray-400">No orders yet</p>
+                <.icon name="hero-clipboard-document-list" class="h-10 w-10 text-mute" />
+                <p class="mt-3 text-sm text-mute">No orders yet</p>
               </div>
             <% else %>
               <%= for order <- @recent_orders do %>
                 <.link
                   navigate={"/admin/orders/#{order.id}"}
-                  class="flex items-center gap-3 px-5 py-3.5 transition hover:bg-gray-50/80"
+                  class="flex items-center gap-3 px-5 py-3.5 transition hover:bg-[#f9f9f7]"
                 >
                   <!-- Avatar initials -->
-                  <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#C8001F]/10 text-xs font-bold text-[#C8001F]">
+                  <div class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">
                     {order.name
                     |> String.split()
                     |> Enum.take(2)
@@ -426,11 +427,11 @@ defmodule DansunautoWeb.DashboardLive.Index do
                     |> Enum.join()}
                   </div>
                   <div class="min-w-0 flex-1">
-                    <p class="truncate text-xs font-semibold text-gray-900">{order.name}</p>
-                    <p class="truncate font-mono text-[10px] text-gray-400">{order.reference}</p>
+                    <p class="truncate text-xs font-semibold text-ink">{order.name}</p>
+                    <p class="truncate font-mono text-[10px] text-mute">{order.reference}</p>
                   </div>
                   <div class="text-right flex-shrink-0">
-                    <p class="text-xs font-bold text-gray-900">KES {fmt(order.total_amount)}</p>
+                    <p class="text-xs font-bold text-ink">KES {fmt(order.total_amount)}</p>
                     <span class={[
                       "inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[9px] font-semibold capitalize",
                       status_pill(order.status)
@@ -445,8 +446,8 @@ defmodule DansunautoWeb.DashboardLive.Index do
           </div>
 
           <%= if @recent_orders != [] do %>
-            <div class="border-t border-gray-50 px-5 py-3 text-center">
-              <p class="text-[10px] text-gray-400">
+            <div class="border-t border-line px-5 py-3 text-center">
+              <p class="text-[10px] text-mute">
                 Last order: {format_date(List.first(@recent_orders).inserted_at)}
               </p>
             </div>
@@ -458,8 +459,10 @@ defmodule DansunautoWeb.DashboardLive.Index do
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
         
     <!-- Status mini-tiles -->
-        <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white p-5 shadow-sm">
-          <h2 class="mb-4 font-serif text-base font-semibold text-gray-900">Order Pipeline</h2>
+        <div class="overflow-hidden rounded-3xl border border-line bg-white p-5 shadow-sm">
+          <h2 class="mb-4 font-display uppercase tracking-wide text-base font-semibold text-ink">
+            Order Pipeline
+          </h2>
           <div class="grid grid-cols-3 gap-3">
             <%= for {status, label, icon} <- [
               {"paid",       "Paid",       "💳"},
@@ -471,13 +474,13 @@ defmodule DansunautoWeb.DashboardLive.Index do
             ] do %>
               <.link
                 navigate="/admin/orders"
-                class="group flex flex-col items-center rounded-2xl border border-gray-100 bg-gray-50/60 p-3 text-center transition hover:border-[#C8001F]/30 hover:bg-[#C8001F]/5"
+                class="group flex flex-col items-center rounded-2xl border border-line bg-[#f9f9f7] p-3 text-center transition hover:border-brand/30 hover:bg-brand/5"
               >
                 <span class="text-xl">{icon}</span>
-                <span class="mt-1 text-lg font-bold tabular-nums text-gray-900">
+                <span class="mt-1 text-lg font-bold tabular-nums text-ink">
                   {Map.get(@status_counts, status, 0)}
                 </span>
-                <span class="text-[10px] font-medium text-gray-400 uppercase tracking-wide">
+                <span class="text-[10px] font-medium text-mute uppercase tracking-wide">
                   {label}
                 </span>
               </.link>
@@ -486,58 +489,60 @@ defmodule DansunautoWeb.DashboardLive.Index do
         </div>
         
     <!-- Quick actions -->
-        <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white p-5 shadow-sm">
-          <h2 class="mb-4 font-serif text-base font-semibold text-gray-900">Quick Actions</h2>
+        <div class="overflow-hidden rounded-3xl border border-line bg-white p-5 shadow-sm">
+          <h2 class="mb-4 font-display uppercase tracking-wide text-base font-semibold text-ink">
+            Quick Actions
+          </h2>
           <div class="grid grid-cols-2 gap-3">
             <.link
               navigate="/admin/orders"
-              class="group flex items-center gap-3 rounded-2xl border border-gray-100 bg-gray-50/60 p-4 transition hover:border-[#C8001F]/30 hover:bg-[#C8001F]/5"
+              class="group flex items-center gap-3 rounded-2xl border border-line bg-[#f9f9f7] p-4 transition hover:border-brand/30 hover:bg-brand/5"
             >
-              <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[#C8001F]/10 text-lg group-hover:bg-[#C8001F]/20 transition">
-                🛍️
+              <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand transition group-hover:bg-brand/20">
+                <.icon name="hero-clipboard-document-list" class="h-4 w-4" />
               </span>
               <div>
-                <p class="text-sm font-semibold text-gray-900">Orders</p>
-                <p class="text-xs text-gray-400">{Map.get(@status_counts, "all", 0)} total</p>
+                <p class="text-sm font-semibold text-ink">Orders</p>
+                <p class="text-xs text-mute">{Map.get(@status_counts, "all", 0)} total</p>
               </div>
             </.link>
 
             <.link
               navigate="/admin/customers"
-              class="group flex items-center gap-3 rounded-2xl border border-gray-100 bg-gray-50/60 p-4 transition hover:border-[#C8001F]/30 hover:bg-[#C8001F]/5"
+              class="group flex items-center gap-3 rounded-2xl border border-line bg-[#f9f9f7] p-4 transition hover:border-brand/30 hover:bg-brand/5"
             >
-              <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-violet-100 text-lg group-hover:bg-violet-200 transition">
-                👥
+              <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[#1F3A5F]/10 text-[#1F3A5F] transition group-hover:bg-[#1F3A5F]/20">
+                <.icon name="hero-users" class="h-4 w-4" />
               </span>
               <div>
-                <p class="text-sm font-semibold text-gray-900">Customers</p>
-                <p class="text-xs text-gray-400">{@total_customers} buyers</p>
+                <p class="text-sm font-semibold text-ink">Customers</p>
+                <p class="text-xs text-mute">{@total_customers} buyers</p>
               </div>
             </.link>
 
             <.link
               navigate="/admin/products"
-              class="group flex items-center gap-3 rounded-2xl border border-gray-100 bg-gray-50/60 p-4 transition hover:border-[#C8001F]/30 hover:bg-[#C8001F]/5"
+              class="group flex items-center gap-3 rounded-2xl border border-line bg-[#f9f9f7] p-4 transition hover:border-brand/30 hover:bg-brand/5"
             >
-              <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-pink-100 text-lg group-hover:bg-pink-200 transition">
-                👗
+              <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-ink/10 text-ink transition group-hover:bg-ink/20">
+                <.icon name="hero-wrench-screwdriver" class="h-4 w-4" />
               </span>
               <div>
-                <p class="text-sm font-semibold text-gray-900">Products</p>
-                <p class="text-xs text-gray-400">{@total_products} items</p>
+                <p class="text-sm font-semibold text-ink">Products</p>
+                <p class="text-xs text-mute">{@total_products} items</p>
               </div>
             </.link>
 
             <.link
               navigate="/admin/promotions"
-              class="group flex items-center gap-3 rounded-2xl border border-gray-100 bg-gray-50/60 p-4 transition hover:border-[#C8001F]/30 hover:bg-[#C8001F]/5"
+              class="group flex items-center gap-3 rounded-2xl border border-line bg-[#f9f9f7] p-4 transition hover:border-brand/30 hover:bg-brand/5"
             >
               <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-amber-100 text-lg group-hover:bg-amber-200 transition">
                 🏷️
               </span>
               <div>
-                <p class="text-sm font-semibold text-gray-900">Promo Codes</p>
-                <p class="text-xs text-gray-400">Influencer campaigns</p>
+                <p class="text-sm font-semibold text-ink">Promo Codes</p>
+                <p class="text-xs text-mute">Influencer campaigns</p>
               </div>
             </.link>
           </div>
@@ -552,19 +557,22 @@ defmodule DansunautoWeb.DashboardLive.Index do
   attr :label, :string, required: true
   attr :value, :string, required: true
   attr :sub, :string, default: ""
-  attr :icon, :string, default: "✦"
-  attr :accent, :string, default: "bg-gray-50 border-gray-100"
-  attr :value_class, :string, default: "text-gray-900"
+  attr :icon, :string, required: true, doc: "heroicon name, e.g. hero-users"
+  attr :icon_class, :string, default: "bg-brand/10 text-brand"
 
   defp kpi_card(assigns) do
     ~H"""
-    <div class={["overflow-hidden rounded-3xl border p-5 shadow-sm", @accent]}>
+    <div class="overflow-hidden rounded-3xl border border-line bg-white p-5 shadow-sm">
       <div class="flex items-start justify-between">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">{@label}</p>
-        <span class="text-xl leading-none">{@icon}</span>
+        <p class="font-display text-xs uppercase tracking-[0.14em] text-mute">{@label}</p>
+        <span class={["flex h-8 w-8 items-center justify-center rounded-xl", @icon_class]}>
+          <.icon name={@icon} class="h-4 w-4" />
+        </span>
       </div>
-      <p class={["mt-3 font-serif text-2xl font-bold tabular-nums", @value_class]}>{@value}</p>
-      <p class="mt-1 text-xs text-gray-400">{@sub}</p>
+      <p class="mt-3 font-display text-2xl tracking-wide tabular-nums text-ink">
+        {@value}
+      </p>
+      <p class="mt-1 text-xs text-mute">{@sub}</p>
     </div>
     """
   end

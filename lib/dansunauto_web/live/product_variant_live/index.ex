@@ -33,7 +33,10 @@ defmodule DansunautoWeb.ProductVariantLive.Index do
   end
 
   @impl true
-  def handle_info({DansunautoWeb.ProductVariantLive.FormComponent, {:saved, product_variant}}, socket) do
+  def handle_info(
+        {DansunautoWeb.ProductVariantLive.FormComponent, {:saved, product_variant}},
+        socket
+      ) do
     {:noreply, stream_insert(socket, :product_variants, product_variant)}
   end
 

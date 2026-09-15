@@ -103,6 +103,7 @@ defmodule DansunautoWeb do
       import DansunautoWeb.CategoryComponents
       import DansunautoWeb.SidebarComponents
       import DansunautoWeb.ProductComponents
+      import DansunautoWeb.AuthComponents
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 

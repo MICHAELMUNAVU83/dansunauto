@@ -34,8 +34,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans:    ["Lexend", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["Manrope", "Lexend", "sans-serif"],
+        sans:    ["Barlow", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ['"Saira Condensed"', "Barlow", "sans-serif"],
         serif:   ['"Libre Baskerville"', "Georgia", "serif"],
         script:  ["Dancing Script", "cursive"],
         ui:      ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],

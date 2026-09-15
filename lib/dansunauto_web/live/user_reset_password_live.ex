@@ -5,55 +5,35 @@ defmodule DansunautoWeb.UserResetPasswordLive do
 
   def render(assigns) do
     ~H"""
-    <div id="auth-page" class="page-typography min-h-screen flex flex-col bg-white">
-      <.promo_bar />
-      <.navbar collections={[]} />
+    <.auth_shell title="Reset password" subtitle="Choose a new password for your account.">
+      <.simple_form
+        for={@form}
+        id="reset_password_form"
+        phx-submit="reset_password"
+        phx-change="validate"
+      >
+        <.error :if={@form.errors != []}>
+          Oops, something went wrong! Please check the errors below.
+        </.error>
 
-      <main class="flex-1">
-        <section class="bg-[#f5f5f3] px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-          <div class="mx-auto max-w-md">
-            <div class="rounded-lg border border-gray-200 bg-white px-6 py-10 shadow-sm sm:px-12 sm:py-14">
-              <header class="text-center">
-                <h1 class="font-instrument-bold text-2xl text-gray-900 sm:text-3xl">
-                  Reset Password
-                </h1>
-              </header>
+        <.input field={@form[:password]} type="password" label="New password" required />
+        <.input
+          field={@form[:password_confirmation]}
+          type="password"
+          label="Confirm new password"
+          required
+        />
+        <:actions>
+          <.button phx-disable-with="Resetting..." class="w-full">Reset password</.button>
+        </:actions>
+      </.simple_form>
 
-              <.simple_form
-                for={@form}
-                id="reset_password_form"
-                phx-submit="reset_password"
-                phx-change="validate"
-                class="mt-10"
-              >
-                <.error :if={@form.errors != []}>
-                  Oops, something went wrong! Please check the errors below.
-                </.error>
-
-                <.input field={@form[:password]} type="password" label="New password" required />
-                <.input
-                  field={@form[:password_confirmation]}
-                  type="password"
-                  label="Confirm new password"
-                  required
-                />
-                <:actions>
-                  <.button phx-disable-with="Resetting..." class="w-full">Reset Password</.button>
-                </:actions>
-              </.simple_form>
-
-              <p class="mt-6 text-center text-sm text-gray-600">
-                <.link href={~p"/users/register"} class="font-medium text-gray-900 hover:text-gray-600">Register</.link>
-                <span class="mx-2">·</span>
-                <.link href={~p"/users/log_in"} class="font-medium text-gray-900 hover:text-gray-600">Log in</.link>
-              </p>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <.footer />
-    </div>
+      <:links>
+        <.auth_link href={~p"/users/register"}>Register</.auth_link>
+        <span class="mx-2">·</span>
+        <.auth_link href={~p"/users/log_in"}>Log in</.auth_link>
+      </:links>
+    </.auth_shell>
     """
   end
 

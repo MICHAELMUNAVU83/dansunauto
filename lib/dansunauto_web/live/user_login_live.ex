@@ -3,48 +3,27 @@ defmodule DansunautoWeb.UserLoginLive do
 
   def render(assigns) do
     ~H"""
-    <div id="auth-page" class="page-typography min-h-screen flex flex-col bg-white">
-      <.promo_bar />
-      <.navbar collections={[]} />
+    <.auth_shell
+      title="Log in to account"
+      subtitle="Admin access only. Contact the team owner to get an account."
+    >
+      <.simple_form for={@form} id="login_form" action={~p"/users/log_in"} phx-update="ignore">
+        <.input field={@form[:email]} type="email" label="Email" required />
+        <.input field={@form[:password]} type="password" label="Password" required />
 
-      <main class="flex-1">
-        <section class="bg-[#f5f5f3] px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-          <div class="mx-auto max-w-md">
-            <div class="rounded-lg border border-gray-200 bg-white px-6 py-10 shadow-sm sm:px-12 sm:py-14">
-              <header class="text-center">
-                <h1 class="font-instrument-bold text-2xl text-gray-900 sm:text-3xl">
-                  Log in to account
-                </h1>
-                <p class="mt-2 text-sm leading-6 text-gray-600">
-                  Admin access only. Contact the team owner to get an account.
-                </p>
-              </header>
-
-              <.simple_form for={@form} id="login_form" action={~p"/users/log_in"} phx-update="ignore" class="mt-10">
-                <.input field={@form[:email]} type="email" label="Email" required />
-                <.input field={@form[:password]} type="password" label="Password" required />
-
-                <:actions>
-                  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <.input field={@form[:remember_me]} type="checkbox" label="Keep me logged in" />
-                    <.link href={~p"/users/reset_password"} class="text-sm font-medium text-gray-900 hover:text-gray-600">
-                      Forgot your password?
-                    </.link>
-                  </div>
-                </:actions>
-                <:actions>
-                  <.button phx-disable-with="Logging in..." class="w-full">
-                    Log in <span aria-hidden="true">→</span>
-                  </.button>
-                </:actions>
-              </.simple_form>
-            </div>
+        <:actions>
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <.input field={@form[:remember_me]} type="checkbox" label="Keep me logged in" />
+            <.auth_link href={~p"/users/reset_password"}>Forgot your password?</.auth_link>
           </div>
-        </section>
-      </main>
-
-      <.footer />
-    </div>
+        </:actions>
+        <:actions>
+          <.button phx-disable-with="Logging in..." class="w-full">
+            Log in <span aria-hidden="true">→</span>
+          </.button>
+        </:actions>
+      </.simple_form>
+    </.auth_shell>
     """
   end
 

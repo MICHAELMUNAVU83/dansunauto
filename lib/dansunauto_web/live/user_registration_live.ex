@@ -6,55 +6,33 @@ defmodule DansunautoWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div id="auth-page" class="page-typography min-h-screen flex flex-col bg-white">
-      <.promo_bar />
-      <.navbar collections={[]} />
+    <.auth_shell title="Register for an account" subtitle="Create your Dansun Auto account.">
+      <.simple_form
+        for={@form}
+        id="registration_form"
+        phx-submit="save"
+        phx-change="validate"
+        phx-trigger-action={@trigger_submit}
+        action={~p"/users/log_in?_action=registered"}
+        method="post"
+      >
+        <.error :if={@check_errors}>
+          Oops, something went wrong! Please check the errors below.
+        </.error>
 
-      <main class="flex-1">
-        <section class="bg-[#f5f5f3] px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-          <div class="mx-auto max-w-md">
-            <div class="rounded-lg border border-gray-200 bg-white px-6 py-10 shadow-sm sm:px-12 sm:py-14">
-              <header class="text-center">
-                <h1 class="font-instrument-bold text-2xl text-gray-900 sm:text-3xl">
-                  Register for an account
-                </h1>
-                <p class="mt-2 text-sm leading-6 text-gray-600">
-                  Already registered?
-                  <.link navigate={~p"/users/log_in"} class="font-semibold text-gray-900 underline hover:no-underline">
-                    Log in
-                  </.link>
-                  to your account now.
-                </p>
-              </header>
+        <.input field={@form[:email]} type="email" label="Email" required />
+        <.input field={@form[:password]} type="password" label="Password" required />
 
-              <.simple_form
-                for={@form}
-                id="registration_form"
-                phx-submit="save"
-                phx-change="validate"
-                phx-trigger-action={@trigger_submit}
-                action={~p"/users/log_in?_action=registered"}
-                method="post"
-                class="mt-10"
-              >
-                <.error :if={@check_errors}>
-                  Oops, something went wrong! Please check the errors below.
-                </.error>
+        <:actions>
+          <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
+        </:actions>
+      </.simple_form>
 
-                <.input field={@form[:email]} type="email" label="Email" required />
-                <.input field={@form[:password]} type="password" label="Password" required />
-
-                <:actions>
-                  <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
-                </:actions>
-              </.simple_form>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <.footer />
-    </div>
+      <:links>
+        Already registered?
+        <.auth_link navigate={~p"/users/log_in"}>Log in</.auth_link>
+      </:links>
+    </.auth_shell>
     """
   end
 

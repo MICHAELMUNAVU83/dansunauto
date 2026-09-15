@@ -1,6 +1,9 @@
 defmodule DansunautoWeb.CategoryLive.Index do
   use DansunautoWeb, :live_view
 
+  # Module-qualified: HomeComponents (imported via `use`) defines a clashing footer/1.
+  alias DansunautoWeb.AutoComponents
+
   alias Dansunauto.Shop
 
   @impl true
@@ -16,20 +19,18 @@ defmodule DansunautoWeb.CategoryLive.Index do
       product_types = Shop.list_collections_for_display()
       products = Shop.list_products_for_collection_display(category.id)
       popular = Shop.list_popular_products_for_display(3)
-      hero_images = Shop.list_hero_images(6)
 
       {:ok,
        socket
-       |> assign(:page_title, "#{category.name} | Dansunauto")
+       |> assign(:page_title, "#{category.name} | Dansun Auto Care")
        |> assign(:category, category)
        |> assign(:product_types, product_types)
        |> assign(:selected_types, [slug])
-       |> assign(:bestsellers, Shop.list_bestsellers())
+       |> assign(:bestsellers, Enum.take(Shop.list_bestsellers(), 4))
        |> assign(:filter_pill, "all")
        |> assign(:sort, "best_selling")
        |> assign(:products, products)
        |> assign(:popular_products, popular)
-       |> assign(:contact_images, Enum.shuffle(hero_images))
        |> assign(:filters_open, false)}
     end
   end
@@ -37,7 +38,7 @@ defmodule DansunautoWeb.CategoryLive.Index do
   @impl true
   def handle_event("toggle_product_type", %{"slug" => slug}, socket) do
     current = socket.assigns.selected_types
-    next    = if slug in current, do: List.delete(current, slug), else: [slug | current]
+    next = if slug in current, do: List.delete(current, slug), else: [slug | current]
 
     {:noreply,
      socket
@@ -77,18 +78,12 @@ defmodule DansunautoWeb.CategoryLive.Index do
   end
 
   @impl true
-  def handle_event("contact_submit", _params, socket) do
-    {:noreply,
-     socket
-     |> put_flash(:info, "Thanks! We'll get back to you soon.")}
-  end
-
-  @impl true
   def render(assigns) do
     ~H"""
     <div id="category-page" class="page-typography min-h-screen bg-white" phx-hook="HomeReveal">
-      <.promo_bar />
-      <.navbar collections={@product_types} />
+      <AutoComponents.top_bar />
+      <AutoComponents.header_info />
+      <AutoComponents.primary_nav />
       <.category_hero category={@category} />
       <.category_main
         product_types={@product_types}
@@ -99,11 +94,16 @@ defmodule DansunautoWeb.CategoryLive.Index do
         popular_products={@popular_products}
         filters_open={@filters_open}
       />
-      <.features />
-      <.countdown />
-      <.best_sellers bestsellers={@bestsellers} />
-      <.contact_section contact_images={@contact_images} />
-      <.footer />
+      <AutoComponents.promises />
+      <AutoComponents.part_grid
+        products={@bestsellers}
+        eyebrow="Popular"
+        title="Bestselling parts"
+        id="bestselling-parts"
+      />
+      <AutoComponents.contact /> <AutoComponents.footer />
+      <AutoComponents.back_to_top />
+      <AutoComponents.cart_drawer />
     </div>
     """
   end

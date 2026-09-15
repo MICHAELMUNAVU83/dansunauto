@@ -1,5 +1,8 @@
 defmodule DansunautoWeb.CartLive.Index do
   use DansunautoWeb, :live_view
+
+  # Module-qualified: HomeComponents (imported via `use`) defines a clashing footer/1.
+  alias DansunautoWeb.AutoComponents
   import DansunautoWeb.HomeComponents
 
   alias Dansunauto.ProductVariants
@@ -90,7 +93,9 @@ defmodule DansunautoWeb.CartLive.Index do
   def render(assigns) do
     ~H"""
     <div id="cart-page" class="min-h-screen bg-white" phx-hook="CartSync">
-      <.navbar cart_items={@cart_items} collections={[]} />
+      <AutoComponents.top_bar />
+      <AutoComponents.header_info />
+      <AutoComponents.primary_nav />
 
       <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <h1 class="mb-8 text-3xl font-bold text-gray-900">Your Cart</h1>
@@ -147,7 +152,7 @@ defmodule DansunautoWeb.CartLive.Index do
                             class="h-full w-full object-cover object-top object-top"
                           />
                         <% else %>
-                          <div class="flex h-full items-center justify-center text-3xl">👗</div>
+                          <div class="flex h-full items-center justify-center text-3xl">🔧</div>
                         <% end %>
                       </div>
 
@@ -317,7 +322,9 @@ defmodule DansunautoWeb.CartLive.Index do
         <% end %>
       </div>
 
-      <.footer />
+      <AutoComponents.footer />
+      <AutoComponents.back_to_top />
+      <AutoComponents.cart_drawer />
     </div>
     """
   end

@@ -19,7 +19,6 @@ defmodule DansunautoWeb.BundleItemLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-
         <:actions>
           <.button phx-disable-with="Saving...">Save Bundle item</.button>
         </:actions>

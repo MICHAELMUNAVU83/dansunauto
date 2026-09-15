@@ -1,6 +1,9 @@
 defmodule DansunautoWeb.BundleShowLive.Index do
   use DansunautoWeb, :live_view
 
+  # Module-qualified: HomeComponents (imported via `use`) defines a clashing footer/1.
+  alias DansunautoWeb.AutoComponents
+
   alias Dansunauto.Shop
   alias Dansunauto.ProductVariants
 
@@ -165,8 +168,10 @@ defmodule DansunautoWeb.BundleShowLive.Index do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="min-h-screen bg-[#f5f5f3]" id="bundle-show-page" phx-hook="CartHook">
-      <.bundle_navbar />
+    <div class="min-h-screen bg-[#f5f5f3]" id="bundle-show-page">
+      <AutoComponents.top_bar />
+      <AutoComponents.header_info />
+      <AutoComponents.primary_nav />
 
       <%!-- Header --%>
       <div class="bg-white border-b border-gray-100">
@@ -338,37 +343,10 @@ defmodule DansunautoWeb.BundleShowLive.Index do
         </div>
       </div>
 
-      <.footer />
+      <AutoComponents.footer />
+      <AutoComponents.back_to_top />
+      <AutoComponents.cart_drawer />
     </div>
-    """
-  end
-
-  defp bundle_navbar(assigns) do
-    ~H"""
-    <nav class="sticky top-0 z-30 border-b border-gray-100 bg-white/95 backdrop-blur">
-      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <a href="/" class="flex items-center gap-2">
-          <img src="/images/dansunauto-logo.png" alt="Dansunauto" class="h-8 w-8 rounded-full object-cover" />
-          <span class="brand-logo text-xl text-gray-900">
-            Dansunauto's Closet<span class="text-[#C8001F]">.</span>
-          </span>
-        </a>
-        <a
-          href="/cart"
-          class="flex items-center gap-1.5 rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-400"
-        >
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1.5"
-              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-            />
-          </svg>
-          Cart
-        </a>
-      </div>
-    </nav>
     """
   end
 end

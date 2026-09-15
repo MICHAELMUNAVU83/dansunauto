@@ -43,7 +43,12 @@ defmodule DansunautoWeb.ProductVariantLive.FormComponent do
 
   @impl true
   def handle_event("validate", %{"product_variant" => product_variant_params}, socket) do
-    changeset = ProductVariants.change_product_variant(socket.assigns.product_variant, product_variant_params)
+    changeset =
+      ProductVariants.change_product_variant(
+        socket.assigns.product_variant,
+        product_variant_params
+      )
+
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
   end
 
@@ -52,7 +57,10 @@ defmodule DansunautoWeb.ProductVariantLive.FormComponent do
   end
 
   defp save_product_variant(socket, :edit, product_variant_params) do
-    case ProductVariants.update_product_variant(socket.assigns.product_variant, product_variant_params) do
+    case ProductVariants.update_product_variant(
+           socket.assigns.product_variant,
+           product_variant_params
+         ) do
       {:ok, product_variant} ->
         notify_parent({:saved, product_variant})
 

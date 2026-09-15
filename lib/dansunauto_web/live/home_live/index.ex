@@ -13,7 +13,26 @@ defmodule DansunautoWeb.HomeLive.Index do
     {:ok,
      socket
      |> assign(:page_title, "Auto Repairs & Spare Parts in Umoja, Nairobi")
+     |> assign(:collections, Enum.take(Shop.list_collections_for_display(), 6))
+     |> assign(:featured_products, featured_products())
+     |> assign(:bundle, Shop.get_active_bundle_with_products())
      |> assign(:testimonials, Enum.take(Shop.list_testimonials_for_display(), 3))}
+  end
+
+  # Featured parts first; fall back to bestsellers, then to anything active, so
+  # the storefront grid is never empty just because nothing is flagged.
+  defp featured_products do
+    [
+      &Shop.list_bundle_display_products/0,
+      &Shop.list_bestsellers/0,
+      &Shop.list_products_for_display/0
+    ]
+    |> Enum.find_value([], fn fetch ->
+      case fetch.() do
+        [] -> nil
+        products -> Enum.take(products, 8)
+      end
+    end)
   end
 
   @impl true
@@ -30,6 +49,18 @@ defmodule DansunautoWeb.HomeLive.Index do
       <%!-- The app layout already wraps us in a <main>, so the reference
             template's own <main> element is intentionally dropped here. --%>
       <AutoComponents.hero />
+
+      <%!-- Shop first: the storefront is the point of the page, so parts you
+            can actually buy sit directly under the hero. --%>
+      <AutoComponents.part_grid
+        products={@featured_products}
+        eyebrow="Shop Online"
+        title="Spare parts you can buy right now"
+        class="border-b border-line"
+      />
+      <AutoComponents.part_categories collections={@collections} />
+      <AutoComponents.service_kit bundle={@bundle} />
+
       <AutoComponents.reasons />
       <AutoComponents.estimate />
       <AutoComponents.brands />
@@ -44,6 +75,7 @@ defmodule DansunautoWeb.HomeLive.Index do
 
       <AutoComponents.footer />
       <AutoComponents.back_to_top />
+      <AutoComponents.cart_drawer />
     </div>
     """
   end

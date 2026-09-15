@@ -50,7 +50,11 @@ defmodule DansunautoWeb.CoreComponents do
       data-cancel={JS.exec(@on_cancel, "phx-remove")}
       class="relative z-50 hidden"
     >
-      <div id={"#{@id}-bg"} class="bg-zinc-50/90 fixed inset-0 transition-opacity" aria-hidden="true" />
+      <div
+        id={"#{@id}-bg"}
+        class="fixed inset-0 bg-ink/40 backdrop-blur-sm transition-opacity"
+        aria-hidden="true"
+      />
       <div
         class="fixed inset-0 overflow-y-auto"
         aria-labelledby={"#{@id}-title"}
@@ -66,13 +70,13 @@ defmodule DansunautoWeb.CoreComponents do
               phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
               phx-key="escape"
               phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
-              class="shadow-zinc-700/10 ring-zinc-700/10 relative hidden rounded-2xl bg-white p-14 shadow-lg ring-1 transition"
+              class="relative hidden rounded-2xl border border-line bg-white p-8 shadow-xl shadow-ink/10 transition sm:p-12"
             >
               <div class="absolute top-6 right-5">
                 <button
                   phx-click={JS.exec("data-cancel", to: "##{@id}")}
                   type="button"
-                  class="-m-3 flex-none p-3 opacity-20 hover:opacity-40"
+                  class="-m-3 flex-none rounded-full p-3 text-mute transition hover:bg-brand/5 hover:text-brand"
                   aria-label={gettext("close")}
                 >
                   <.icon name="hero-x-mark-solid" class="h-5 w-5" />
@@ -116,9 +120,9 @@ defmodule DansunautoWeb.CoreComponents do
       phx-mounted={JS.dispatch("flash:auto-dismiss", detail: %{id: @id, kind: @kind})}
       role="alert"
       class={[
-        "fixed top-2 right-2 mr-2 w-80 sm:w-96 z-50 rounded-lg p-3 ring-1",
-        @kind == :info && "bg-emerald-50 text-emerald-800 ring-emerald-500 fill-cyan-900",
-        @kind == :error && "bg-rose-50 text-rose-900 shadow-md ring-rose-500 fill-rose-900"
+        "fixed top-4 right-4 z-50 w-80 rounded-2xl border p-4 shadow-lg shadow-ink/10 sm:w-96",
+        @kind == :info && "border-emerald-200 bg-emerald-50 text-emerald-900",
+        @kind == :error && "border-brand/30 bg-brand-50 text-brand-800"
       ]}
       {@rest}
     >
@@ -203,7 +207,7 @@ defmodule DansunautoWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 space-y-8 bg-white">
+      <div class="mt-8 space-y-6">
         {render_slot(@inner_block, f)}
         <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
           {render_slot(action, f)}
@@ -232,8 +236,9 @@ defmodule DansunautoWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3",
+        "phx-submit-loading:opacity-75 rounded-full bg-brand px-5 py-2.5 transition hover:bg-brand-700",
         "text-sm font-semibold leading-6 text-white active:text-white/80",
+        "disabled:cursor-not-allowed disabled:opacity-50",
         @class
       ]}
       {@rest}
@@ -311,7 +316,7 @@ defmodule DansunautoWeb.CoreComponents do
 
     ~H"""
     <div>
-      <label class="flex items-center gap-4 text-sm leading-6 text-zinc-600">
+      <label class="flex items-center gap-3 text-sm leading-6 text-body">
         <input type="hidden" name={@name} value="false" disabled={@rest[:disabled]} />
         <input
           type="checkbox"
@@ -319,7 +324,7 @@ defmodule DansunautoWeb.CoreComponents do
           name={@name}
           value="true"
           checked={@checked}
-          class="rounded border-zinc-300 text-zinc-900 focus:ring-0"
+          class="rounded border-line text-brand focus:ring-brand/30"
           {@rest}
         />
         {@label}
@@ -336,7 +341,7 @@ defmodule DansunautoWeb.CoreComponents do
       <select
         id={@id}
         name={@name}
-        class="mt-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
+        class="mt-2 block w-full rounded-xl border-line bg-white py-3 text-sm text-ink transition focus:border-brand/60 focus:ring-1 focus:ring-brand/30"
         multiple={@multiple}
         {@rest}
       >
@@ -356,9 +361,9 @@ defmodule DansunautoWeb.CoreComponents do
         id={@id}
         name={@name}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 min-h-[6rem]",
-          @errors == [] && "border-zinc-300 focus:border-zinc-400",
-          @errors != [] && "border-rose-400 focus:border-rose-400"
+          "mt-2 block min-h-[6rem] w-full rounded-xl px-4 py-3 text-sm text-ink transition placeholder:text-mute focus:ring-1 sm:leading-6",
+          @errors == [] && "border-line focus:border-brand/60 focus:ring-brand/30",
+          @errors != [] && "border-brand focus:border-brand focus:ring-brand/30"
         ]}
         {@rest}
       >{Phoenix.HTML.Form.normalize_value("textarea", @value)}</textarea>
@@ -378,9 +383,9 @@ defmodule DansunautoWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
-          @errors == [] && "border-zinc-300 focus:border-zinc-400",
-          @errors != [] && "border-rose-400 focus:border-rose-400"
+          "mt-2 block w-full rounded-xl px-4 py-3 text-sm text-ink transition placeholder:text-mute focus:ring-1 sm:leading-6",
+          @errors == [] && "border-line focus:border-brand/60 focus:ring-brand/30",
+          @errors != [] && "border-brand focus:border-brand focus:ring-brand/30"
         ]}
         {@rest}
       />
@@ -397,7 +402,7 @@ defmodule DansunautoWeb.CoreComponents do
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-zinc-800">
+    <label for={@for} class="block text-sm font-semibold leading-6 text-ink">
       {render_slot(@inner_block)}
     </label>
     """
@@ -410,7 +415,7 @@ defmodule DansunautoWeb.CoreComponents do
 
   def error(assigns) do
     ~H"""
-    <p class="mt-3 flex gap-3 text-sm leading-6 text-rose-600">
+    <p class="mt-2 flex gap-2 text-sm leading-6 text-brand">
       <.icon name="hero-exclamation-circle-mini" class="mt-0.5 h-5 w-5 flex-none" />
       {render_slot(@inner_block)}
     </p>
@@ -430,10 +435,10 @@ defmodule DansunautoWeb.CoreComponents do
     ~H"""
     <header class={[@actions != [] && "flex items-center justify-between gap-6", @class]}>
       <div>
-        <h1 class="text-lg font-semibold leading-8 text-zinc-800">
+        <h1 class="font-display text-2xl uppercase leading-8 tracking-wide text-ink">
           {render_slot(@inner_block)}
         </h1>
-        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
+        <p :if={@subtitle != []} class="mt-1 text-sm leading-6 text-body">
           {render_slot(@subtitle)}
         </p>
       </div>
@@ -474,48 +479,50 @@ defmodule DansunautoWeb.CoreComponents do
       end
 
     ~H"""
-    <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
-      <table class="w-[40rem] mt-11 sm:w-full">
-        <thead class="text-sm text-left leading-6 text-zinc-500">
-          <tr>
-            <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal">{col[:label]}</th>
-            <th :if={@action != []} class="relative p-0 pb-4">
-              <span class="sr-only">{gettext("Actions")}</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          id={@id}
-          phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
-          class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700"
-        >
-          <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-zinc-50">
-            <td
-              :for={{col, i} <- Enum.with_index(@col)}
-              phx-click={@row_click && @row_click.(row)}
-              class={["relative p-0", @row_click && "hover:cursor-pointer"]}
+    <div class="mt-8 overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[40rem]">
+          <thead class="bg-[#f9f9f7] text-left font-display text-[11px] uppercase tracking-[0.14em] text-mute">
+            <tr>
+              <th :for={col <- @col} class="px-6 py-3.5 font-normal">{col[:label]}</th>
+              <th :if={@action != []} class="relative px-6 py-3.5">
+                <span class="sr-only">{gettext("Actions")}</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            id={@id}
+            phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
+            class="divide-y divide-line text-sm leading-6 text-body"
+          >
+            <tr
+              :for={row <- @rows}
+              id={@row_id && @row_id.(row)}
+              class="group transition hover:bg-brand/[0.03]"
             >
-              <div class="block py-4 pr-6">
-                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-zinc-50 sm:rounded-l-xl" />
-                <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
-                  {render_slot(col, @row_item.(row))}
-                </span>
-              </div>
-            </td>
-            <td :if={@action != []} class="relative w-14 p-0">
-              <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
-                <span class="absolute -inset-y-px -right-4 left-0 group-hover:bg-zinc-50 sm:rounded-r-xl" />
+              <td
+                :for={{col, i} <- Enum.with_index(@col)}
+                phx-click={@row_click && @row_click.(row)}
+                class={[
+                  "px-6 py-4 align-middle",
+                  i == 0 && "font-semibold text-ink",
+                  @row_click && "cursor-pointer"
+                ]}
+              >
+                {render_slot(col, @row_item.(row))}
+              </td>
+              <td :if={@action != []} class="whitespace-nowrap px-6 py-4 text-right">
                 <span
                   :for={action <- @action}
-                  class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
+                  class="ml-4 text-sm font-semibold leading-6 text-body transition hover:text-brand"
                 >
                   {render_slot(action, @row_item.(row))}
                 </span>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     """
   end
@@ -536,11 +543,11 @@ defmodule DansunautoWeb.CoreComponents do
 
   def list(assigns) do
     ~H"""
-    <div class="mt-14">
-      <dl class="-my-4 divide-y divide-zinc-100">
+    <div class="mt-8 rounded-2xl border border-line bg-white px-6 shadow-sm">
+      <dl class="divide-y divide-line">
         <div :for={item <- @item} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
-          <dt class="w-1/4 flex-none text-zinc-500">{item.title}</dt>
-          <dd class="text-zinc-700">{render_slot(item)}</dd>
+          <dt class="w-1/4 flex-none font-medium text-mute">{item.title}</dt>
+          <dd class="text-ink">{render_slot(item)}</dd>
         </div>
       </dl>
     </div>
@@ -559,10 +566,10 @@ defmodule DansunautoWeb.CoreComponents do
 
   def back(assigns) do
     ~H"""
-    <div class="mt-16">
+    <div class="mt-10">
       <.link
         navigate={@navigate}
-        class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
+        class="text-sm font-semibold leading-6 text-body transition hover:text-brand"
       >
         <.icon name="hero-arrow-left-solid" class="h-3 w-3" />
         {render_slot(@inner_block)}

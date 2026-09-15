@@ -1,5 +1,8 @@
 defmodule DansunautoWeb.CheckoutLive.Index do
   use DansunautoWeb, :live_view
+
+  # Module-qualified: HomeComponents (imported via `use`) defines a clashing footer/1.
+  alias DansunautoWeb.AutoComponents
   import DansunautoWeb.HomeComponents
 
   alias Dansunauto.Orders
@@ -10,7 +13,7 @@ defmodule DansunautoWeb.CheckoutLive.Index do
   def mount(_params, _session, socket) do
     {:ok,
      socket
-     |> assign(:page_title, "Checkout | Dansunauto's Closet")
+     |> assign(:page_title, "Checkout | Dansun Auto Care")
      |> assign(:cart_items, [])
      |> assign(:cart_loaded, false)
      |> assign(:submitting, false)
@@ -99,21 +102,21 @@ defmodule DansunautoWeb.CheckoutLive.Index do
       true ->
         socket = assign(socket, submitting: true, form_error: nil)
 
-        subtotal        = calc_subtotal(items)
+        subtotal = calc_subtotal(items)
         discount_amount = if promo, do: Promotions.calc_discount(promo, subtotal), else: 0
-        total           = subtotal - discount_amount
-        reference       = Orders.generate_reference()
+        total = subtotal - discount_amount
+        reference = Orders.generate_reference()
 
         order_attrs = %{
-          reference:       reference,
-          email:           form["email"],
-          name:            form["name"],
-          phone:           form["phone"],
-          address:         form["address"],
-          total_amount:    total,
+          reference: reference,
+          email: form["email"],
+          name: form["name"],
+          phone: form["phone"],
+          address: form["address"],
+          total_amount: total,
           discount_amount: discount_amount,
-          promo_code:      if(promo, do: promo.code, else: nil),
-          items:           items
+          promo_code: if(promo, do: promo.code, else: nil),
+          items: items
         }
 
         case Orders.create_order(order_attrs) do
@@ -164,22 +167,32 @@ defmodule DansunautoWeb.CheckoutLive.Index do
   def render(assigns) do
     ~H"""
     <div id="checkout-page" class="min-h-screen bg-[#f9f9f7]" phx-hook="CartSync">
-      <.navbar cart_items={@cart_items} collections={[]} />
+      <AutoComponents.top_bar />
+      <AutoComponents.header_info />
+      <AutoComponents.primary_nav />
 
       <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="mb-8 flex items-center gap-3">
-          <a href="/cart" class="rounded-full p-1.5 text-gray-400 transition hover:bg-gray-200 hover:text-black">
+          <a
+            href="/cart"
+            class="rounded-full p-1.5 text-gray-400 transition hover:bg-gray-200 hover:text-black"
+          >
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
           </a>
           <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Checkout</h1>
         </div>
 
         <div class="grid gap-8 lg:grid-cols-5">
-
-          <!-- ── Left: Contact & Delivery form ── -->
+          
+    <!-- ── Left: Contact & Delivery form ── -->
           <div class="lg:col-span-3">
             <div class="rounded-2xl border border-gray-200 bg-white p-7 shadow-sm">
               <h2 class="mb-1 text-lg font-semibold text-gray-900">Contact & Delivery</h2>
@@ -188,7 +201,11 @@ defmodule DansunautoWeb.CheckoutLive.Index do
               <%= if @form_error do %>
                 <div class="mb-5 flex items-center gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
                   <svg class="h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                      clip-rule="evenodd"
+                    />
                   </svg>
                   {@form_error}
                 </div>
@@ -208,7 +225,9 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                     />
                   </div>
                   <div>
-                    <label class="mb-1.5 block text-sm font-medium text-gray-700">Email Address *</label>
+                    <label class="mb-1.5 block text-sm font-medium text-gray-700">
+                      Email Address *
+                    </label>
                     <input
                       type="email"
                       name="email"
@@ -232,7 +251,9 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                 </div>
 
                 <div>
-                  <label class="mb-1.5 block text-sm font-medium text-gray-700">Delivery Address</label>
+                  <label class="mb-1.5 block text-sm font-medium text-gray-700">
+                    Delivery Address
+                  </label>
                   <textarea
                     name="address"
                     rows="3"
@@ -240,16 +261,28 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                     class="w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-sm placeholder-gray-400 transition focus:border-[#C8001F]/60 focus:outline-none focus:ring-1 focus:ring-[#C8001F]/30"
                   >{@form["address"]}</textarea>
                 </div>
-
-                <!-- ── Promo Code ── -->
+                
+    <!-- ── Promo Code ── -->
                 <div class="border-t border-gray-100 pt-5">
-                  <label class="mb-2 block text-sm font-medium text-gray-700">Promo / Discount Code</label>
+                  <label class="mb-2 block text-sm font-medium text-gray-700">
+                    Promo / Discount Code
+                  </label>
 
                   <%= if @applied_promo do %>
                     <!-- Applied state -->
                     <div class="flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3">
-                      <svg class="h-5 w-5 flex-shrink-0 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <svg
+                        class="h-5 w-5 flex-shrink-0 text-green-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                       </svg>
                       <div class="flex-1 min-w-0">
                         <p class="text-sm font-semibold text-green-800">
@@ -295,24 +328,34 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                     <%= if @promo_error do %>
                       <p class="mt-1.5 flex items-center gap-1 text-xs text-red-600">
                         <svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                          <path
+                            fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                            clip-rule="evenodd"
+                          />
                         </svg>
                         {@promo_error}
                       </p>
                     <% end %>
                   <% end %>
                 </div>
-
-                <!-- Totals summary -->
+                
+    <!-- Totals summary -->
                 <div class="space-y-1.5">
                   <div class="flex items-center justify-between text-sm text-gray-500">
                     <span>Subtotal</span>
-                    <span class="font-medium text-gray-700">KES {fmt(calc_subtotal(@cart_items))}</span>
+                    <span class="font-medium text-gray-700">
+                      KES {fmt(calc_subtotal(@cart_items))}
+                    </span>
                   </div>
                   <%= if @applied_promo do %>
                     <div class="flex items-center justify-between text-sm text-green-600">
                       <span>Discount ({@applied_promo.discount_percent}% off)</span>
-                      <span class="font-semibold">-KES {fmt(Promotions.calc_discount(@applied_promo, calc_subtotal(@cart_items)))}</span>
+                      <span class="font-semibold">
+                        -KES {fmt(
+                          Promotions.calc_discount(@applied_promo, calc_subtotal(@cart_items))
+                        )}
+                      </span>
                     </div>
                   <% end %>
                   <div class="flex items-center justify-between text-sm text-gray-500">
@@ -321,7 +364,9 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                   </div>
                   <div class="flex items-center justify-between border-t border-gray-100 pt-2 text-base font-bold text-gray-900">
                     <span>Total</span>
-                    <span class="text-[#C8001F]">KES {fmt(calc_total(@cart_items, @applied_promo))}</span>
+                    <span class="text-[#C8001F]">
+                      KES {fmt(calc_total(@cart_items, @applied_promo))}
+                    </span>
                   </div>
                 </div>
 
@@ -333,8 +378,21 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                   <%= if @submitting do %>
                     <span class="flex items-center justify-center gap-2">
                       <svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                        <circle
+                          class="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          stroke-width="4"
+                        >
+                        </circle>
+                        <path
+                          class="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                        >
+                        </path>
                       </svg>
                       Redirecting to payment…
                     </span>
@@ -345,15 +403,20 @@ defmodule DansunautoWeb.CheckoutLive.Index do
 
                 <div class="flex items-center justify-center gap-1.5 text-xs text-gray-400">
                   <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
                   </svg>
                   Secured & encrypted by Paystack
                 </div>
               </form>
             </div>
           </div>
-
-          <!-- ── Right: Editable cart ── -->
+          
+    <!-- ── Right: Editable cart ── -->
           <div class="lg:col-span-2">
             <div class="rounded-2xl border border-gray-200 bg-white shadow-sm">
               <div class="flex items-center justify-between border-b border-gray-100 px-6 py-4">
@@ -367,7 +430,10 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                 <%= if @cart_items == [] do %>
                   <div class="py-10 text-center">
                     <p class="text-sm text-gray-400">No items in your cart.</p>
-                    <a href="/" class="mt-3 inline-block text-sm font-medium text-[#C8001F] underline underline-offset-2">
+                    <a
+                      href="/"
+                      class="mt-3 inline-block text-sm font-medium text-[#C8001F] underline underline-offset-2"
+                    >
                       Keep shopping
                     </a>
                   </div>
@@ -376,9 +442,13 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                     <div class="flex gap-4 py-4">
                       <div class="h-20 w-16 flex-shrink-0 overflow-hidden rounded-xl bg-gray-100">
                         <%= if item["image"] do %>
-                          <img src={item["image"]} alt={item["name"]} class="h-full w-full object-cover" />
+                          <img
+                            src={item["image"]}
+                            alt={item["name"]}
+                            class="h-full w-full object-cover"
+                          />
                         <% else %>
-                          <div class="flex h-full items-center justify-center text-2xl">👗</div>
+                          <div class="flex h-full items-center justify-center text-2xl">🔧</div>
                         <% end %>
                       </div>
 
@@ -387,9 +457,9 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                           <div class="min-w-0">
                             <p class="truncate text-sm font-semibold text-gray-900">{item["name"]}</p>
                             <p class="mt-0.5 text-xs text-gray-400">
-                              <%= if item["color"], do: item["color"] %>
-                              <%= if item["color"] && item["size"], do: " · " %>
-                              <%= if item["size"], do: item["size"] %>
+                              {if item["color"], do: item["color"]}
+                              {if item["color"] && item["size"], do: " · "}
+                              {if item["size"], do: item["size"]}
                             </p>
                           </div>
                           <button
@@ -398,7 +468,12 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                             class="flex-shrink-0 rounded-lg p-1 text-gray-300 transition hover:bg-red-50 hover:text-red-500"
                           >
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
                             </svg>
                           </button>
                         </div>
@@ -410,14 +485,20 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                               phx-value-key={item["key"]}
                               phx-value-quantity={max(1, (item["quantity"] || 1) - 1)}
                               class="flex h-5 w-5 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-black"
-                            >−</button>
-                            <span class="w-5 text-center text-sm font-medium text-gray-800">{item["quantity"] || 1}</span>
+                            >
+                              −
+                            </button>
+                            <span class="w-5 text-center text-sm font-medium text-gray-800">
+                              {item["quantity"] || 1}
+                            </span>
                             <button
                               phx-click="update_quantity"
                               phx-value-key={item["key"]}
                               phx-value-quantity={(item["quantity"] || 1) + 1}
                               class="flex h-5 w-5 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-black"
-                            >+</button>
+                            >
+                              +
+                            </button>
                           </div>
                           <span class="text-sm font-semibold text-gray-900">
                             KES {fmt((item["price"] || 0) * (item["quantity"] || 1))}
@@ -433,8 +514,14 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                 <div class="border-t border-gray-100 px-6 py-4 space-y-1.5">
                   <%= if @applied_promo do %>
                     <div class="flex justify-between text-sm text-green-600">
-                      <span>Discount ({@applied_promo.discount_percent}% · <span class="font-mono">{@applied_promo.code}</span>)</span>
-                      <span class="font-semibold">-KES {fmt(Promotions.calc_discount(@applied_promo, calc_subtotal(@cart_items)))}</span>
+                      <span>
+                        Discount ({@applied_promo.discount_percent}% · <span class="font-mono">{@applied_promo.code}</span>)
+                      </span>
+                      <span class="font-semibold">
+                        -KES {fmt(
+                          Promotions.calc_discount(@applied_promo, calc_subtotal(@cart_items))
+                        )}
+                      </span>
                     </div>
                   <% end %>
                   <div class="flex justify-between text-sm text-gray-500">
@@ -443,17 +530,20 @@ defmodule DansunautoWeb.CheckoutLive.Index do
                   </div>
                   <div class="flex justify-between border-t border-gray-100 pt-2 text-base font-bold text-gray-900">
                     <span>Total</span>
-                    <span class="text-[#C8001F]">KES {fmt(calc_total(@cart_items, @applied_promo))}</span>
+                    <span class="text-[#C8001F]">
+                      KES {fmt(calc_total(@cart_items, @applied_promo))}
+                    </span>
                   </div>
                 </div>
               <% end %>
             </div>
           </div>
-
         </div>
       </div>
 
-      <.footer />
+      <AutoComponents.footer />
+      <AutoComponents.back_to_top />
+      <AutoComponents.cart_drawer />
     </div>
     """
   end

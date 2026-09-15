@@ -32,50 +32,48 @@ IO.puts("🗑️   Cleared existing data.")
 
 # ─── Collections (spare-part categories) ─────────────────────────────────────
 
-unsplash = fn id, w ->
-  "https://images.unsplash.com/photo-#{id}?w=#{w}&q=80&auto=format&fit=crop"
-end
+part_image = fn slug -> "/images/auto-parts/#{slug}.webp" end
 
 collections = [
   %{
     title: "Brakes",
     slug: "brakes",
-    image: unsplash.("1486262715619-67b85e0b08d3", 900),
+    image: part_image.("front-brake-discs-pair"),
     position: 1,
     is_active: true
   },
   %{
     title: "Filters & Service Parts",
     slug: "filters-and-service-parts",
-    image: unsplash.("1517524008697-84bbe3c3fd98", 900),
+    image: part_image.("oil-filter"),
     position: 2,
     is_active: true
   },
   %{
     title: "Engine Components",
     slug: "engine-components",
-    image: unsplash.("1492144534655-ae79c964c9d7", 900),
+    image: part_image.("water-pump"),
     position: 3,
     is_active: true
   },
   %{
     title: "Suspension & Steering",
     slug: "suspension-and-steering",
-    image: unsplash.("1530046339160-ce3e530c7d2f", 900),
+    image: part_image.("front-shock-absorbers-pair"),
     position: 4,
     is_active: true
   },
   %{
     title: "Electrical & Batteries",
     slug: "electrical-and-batteries",
-    image: unsplash.("1558618666-fcd25c85cd64", 900),
+    image: part_image.("car-battery-12v-60ah"),
     position: 5,
     is_active: true
   },
   %{
     title: "Belts & Ignition",
     slug: "belts-and-ignition",
-    image: unsplash.("1552519507-da3b142c6e3d", 900),
+    image: part_image.("timing-belt-kit"),
     position: 6,
     is_active: true
   }
@@ -98,7 +96,8 @@ end
 # ─── Products (spare parts) ──────────────────────────────────────────────────
 #
 # `fitments` becomes one variant row per vehicle (stored in `size`);
-# `grades` becomes the part grade (stored in `color_name` / `color_hex`).
+# `grades` becomes the part grade (stored in `color_name`, with the swatch
+# hex looked up in `grade_colors`).
 
 fitment_note = """
 Confirm fitment before ordering. Send us your vehicle make, model, year and \
@@ -121,6 +120,24 @@ common = [
   "Mitsubishi Lancer/Outlander"
 ]
 
+# Grade swatches shown on the variant picker. Distinct hues rather than two
+# near-identical greys, so the grade is readable at swatch size.
+grade_colors = %{
+  "OEM" => "#1F3A5F",
+  "Aftermarket" => "#8A8F98"
+}
+
+# Badges are derived from the flags a part already carries, so the label and
+# its colour can never drift apart. Hex (not "red"): `badge_color` is written
+# straight into `background-color` and edited by a colour input in the admin,
+# which only accepts #rrggbb.
+badge_for = fn
+  %{is_bestseller: true} -> {"Bestseller", "#BB0A07"}
+  %{is_new_arrival: true} -> {"New Arrival", "#0F7B6C"}
+  %{is_featured: true} -> {"Featured", "#1D4ED8"}
+  _ -> {nil, nil}
+end
+
 products = [
   # ── Brakes ────────────────────────────────────────────────────────────────
   %{
@@ -129,9 +146,7 @@ products = [
     description:
       "Front brake pad set for common Japanese saloons and hatchbacks. Supplied as a full axle set of four pads. Fitting available at the garage.",
     base_price: 3_500,
-    image: unsplash.("1486262715619-67b85e0b08d3", 900),
-    badge_label: "Popular",
-    badge_color: "red",
+    image: part_image.("front-brake-pads-set"),
     is_featured: true,
     is_bestseller: true,
     is_new_arrival: false,
@@ -139,7 +154,7 @@ products = [
     status: "active",
     collection_slug: "brakes",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Rear Brake Pads Set",
@@ -147,9 +162,7 @@ products = [
     description:
       "Rear brake pad set, supplied as a full axle set. Fitted and bedded in at the garage on request.",
     base_price: 3_200,
-    image: unsplash.("1486262715619-67b85e0b08d3", 901),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("rear-brake-pads-set"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -157,7 +170,7 @@ products = [
     status: "active",
     collection_slug: "brakes",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Front Brake Discs (Pair)",
@@ -165,9 +178,7 @@ products = [
     description:
       "Pair of front brake discs. We measure your existing discs for thickness and run-out before recommending replacement.",
     base_price: 8_500,
-    image: unsplash.("1486262715619-67b85e0b08d3", 902),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("front-brake-discs-pair"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -175,7 +186,7 @@ products = [
     status: "active",
     collection_slug: "brakes",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Brake Fluid DOT 4 (1L)",
@@ -183,9 +194,7 @@ products = [
     description:
       "DOT 4 brake fluid, 1 litre. Recommended change interval is every two years or as specified by your vehicle handbook.",
     base_price: 950,
-    image: unsplash.("1517524008697-84bbe3c3fd98", 903),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("brake-fluid-dot-4-1l"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -193,7 +202,7 @@ products = [
     status: "active",
     collection_slug: "brakes",
     fitments: ["Universal"],
-    grades: [{"OEM", "#2A2A2A"}]
+    grades: ["OEM"]
   },
 
   # ── Filters & Service Parts ───────────────────────────────────────────────
@@ -202,9 +211,7 @@ products = [
     slug: "oil-filter",
     description: "Engine oil filter. Replaced at every oil change as part of a routine service.",
     base_price: 800,
-    image: unsplash.("1517524008697-84bbe3c3fd98", 904),
-    badge_label: "Popular",
-    badge_color: "red",
+    image: part_image.("oil-filter"),
     is_featured: true,
     is_bestseller: true,
     is_new_arrival: false,
@@ -212,7 +219,7 @@ products = [
     status: "active",
     collection_slug: "filters-and-service-parts",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Air Filter",
@@ -220,9 +227,7 @@ products = [
     description:
       "Engine air filter. A clogged filter costs you fuel — we check it at every service and replace as needed.",
     base_price: 1_200,
-    image: unsplash.("1517524008697-84bbe3c3fd98", 905),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("air-filter"),
     is_featured: true,
     is_bestseller: false,
     is_new_arrival: false,
@@ -230,7 +235,7 @@ products = [
     status: "active",
     collection_slug: "filters-and-service-parts",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Fuel Filter",
@@ -238,9 +243,7 @@ products = [
     description:
       "In-line or in-tank fuel filter depending on model. Confirm your vehicle details so we supply the correct type.",
     base_price: 1_800,
-    image: unsplash.("1517524008697-84bbe3c3fd98", 906),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("fuel-filter"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -248,7 +251,7 @@ products = [
     status: "active",
     collection_slug: "filters-and-service-parts",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Cabin / Pollen Filter",
@@ -256,9 +259,7 @@ products = [
     description:
       "Cabin air filter. Worth replacing if your vents smell musty or airflow has dropped.",
     base_price: 1_500,
-    image: unsplash.("1517524008697-84bbe3c3fd98", 907),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("cabin-pollen-filter"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: true,
@@ -266,7 +267,7 @@ products = [
     status: "active",
     collection_slug: "filters-and-service-parts",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Engine Oil 5W-30 (4L)",
@@ -274,9 +275,7 @@ products = [
     description:
       "Semi-synthetic 5W-30 engine oil, 4 litre pack. Fitted with a new oil filter as part of a routine service.",
     base_price: 4_500,
-    image: unsplash.("1517524008697-84bbe3c3fd98", 908),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("engine-oil-5w30-4l"),
     is_featured: true,
     is_bestseller: true,
     is_new_arrival: false,
@@ -284,7 +283,7 @@ products = [
     status: "active",
     collection_slug: "filters-and-service-parts",
     fitments: ["Universal"],
-    grades: [{"OEM", "#2A2A2A"}]
+    grades: ["OEM"]
   },
 
   # ── Engine Components ─────────────────────────────────────────────────────
@@ -294,9 +293,7 @@ products = [
     description:
       "Cooling system water pump. Often replaced together with the timing belt — ask us to quote both together.",
     base_price: 6_500,
-    image: unsplash.("1492144534655-ae79c964c9d7", 909),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("water-pump"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -304,7 +301,7 @@ products = [
     status: "active",
     collection_slug: "engine-components",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Radiator",
@@ -312,9 +309,7 @@ products = [
     description:
       "Replacement radiator. We pressure-test the cooling system first so you are not replacing a part that is not the fault.",
     base_price: 12_000,
-    image: unsplash.("1492144534655-ae79c964c9d7", 910),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("radiator"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -322,7 +317,7 @@ products = [
     status: "active",
     collection_slug: "engine-components",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Thermostat",
@@ -330,9 +325,7 @@ products = [
     description:
       "Cooling system thermostat. A common cause of overheating and of an engine that never reaches temperature.",
     base_price: 2_200,
-    image: unsplash.("1492144534655-ae79c964c9d7", 911),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("thermostat"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -340,7 +333,7 @@ products = [
     status: "active",
     collection_slug: "engine-components",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Clutch Kit",
@@ -348,9 +341,7 @@ products = [
     description:
       "Clutch kit — plate, cover and release bearing. Fitting available at the garage; we will quote parts and labour separately.",
     base_price: 18_000,
-    image: unsplash.("1492144534655-ae79c964c9d7", 912),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("clutch-kit"),
     is_featured: true,
     is_bestseller: false,
     is_new_arrival: false,
@@ -358,7 +349,7 @@ products = [
     status: "active",
     collection_slug: "engine-components",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
 
   # ── Suspension & Steering ─────────────────────────────────────────────────
@@ -368,9 +359,7 @@ products = [
     description:
       "Pair of front shock absorbers. Always replaced in pairs so the car sits and handles evenly.",
     base_price: 11_000,
-    image: unsplash.("1530046339160-ce3e530c7d2f", 913),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("front-shock-absorbers-pair"),
     is_featured: true,
     is_bestseller: false,
     is_new_arrival: false,
@@ -378,7 +367,7 @@ products = [
     status: "active",
     collection_slug: "suspension-and-steering",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Lower Control Arm Bushes",
@@ -386,9 +375,7 @@ products = [
     description:
       "Lower control arm bush set. Worn bushes cause knocking over bumps and uneven tyre wear.",
     base_price: 2_800,
-    image: unsplash.("1530046339160-ce3e530c7d2f", 914),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("lower-control-arm-bushes"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -396,7 +383,7 @@ products = [
     status: "active",
     collection_slug: "suspension-and-steering",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Ball Joint",
@@ -404,9 +391,7 @@ products = [
     description:
       "Suspension ball joint. We check play on both sides during inspection and advise whether one or both need replacing.",
     base_price: 2_500,
-    image: unsplash.("1530046339160-ce3e530c7d2f", 915),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("ball-joint"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -414,16 +399,14 @@ products = [
     status: "active",
     collection_slug: "suspension-and-steering",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Tie Rod End",
     slug: "tie-rod-end",
     description: "Steering tie rod end. Wheel alignment is recommended after fitting.",
     base_price: 2_000,
-    image: unsplash.("1530046339160-ce3e530c7d2f", 916),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("tie-rod-end"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -431,7 +414,7 @@ products = [
     status: "active",
     collection_slug: "suspension-and-steering",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
 
   # ── Electrical & Batteries ────────────────────────────────────────────────
@@ -441,9 +424,7 @@ products = [
     description:
       "12V 60Ah maintenance-free battery for most saloons and small SUVs. We test your charging system before fitting a new battery.",
     base_price: 9_500,
-    image: unsplash.("1558618666-fcd25c85cd64", 917),
-    badge_label: "Popular",
-    badge_color: "red",
+    image: part_image.("car-battery-12v-60ah"),
     is_featured: true,
     is_bestseller: true,
     is_new_arrival: false,
@@ -451,7 +432,7 @@ products = [
     status: "active",
     collection_slug: "electrical-and-batteries",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Alternator",
@@ -459,9 +440,7 @@ products = [
     description:
       "Replacement alternator. A flat battery is often an alternator fault — we diagnose before recommending either.",
     base_price: 16_000,
-    image: unsplash.("1558618666-fcd25c85cd64", 918),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("alternator"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -469,7 +448,7 @@ products = [
     status: "active",
     collection_slug: "electrical-and-batteries",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Starter Motor",
@@ -477,9 +456,7 @@ products = [
     description:
       "Replacement starter motor. Bring the vehicle in and we will confirm whether it is the starter, the battery or the wiring.",
     base_price: 14_000,
-    image: unsplash.("1558618666-fcd25c85cd64", 919),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("starter-motor"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: false,
@@ -487,7 +464,7 @@ products = [
     status: "active",
     collection_slug: "electrical-and-batteries",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
 
   # ── Belts & Ignition ──────────────────────────────────────────────────────
@@ -497,9 +474,7 @@ products = [
     description:
       "Set of four spark plugs. Worth replacing if you have rough idling, misfires or poor fuel consumption.",
     base_price: 2_400,
-    image: unsplash.("1552519507-da3b142c6e3d", 920),
-    badge_label: "Popular",
-    badge_color: "red",
+    image: part_image.("spark-plugs-set-of-4"),
     is_featured: true,
     is_bestseller: true,
     is_new_arrival: false,
@@ -507,7 +482,7 @@ products = [
     status: "active",
     collection_slug: "belts-and-ignition",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Timing Belt Kit",
@@ -515,9 +490,7 @@ products = [
     description:
       "Timing belt with tensioner and idler pulleys. Replace at the manufacturer's interval — a snapped belt can destroy the engine.",
     base_price: 9_000,
-    image: unsplash.("1552519507-da3b142c6e3d", 921),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("timing-belt-kit"),
     is_featured: true,
     is_bestseller: false,
     is_new_arrival: false,
@@ -525,7 +498,7 @@ products = [
     status: "active",
     collection_slug: "belts-and-ignition",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Alternator / Fan Belt",
@@ -533,9 +506,7 @@ products = [
     description:
       "Auxiliary drive belt. A squeal on start-up usually means the belt or its tensioner needs attention.",
     base_price: 1_600,
-    image: unsplash.("1552519507-da3b142c6e3d", 922),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("alternator-fan-belt"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: true,
@@ -543,7 +514,7 @@ products = [
     status: "active",
     collection_slug: "belts-and-ignition",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   },
   %{
     name: "Ignition Coil",
@@ -551,9 +522,7 @@ products = [
     description:
       "Ignition coil pack. A diagnostic scan will tell us which cylinder is misfiring before you buy a replacement.",
     base_price: 4_200,
-    image: unsplash.("1552519507-da3b142c6e3d", 923),
-    badge_label: nil,
-    badge_color: nil,
+    image: part_image.("ignition-coil"),
     is_featured: false,
     is_bestseller: false,
     is_new_arrival: true,
@@ -561,7 +530,7 @@ products = [
     status: "active",
     collection_slug: "belts-and-ignition",
     fitments: common,
-    grades: [{"OEM", "#2A2A2A"}, {"Aftermarket", "#B9BBBC"}]
+    grades: ["OEM", "Aftermarket"]
   }
 ]
 
@@ -570,9 +539,12 @@ inserted_products =
     {collection_slug, attrs} = Map.pop(attrs, :collection_slug)
     {fitments, attrs} = Map.pop(attrs, :fitments)
     {grades, attrs} = Map.pop(attrs, :grades)
+    {badge_label, badge_color} = badge_for.(attrs)
 
     attrs =
       attrs
+      |> Map.put(:badge_label, badge_label)
+      |> Map.put(:badge_color, badge_color)
       |> Map.put(:collection_id, get_collection.(collection_slug).id)
       |> Map.put(:size_advice, fitment_note)
       |> Map.put(:shipping_returns, availability_note)
@@ -583,14 +555,14 @@ inserted_products =
       |> Repo.insert()
 
     # One variant per grade × fitment.
-    Enum.each(grades, fn {grade_name, grade_hex} ->
+    Enum.each(grades, fn grade_name ->
       Enum.each(fitments, fn fitment ->
         {:ok, _} =
           %ProductVariant{}
           |> ProductVariant.changeset(%{
             product_id: product.id,
             color_name: grade_name,
-            color_hex: grade_hex,
+            color_hex: Map.fetch!(grade_colors, grade_name),
             size: fitment,
             stock_quantity: "5"
           })
@@ -620,7 +592,7 @@ IO.puts(
     title: "Minor Service Kit",
     description:
       "Everything a routine minor service needs, in one go — engine oil, oil filter, air filter and a set of spark plugs. Bring the car to our Umoja I workshop and we will fit it for you, or take the kit away and fit it yourself.",
-    image: unsplash.("1517524008697-84bbe3c3fd98", 1200),
+    image: part_image.("engine-oil-5w30-4l"),
     is_active: true
   })
   |> Repo.insert()

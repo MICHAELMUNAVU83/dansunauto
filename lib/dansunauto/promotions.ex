@@ -83,11 +83,14 @@ defmodule Dansunauto.Promotions do
   """
   def record_usage(code) when is_binary(code) and code != "" do
     case get_promo_code_by_code(code) do
-      nil -> :ok
+      nil ->
+        :ok
+
       promo ->
         promo
         |> PromoCode.increment_usage_changeset()
         |> Repo.update()
+
         :ok
     end
   end
@@ -111,7 +114,11 @@ defmodule Dansunauto.Promotions do
   """
   def revenue_for_code(code) when is_binary(code) do
     Dansunauto.Orders.Order
-    |> where([o], o.promo_code == ^String.upcase(String.trim(code)) and o.status in ["paid", "processing", "shipped", "delivered"])
+    |> where(
+      [o],
+      o.promo_code == ^String.upcase(String.trim(code)) and
+        o.status in ["paid", "processing", "shipped", "delivered"]
+    )
     |> Repo.aggregate(:sum, :total_amount)
     |> then(&(&1 || 0))
   end

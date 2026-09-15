@@ -235,7 +235,7 @@ defmodule DansunautoWeb.ProductLive.Show do
     <div class="mb-8 flex items-center justify-between">
       <div class="flex items-center gap-4">
         <.link navigate={~p"/admin/products"}>
-          <button class="flex h-10 w-10 items-center justify-center rounded-xl border border-gray-200 text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
+          <button class="flex h-10 w-10 items-center justify-center rounded-xl border border-line text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
             <svg
               class="h-5 w-5"
               viewBox="0 0 24 24"
@@ -249,7 +249,7 @@ defmodule DansunautoWeb.ProductLive.Show do
         </.link>
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Catalogue</p>
-          <h1 class="mt-0.5 text-3xl font-bold text-gray-900">{@product.name}</h1>
+          <h1 class="mt-0.5 text-3xl font-bold text-ink">{@product.name}</h1>
         </div>
       </div>
 
@@ -265,7 +265,7 @@ defmodule DansunautoWeb.ProductLive.Show do
     </div>
 
     <%!-- Top summary card --%>
-    <div class="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+    <div class="mb-8 overflow-hidden rounded-2xl border border-line bg-white">
       <div class="flex gap-8 p-8">
         <%!-- Hero image --%>
         <div class="flex-shrink-0">
@@ -273,11 +273,11 @@ defmodule DansunautoWeb.ProductLive.Show do
             <img
               src={@product.image}
               alt={@product.name}
-              class="h-52 w-52 rounded-2xl border border-gray-200 object-cover object-top shadow-sm"
+              class="h-52 w-52 rounded-2xl border border-line object-cover object-top shadow-sm"
             />
           <% else %>
-            <div class="flex h-52 w-52 items-center justify-center rounded-2xl border border-gray-200 bg-gray-50 text-6xl">
-              👗
+            <div class="flex h-52 w-52 items-center justify-center rounded-2xl border border-line bg-gray-50 text-6xl">
+              🔧
             </div>
           <% end %>
         </div>
@@ -287,7 +287,7 @@ defmodule DansunautoWeb.ProductLive.Show do
           <div class="flex flex-wrap items-start justify-between gap-3">
             <div>
               <div class="flex items-center gap-3">
-                <h2 class="text-2xl font-bold text-gray-900">{@product.name}</h2>
+                <h2 class="text-2xl font-bold text-ink">{@product.name}</h2>
                 <%= if @product.badge_label not in [nil, ""] do %>
                   <span
                     class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
@@ -321,7 +321,7 @@ defmodule DansunautoWeb.ProductLive.Show do
           <p class="mt-4 text-base text-gray-600">{@product.description}</p>
 
           <div class="mt-6 flex flex-wrap items-center gap-5 text-base">
-            <span class="text-xl font-bold text-gray-900">Ksh {@product.base_price}</span>
+            <span class="text-xl font-bold text-ink">Ksh {@product.base_price}</span>
 
             <%= if @collection do %>
               <span class="flex items-center gap-1.5 text-gray-500">
@@ -380,8 +380,8 @@ defmodule DansunautoWeb.ProductLive.Show do
     </div>
 
     <%!-- Images panel (full width) --%>
-    <div class="mb-6 overflow-hidden rounded-2xl border border-gray-200 bg-white">
-      <div class="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+    <div class="mb-6 overflow-hidden rounded-2xl border border-line bg-white">
+      <div class="flex items-center justify-between border-b border-line px-6 py-5">
         <p class="text-base font-semibold text-gray-700">
           Images
           <span class="ml-2 rounded-full bg-gray-100 px-2.5 py-0.5 text-sm font-medium text-gray-500">
@@ -399,14 +399,14 @@ defmodule DansunautoWeb.ProductLive.Show do
                 <img
                   src={image.image}
                   alt="Product image"
-                  class="h-full w-full rounded-xl border border-gray-200 object-cover object-top shadow-sm"
+                  class="h-full w-full rounded-xl border border-line object-cover object-top shadow-sm"
                 />
                 <button
                   type="button"
                   phx-click="delete_image"
                   phx-value-id={image.id}
                   data-confirm="Remove this image?"
-                  class="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-400 opacity-0 shadow-sm transition group-hover:opacity-100 hover:border-red-200 hover:bg-red-50 hover:text-red-500"
+                  class="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full border border-line bg-white text-gray-400 opacity-0 shadow-sm transition group-hover:opacity-100 hover:border-red-200 hover:bg-red-50 hover:text-red-500"
                 >
                   <svg
                     class="h-3.5 w-3.5"
@@ -429,7 +429,7 @@ defmodule DansunautoWeb.ProductLive.Show do
               <div class="group relative aspect-square">
                 <.live_img_preview
                   entry={entry}
-                  class="h-full w-full rounded-xl border border-gray-200 object-cover object-top shadow-sm"
+                  class="h-full w-full rounded-xl border border-line object-cover object-top shadow-sm"
                 />
                 <%= if entry.progress > 0 and not entry.done? do %>
                   <div class="absolute inset-x-0 bottom-0 rounded-b-xl bg-black/40 px-3 py-2">
@@ -445,7 +445,7 @@ defmodule DansunautoWeb.ProductLive.Show do
                   type="button"
                   phx-click="cancel_image_upload"
                   phx-value-ref={entry.ref}
-                  class="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-400 shadow-sm transition hover:border-red-200 hover:bg-red-50 hover:text-red-500"
+                  class="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full border border-line bg-white text-gray-400 shadow-sm transition hover:border-red-200 hover:bg-red-50 hover:text-red-500"
                 >
                   <svg
                     class="h-3.5 w-3.5"
@@ -514,8 +514,8 @@ defmodule DansunautoWeb.ProductLive.Show do
     </div>
 
     <%!-- Variants panel (full width) --%>
-    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white">
-      <div class="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+    <div class="overflow-hidden rounded-2xl border border-line bg-white">
+      <div class="flex items-center justify-between border-b border-line px-6 py-5">
         <p class="text-base font-semibold text-gray-700">
           Variants
           <span class="ml-2 rounded-full bg-gray-100 px-2.5 py-0.5 text-sm font-medium text-gray-500">
@@ -529,7 +529,7 @@ defmodule DansunautoWeb.ProductLive.Show do
             "flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-semibold transition",
             if(@show_variant_form,
               do: "border-gray-300 bg-gray-100 text-gray-700",
-              else: "border-gray-200 text-gray-600 hover:border-gray-300 hover:text-gray-900"
+              else: "border-line text-gray-600 hover:border-gray-300 hover:text-ink"
             )
           ]}
         >
@@ -561,7 +561,7 @@ defmodule DansunautoWeb.ProductLive.Show do
 
       <%!-- Inline add-variant form --%>
       <%= if @show_variant_form do %>
-        <div class="border-b border-gray-100 bg-gray-50 px-6 py-6">
+        <div class="border-b border-line bg-gray-50 px-6 py-6">
           <p class="mb-4 text-xs font-semibold uppercase tracking-widest text-gray-400">
             New Variant
           </p>
@@ -581,7 +581,7 @@ defmodule DansunautoWeb.ProductLive.Show do
                   value={@variant_form[:color_name].value}
                   id={@variant_form[:color_name].id}
                   placeholder="e.g. Midnight Black"
-                  class="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
+                  class="w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
                 />
                 <.error :for={msg <- Enum.map(@variant_form[:color_name].errors, &translate_error/1)}>
                   {msg}
@@ -594,7 +594,7 @@ defmodule DansunautoWeb.ProductLive.Show do
                 <div
                   id="variant-color-picker-add"
                   phx-hook="SyncColorPicker"
-                  class="flex items-center overflow-hidden rounded-xl border border-gray-200 bg-white transition focus-within:border-gray-400"
+                  class="flex items-center overflow-hidden rounded-xl border border-line bg-white transition focus-within:border-gray-400"
                 >
                   <input
                     type="color"
@@ -624,7 +624,7 @@ defmodule DansunautoWeb.ProductLive.Show do
                   value={@variant_form[:size].value}
                   id={@variant_form[:size].id}
                   placeholder="e.g. S, M, L, XL"
-                  class="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
+                  class="w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
                 />
                 <.error :for={msg <- Enum.map(@variant_form[:size].errors, &translate_error/1)}>
                   {msg}
@@ -640,7 +640,7 @@ defmodule DansunautoWeb.ProductLive.Show do
                   value={@variant_form[:stock_quantity].value}
                   id={@variant_form[:stock_quantity].id}
                   placeholder="e.g. 50"
-                  class="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
+                  class="w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
                 />
                 <.error :for={
                   msg <- Enum.map(@variant_form[:stock_quantity].errors, &translate_error/1)
@@ -665,7 +665,7 @@ defmodule DansunautoWeb.ProductLive.Show do
 
       <%!-- Inline edit-variant form --%>
       <%= if @editing_variant_id do %>
-        <div class="border-b border-gray-100 bg-amber-50 px-6 py-6">
+        <div class="border-b border-line bg-amber-50 px-6 py-6">
           <div class="mb-4 flex items-center justify-between">
             <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">
               Edit Variant
@@ -673,7 +673,7 @@ defmodule DansunautoWeb.ProductLive.Show do
             <button
               type="button"
               phx-click="cancel_edit_variant"
-              class="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-500 transition hover:border-gray-300 hover:text-gray-700"
+              class="flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-semibold text-gray-500 transition hover:border-gray-300 hover:text-gray-700"
             >
               <svg
                 class="h-3.5 w-3.5"
@@ -703,7 +703,7 @@ defmodule DansunautoWeb.ProductLive.Show do
                   value={@edit_variant_form[:color_name].value}
                   id={@edit_variant_form[:color_name].id}
                   placeholder="e.g. Midnight Black"
-                  class="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
+                  class="w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
                 />
                 <.error :for={
                   msg <- Enum.map(@edit_variant_form[:color_name].errors, &translate_error/1)
@@ -718,7 +718,7 @@ defmodule DansunautoWeb.ProductLive.Show do
                 <div
                   id="variant-color-picker-edit"
                   phx-hook="SyncColorPicker"
-                  class="flex items-center overflow-hidden rounded-xl border border-gray-200 bg-white transition focus-within:border-gray-400"
+                  class="flex items-center overflow-hidden rounded-xl border border-line bg-white transition focus-within:border-gray-400"
                 >
                   <input
                     type="color"
@@ -750,11 +750,9 @@ defmodule DansunautoWeb.ProductLive.Show do
                   value={@edit_variant_form[:size].value}
                   id={@edit_variant_form[:size].id}
                   placeholder="e.g. S, M, L, XL"
-                  class="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
+                  class="w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
                 />
-                <.error :for={
-                  msg <- Enum.map(@edit_variant_form[:size].errors, &translate_error/1)
-                }>
+                <.error :for={msg <- Enum.map(@edit_variant_form[:size].errors, &translate_error/1)}>
                   {msg}
                 </.error>
               </div>
@@ -768,7 +766,7 @@ defmodule DansunautoWeb.ProductLive.Show do
                   value={@edit_variant_form[:stock_quantity].value}
                   id={@edit_variant_form[:stock_quantity].id}
                   placeholder="e.g. 50"
-                  class="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
+                  class="w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
                 />
                 <.error :for={
                   msg <- Enum.map(@edit_variant_form[:stock_quantity].errors, &translate_error/1)
@@ -816,7 +814,7 @@ defmodule DansunautoWeb.ProductLive.Show do
         <% else %>
           <table class="w-full">
             <thead>
-              <tr class="border-b border-gray-100 bg-gray-50">
+              <tr class="border-b border-line bg-gray-50">
                 <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
                   Color
                 </th>
@@ -834,14 +832,14 @@ defmodule DansunautoWeb.ProductLive.Show do
               <tr
                 :for={variant <- @variants}
                 class={[
-                  "group border-b border-gray-100 last:border-0 hover:bg-gray-50",
+                  "group border-b border-line last:border-0 hover:bg-gray-50",
                   if(@editing_variant_id == variant.id, do: "bg-amber-50 hover:bg-amber-50")
                 ]}
               >
                 <td class="px-6 py-4">
                   <div class="flex items-center gap-3">
                     <span
-                      class="h-6 w-6 flex-shrink-0 rounded-full border border-gray-200 shadow-sm"
+                      class="h-6 w-6 flex-shrink-0 rounded-full border border-line shadow-sm"
                       style={"background-color: #{variant.color_hex}"}
                     />
                     <span class="text-sm font-medium text-gray-800">{variant.color_name}</span>
@@ -849,7 +847,7 @@ defmodule DansunautoWeb.ProductLive.Show do
                   </div>
                 </td>
                 <td class="px-6 py-4">
-                  <span class="rounded-lg border border-gray-200 bg-gray-50 px-3 py-1 text-sm font-semibold text-gray-700">
+                  <span class="rounded-lg border border-line bg-gray-50 px-3 py-1 text-sm font-semibold text-gray-700">
                     {variant.size}
                   </span>
                 </td>
@@ -868,7 +866,7 @@ defmodule DansunautoWeb.ProductLive.Show do
                         if(@editing_variant_id == variant.id,
                           do: "border-amber-300 bg-amber-100 text-amber-600",
                           else:
-                            "border-gray-200 opacity-0 group-hover:opacity-100 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                            "border-line opacity-0 group-hover:opacity-100 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
                         )
                       ]}
                     >
@@ -887,7 +885,7 @@ defmodule DansunautoWeb.ProductLive.Show do
                       phx-click="delete_variant"
                       phx-value-id={variant.id}
                       data-confirm="Delete this variant?"
-                      class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-400 opacity-0 transition group-hover:opacity-100 hover:border-red-200 hover:bg-red-50 hover:text-red-500"
+                      class="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-gray-400 opacity-0 transition group-hover:opacity-100 hover:border-red-200 hover:bg-red-50 hover:text-red-500"
                     >
                       <svg
                         class="h-3.5 w-3.5"

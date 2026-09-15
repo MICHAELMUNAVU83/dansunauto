@@ -32,7 +32,12 @@ defmodule Dansunauto.Chat do
     do: Phoenix.PubSub.broadcast(Dansunauto.PubSub, topic_admin(), {event, payload})
 
   defp broadcast_admin_session(session_id, event, payload),
-    do: Phoenix.PubSub.broadcast(Dansunauto.PubSub, topic_admin_session(session_id), {event, payload})
+    do:
+      Phoenix.PubSub.broadcast(
+        Dansunauto.PubSub,
+        topic_admin_session(session_id),
+        {event, payload}
+      )
 
   # ── Sessions ──────────────────────────────────────────────────────────────
 

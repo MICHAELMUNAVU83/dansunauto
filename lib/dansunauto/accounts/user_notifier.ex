@@ -22,7 +22,7 @@ defmodule Dansunauto.Accounts.UserNotifier do
             </h2>
             <p style="margin:0;font-size:15px;color:#555;line-height:1.7;">
               Hi <strong style="color:#111;">#{name}</strong>,
-              we received a request to reset your password for your Dansunauto's Closet admin account.
+              we received a request to reset your password for your Dansun Auto Care admin account.
             </p>
           </td>
         </tr>
@@ -60,11 +60,11 @@ defmodule Dansunauto.Accounts.UserNotifier do
           </td>
         </tr>
         """,
-        preview: "Reset your Dansunauto's Closet password — link valid for 24 hours.",
+        preview: "Reset your Dansun Auto Care password — link valid for 24 hours.",
         header_label: "Account Security"
       )
 
-    Gmail.send_email(user.email, "Reset your password — Dansunauto's Closet", body)
+    Gmail.send_email(user.email, "Reset your password — Dansun Auto Care", body)
     {:ok, :sent}
   end
 
@@ -93,7 +93,7 @@ defmodule Dansunauto.Accounts.UserNotifier do
             </h2>
             <p style="margin:0;font-size:15px;color:#555;line-height:1.7;">
               Hi <strong style="color:#111;">#{name}</strong>, you've been added as
-              <strong style="color:#{@brand_color};">#{role_label}</strong> at Dansunauto's Closet.
+              <strong style="color:#{@brand_color};">#{role_label}</strong> at Dansun Auto Care.
               Here are your login credentials:
             </p>
           </td>
@@ -139,11 +139,11 @@ defmodule Dansunauto.Accounts.UserNotifier do
           </td>
         </tr>
         """,
-        preview: "You've been added to Dansunauto's Closet admin — here are your login details.",
+        preview: "You've been added to Dansun Auto Care admin — here are your login details.",
         header_label: "Team Invitation"
       )
 
-    Gmail.send_email(user.email, "You've been added to Dansunauto's Closet admin team 🎉", body)
+    Gmail.send_email(user.email, "You've been added to Dansun Auto Care admin team 🎉", body)
     {:ok, :sent}
   end
 
@@ -175,11 +175,11 @@ defmodule Dansunauto.Accounts.UserNotifier do
           </td>
         </tr>
         """,
-        preview: "Confirm your new email address for Dansunauto's Closet.",
+        preview: "Confirm your new email address for Dansun Auto Care.",
         header_label: "Account Settings"
       )
 
-    Gmail.send_email(user.email, "Confirm your new email — Dansunauto's Closet", body)
+    Gmail.send_email(user.email, "Confirm your new email — Dansun Auto Care", body)
     {:ok, :sent}
   end
 

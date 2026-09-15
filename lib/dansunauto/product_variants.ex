@@ -30,7 +30,10 @@ defmodule Dansunauto.ProductVariants do
   def list_variants_for_products([]), do: %{}
 
   def list_variants_for_products(product_ids) do
-    from(pv in ProductVariant, where: pv.product_id in ^product_ids, order_by: [pv.product_id, pv.color_name, pv.size])
+    from(pv in ProductVariant,
+      where: pv.product_id in ^product_ids,
+      order_by: [pv.product_id, pv.color_name, pv.size]
+    )
     |> Repo.all()
     |> Enum.group_by(& &1.product_id)
   end

@@ -54,8 +54,8 @@ defmodule Dansunauto.Shop do
           id: c.id,
           name: c.title,
           slug: c.slug,
-          title: "Our #{c.title} Collection",
-          subtitle: "EXPLORE OUR PRODUCTS",
+          title: c.title,
+          subtitle: "Shop Spare Parts",
           hero_image: c.image || "/images/main.jpeg",
           href: "/collections/#{c.slug}"
         }
@@ -151,10 +151,10 @@ defmodule Dansunauto.Shop do
 
   defp apply_pill_filter(query, _all), do: query
 
-  defp apply_sort(query, "price_asc"),  do: order_by(query, [p], asc: p.base_price)
+  defp apply_sort(query, "price_asc"), do: order_by(query, [p], asc: p.base_price)
   defp apply_sort(query, "price_desc"), do: order_by(query, [p], desc: p.base_price)
-  defp apply_sort(query, "newest"),     do: order_by(query, [p], desc: p.inserted_at)
-  defp apply_sort(query, _),            do: order_by(query, [p], asc: p.position)
+  defp apply_sort(query, "newest"), do: order_by(query, [p], desc: p.inserted_at)
+  defp apply_sort(query, _), do: order_by(query, [p], asc: p.position)
 
   @doc "Returns a small list of products for the popular sidebar block."
   def list_popular_products_for_display(limit \\ 3) do
@@ -191,7 +191,9 @@ defmodule Dansunauto.Shop do
       product ->
         images = ProductImages.list_product_images_for_product(product.id)
         variants = ProductVariants.list_product_variants_for_product(product.id)
-        collection = if product.collection_id, do: Repo.get(Collection, product.collection_id), else: nil
+
+        collection =
+          if product.collection_id, do: Repo.get(Collection, product.collection_id), else: nil
 
         colors =
           variants
@@ -199,7 +201,12 @@ defmodule Dansunauto.Shop do
           |> Enum.uniq_by(& &1.color_name)
           |> Enum.with_index()
           |> Enum.map(fn {v, idx} ->
-            %{id: "c#{idx + 1}", name: v.color_name, hex: v.color_hex || "#000000", selected: idx == 0}
+            %{
+              id: "c#{idx + 1}",
+              name: v.color_name,
+              hex: v.color_hex || "#000000",
+              selected: idx == 0
+            }
           end)
 
         sizes =
@@ -343,7 +350,7 @@ defmodule Dansunauto.Shop do
   """
   def get_sale_banner_data do
     featured =
-      (from(p in Product,
+      from(p in Product,
         where: p.is_featured == true and p.status == "active",
         order_by: p.position
       )
@@ -355,7 +362,7 @@ defmodule Dansunauto.Shop do
 
         products ->
           products
-      end)
+      end
       |> case do
         [] -> nil
         products -> Enum.random(products)
@@ -377,7 +384,12 @@ defmodule Dansunauto.Shop do
           |> Enum.uniq_by(& &1.color_name)
           |> Enum.with_index()
           |> Enum.map(fn {v, idx} ->
-            %{id: "c#{idx + 1}", name: v.color_name, hex: v.color_hex || "#000000", selected: idx == 0}
+            %{
+              id: "c#{idx + 1}",
+              name: v.color_name,
+              hex: v.color_hex || "#000000",
+              selected: idx == 0
+            }
           end)
 
         main_image =
@@ -418,7 +430,7 @@ defmodule Dansunauto.Shop do
 
         slides =
           case fallback_images do
-            [] -> [%{image: "/images/main.jpeg", alt: "Fashion"}]
+            [] -> [%{image: "/images/main.jpeg", alt: "Dansun Auto Care"}]
             imgs -> imgs
           end
 
@@ -541,7 +553,12 @@ defmodule Dansunauto.Shop do
         |> Enum.uniq_by(& &1.color_name)
         |> Enum.with_index()
         |> Enum.map(fn {v, idx} ->
-          %{id: "c#{idx + 1}", name: v.color_name, hex: v.color_hex || "#000000", selected: idx == 0}
+          %{
+            id: "c#{idx + 1}",
+            name: v.color_name,
+            hex: v.color_hex || "#000000",
+            selected: idx == 0
+          }
         end)
 
       {pid, colors}

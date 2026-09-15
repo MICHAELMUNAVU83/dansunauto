@@ -1,4 +1,4 @@
-<div class="flex h-screen overflow-hidden">
+<div class="flex h-screen overflow-hidden bg-[#f9f9f7] font-sans text-body antialiased">
   <.admin_sidebar
     current_path={@current_path}
     current_user={Map.get(assigns, :current_user)}
@@ -17,7 +17,9 @@
       )
     }
   />
-  <main class="flex-1 p-4 overflow-y-auto">
+  <main class="flex-1 overflow-y-auto p-4 sm:p-6">
+    <%!-- The storefront layout renders this too; without it admin flashes are silently dropped. --%>
+    <.flash_group flash={@flash} />
     {@inner_content}
   </main>
 </div>

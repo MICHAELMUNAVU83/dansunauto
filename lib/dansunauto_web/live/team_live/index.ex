@@ -74,7 +74,8 @@ defmodule DansunautoWeb.TeamLive.Index do
   end
 
   def handle_event("cancel_edit", _params, socket) do
-    {:noreply, socket |> assign(:editing_id, nil) |> assign(:edit_form, nil) |> assign(:form_error, nil)}
+    {:noreply,
+     socket |> assign(:editing_id, nil) |> assign(:edit_form, nil) |> assign(:form_error, nil)}
   end
 
   def handle_event("validate_edit", %{"user" => params}, socket) do
@@ -131,21 +132,25 @@ defmodule DansunautoWeb.TeamLive.Index do
   defp role_label("member"), do: "Member"
   defp role_label(_), do: "Member"
 
-  defp role_badge("super_admin"), do: "bg-[#C8001F]/10 text-[#C8001F]"
+  defp role_badge("super_admin"), do: "bg-brand/10 text-brand"
   defp role_badge("admin"), do: "bg-blue-100 text-blue-700"
   defp role_badge(_), do: "bg-gray-100 text-gray-600"
 
   defp initials(nil), do: "?"
+
   defp initials(email) do
     email |> String.split("@") |> List.first() |> String.slice(0, 2) |> String.upcase()
   end
 
   defp avatar_color(id) do
-    colors = ~w[bg-red-400 bg-orange-400 bg-amber-400 bg-green-500 bg-teal-500 bg-blue-500 bg-violet-500 bg-pink-500]
+    colors =
+      ~w[bg-red-400 bg-orange-400 bg-amber-400 bg-green-500 bg-teal-500 bg-blue-500 bg-violet-500 bg-pink-500]
+
     Enum.at(colors, rem(id, length(colors)))
   end
 
   defp format_dt(nil), do: "Never"
+
   defp format_dt(%DateTime{} = dt) do
     Calendar.strftime(dt, "%b %d, %Y · %H:%M")
   end
@@ -157,7 +162,7 @@ defmodule DansunautoWeb.TeamLive.Index do
       <%!-- Header --%>
       <div class="mb-8 flex items-center justify-between">
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">Team Members</h1>
+          <h1 class="text-2xl font-bold text-ink">Team Members</h1>
           <p class="mt-1 text-sm text-gray-500">
             {@users |> length()} members · Admin access only
           </p>
@@ -165,7 +170,7 @@ defmodule DansunautoWeb.TeamLive.Index do
         <button
           type="button"
           phx-click="show_invite"
-          class="flex items-center gap-2 rounded-xl bg-[#C8001F] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--brand-primary-dark)]"
+          class="flex items-center gap-2 rounded-xl bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--brand-primary-dark)]"
         >
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
@@ -176,11 +181,21 @@ defmodule DansunautoWeb.TeamLive.Index do
 
       <%!-- Invite form --%>
       <%= if @show_invite do %>
-        <div class="mb-8 overflow-hidden rounded-3xl border border-[#C8001F]/20 bg-white shadow-sm">
-          <div class="flex items-center justify-between border-b border-gray-100 px-6 py-4">
-            <h2 class="text-sm font-semibold text-gray-900">Add New Team Member</h2>
-            <button type="button" phx-click="hide_invite" class="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 transition">
-              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <div class="mb-8 overflow-hidden rounded-3xl border border-brand/20 bg-white shadow-sm">
+          <div class="flex items-center justify-between border-b border-line px-6 py-4">
+            <h2 class="text-sm font-semibold text-ink">Add New Team Member</h2>
+            <button
+              type="button"
+              phx-click="hide_invite"
+              class="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 transition"
+            >
+              <svg
+                class="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+              >
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -192,7 +207,9 @@ defmodule DansunautoWeb.TeamLive.Index do
             class="grid gap-5 p-6 sm:grid-cols-2 lg:grid-cols-4"
           >
             <%= if @form_error do %>
-              <p class="col-span-full rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">{@form_error}</p>
+              <p class="col-span-full rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+                {@form_error}
+              </p>
             <% end %>
             <div>
               <label class="mb-1.5 block text-sm font-semibold text-gray-700">
@@ -223,7 +240,7 @@ defmodule DansunautoWeb.TeamLive.Index do
             <div class="col-span-full flex items-center gap-3 pt-1">
               <button
                 type="submit"
-                class="rounded-xl bg-[#C8001F] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--brand-primary-dark)]"
+                class="rounded-xl bg-brand px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--brand-primary-dark)]"
               >
                 Add Member
               </button>
@@ -243,14 +260,14 @@ defmodule DansunautoWeb.TeamLive.Index do
       <% end %>
 
       <%!-- Team table --%>
-      <div class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+      <div class="overflow-hidden rounded-3xl border border-line bg-white shadow-sm">
         <%= if @users == [] do %>
           <div class="px-6 py-16 text-center">
             <p class="text-4xl">👥</p>
             <p class="mt-3 text-sm font-medium text-gray-500">No team members yet.</p>
           </div>
         <% else %>
-          <div class="divide-y divide-gray-100">
+          <div class="divide-y divide-line">
             <%= for user <- @users do %>
               <div class="px-6 py-5">
                 <%!-- Normal row --%>
@@ -263,14 +280,16 @@ defmodule DansunautoWeb.TeamLive.Index do
                   <%!-- Info --%>
                   <div class="min-w-0 flex-1">
                     <div class="flex flex-wrap items-center gap-2">
-                      <span class="text-sm font-semibold text-gray-900">
+                      <span class="text-sm font-semibold text-ink">
                         {user.name || user.email}
                       </span>
                       <span class={"rounded-full px-2 py-0.5 text-[11px] font-medium #{role_badge(user.role)}"}>
                         {role_label(user.role)}
                       </span>
                       <%= if user.id == @current_user.id do %>
-                        <span class="rounded-full bg-green-100 px-2 py-0.5 text-[11px] font-medium text-green-700">You</span>
+                        <span class="rounded-full bg-green-100 px-2 py-0.5 text-[11px] font-medium text-green-700">
+                          You
+                        </span>
                       <% end %>
                     </div>
                     <p class="mt-0.5 text-xs text-gray-400">{user.email}</p>
@@ -278,13 +297,17 @@ defmodule DansunautoWeb.TeamLive.Index do
 
                   <%!-- Last signed in --%>
                   <div class="hidden text-right sm:block">
-                    <p class="text-[11px] font-medium text-gray-400 uppercase tracking-wide">Last sign-in</p>
+                    <p class="text-[11px] font-medium text-gray-400 uppercase tracking-wide">
+                      Last sign-in
+                    </p>
                     <p class="mt-0.5 text-xs text-gray-600">{format_dt(user.last_signed_in_at)}</p>
                   </div>
 
                   <%!-- Member since --%>
                   <div class="hidden text-right lg:block">
-                    <p class="text-[11px] font-medium text-gray-400 uppercase tracking-wide">Member since</p>
+                    <p class="text-[11px] font-medium text-gray-400 uppercase tracking-wide">
+                      Member since
+                    </p>
                     <p class="mt-0.5 text-xs text-gray-600">
                       {Calendar.strftime(user.inserted_at, "%b %d, %Y")}
                     </p>
@@ -296,7 +319,7 @@ defmodule DansunautoWeb.TeamLive.Index do
                       type="button"
                       phx-click="edit"
                       phx-value-id={user.id}
-                      class="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-[#C8001F]/40 hover:text-[#C8001F]"
+                      class="rounded-lg border border-line px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-brand/40 hover:text-brand"
                     >
                       Edit
                     </button>
@@ -320,10 +343,12 @@ defmodule DansunautoWeb.TeamLive.Index do
                     for={@edit_form}
                     phx-change="validate_edit"
                     phx-submit="save_edit"
-                    class="mt-4 grid gap-4 rounded-2xl border border-gray-100 bg-gray-50 p-5 sm:grid-cols-3"
+                    class="mt-4 grid gap-4 rounded-2xl border border-line bg-gray-50 p-5 sm:grid-cols-3"
                   >
                     <%= if @form_error do %>
-                      <p class="col-span-full rounded-xl bg-red-50 px-3 py-2 text-sm text-red-600">{@form_error}</p>
+                      <p class="col-span-full rounded-xl bg-red-50 px-3 py-2 text-sm text-red-600">
+                        {@form_error}
+                      </p>
                     <% end %>
                     <div>
                       <label class="mb-1 block text-xs font-semibold text-gray-600">Full Name</label>
@@ -334,13 +359,17 @@ defmodule DansunautoWeb.TeamLive.Index do
                       <.input
                         field={@edit_form[:role]}
                         type="select"
-                        options={[{"Member", "member"}, {"Admin", "admin"}, {"Super Admin", "super_admin"}]}
+                        options={[
+                          {"Member", "member"},
+                          {"Admin", "admin"},
+                          {"Super Admin", "super_admin"}
+                        ]}
                       />
                     </div>
                     <div class="flex items-end gap-2">
                       <button
                         type="submit"
-                        class="rounded-xl bg-[#C8001F] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[var(--brand-primary-dark)]"
+                        class="rounded-xl bg-brand px-4 py-2 text-xs font-semibold text-white transition hover:bg-[var(--brand-primary-dark)]"
                       >
                         Save
                       </button>

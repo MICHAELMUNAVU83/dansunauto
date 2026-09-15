@@ -26,16 +26,16 @@ defmodule DansunautoWeb.AutoComponents do
         <nav aria-label="Secondary">
           <ul class="flex flex-wrap items-center gap-x-5 gap-y-1 text-white/75">
             <li>
-              <a class="transition hover:text-brand" href="#parts">Spare Parts</a>
+              <a class="transition hover:text-brand" href="/#parts">Spare Parts</a>
             </li>
             <li>
-              <a class="transition hover:text-brand" href="#services">Services</a>
+              <a class="transition hover:text-brand" href="/#services">Services</a>
             </li>
             <li>
-              <a class="transition hover:text-brand" href="#contact">Contact</a>
+              <a class="transition hover:text-brand" href="/#contact">Contact</a>
             </li>
             <li>
-              <a class="transition hover:text-brand" href="#faq">FAQ</a>
+              <a class="transition hover:text-brand" href="/#faq">FAQ</a>
             </li>
           </ul>
         </nav>
@@ -51,14 +51,19 @@ defmodule DansunautoWeb.AutoComponents do
     ~H"""
     <div class="border-b border-line bg-white">
       <div class="mx-auto flex max-w-wrap flex-wrap items-center justify-between gap-6 px-4 py-6">
-        <a href="#top" class="flex shrink-0 items-center gap-3">
+        <a href="/" class="flex shrink-0 items-center gap-3">
           <img
             src="/images/dansunauto-logo.png"
-            alt="Dansunauto"
+            alt="Dansun Auto Care"
             class="h-11 w-11 rounded-[10px] object-cover"
           />
-          <span class="font-display text-3xl font-extrabold tracking-tight text-ink">
-            Dansun<span class="text-brand">auto</span>
+          <span class="leading-none">
+            <span class="block font-display text-3xl font-black uppercase tracking-tight text-ink">
+              Dansun Auto <span class="text-brand">Care</span>
+            </span>
+            <span class="mt-1 block text-[11px] font-medium uppercase tracking-[0.28em] text-mute">
+              Volkswagen &ndash; Audi
+            </span>
           </span>
         </a>
 
@@ -105,66 +110,107 @@ defmodule DansunautoWeb.AutoComponents do
           </div>
 
           <form
-            class="flex items-center overflow-hidden rounded-md bg-black/[0.06]"
+            class="group flex items-center gap-2.5 rounded-full bg-[#f5f5f3] py-1.5 pl-4 pr-1.5 transition focus-within:bg-white focus-within:shadow-sm focus-within:ring-2 focus-within:ring-brand/15"
             role="search"
             onsubmit="return false;"
           >
             <label for="site-search" class="sr-only">Search spare parts</label>
+            <svg
+              class="h-[18px] w-[18px] shrink-0 text-mute transition group-focus-within:text-brand"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
             <input
               id="site-search"
               type="search"
               placeholder="Search spare parts"
-              class="w-44 bg-transparent px-4 py-2.5 text-[14px] text-ink outline-none placeholder:text-mute focus:w-56 focus:bg-black/[0.03] motion-safe:transition-all"
+              class="w-40 bg-transparent text-[14px] text-ink outline-none placeholder:text-mute focus:w-52 motion-safe:transition-all [&::-webkit-search-cancel-button]:appearance-none"
             />
+            <%!-- Arrow, not a second magnifier: the leading icon already
+                  labels the field, so the button reads as "go". --%>
             <button
               type="submit"
-              class="px-3 text-ink transition hover:text-brand"
+              class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand text-white transition hover:bg-brand-700"
               aria-label="Search"
             >
               <svg
-                class="h-5 w-5"
+                class="h-4 w-4"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
+                stroke-width="2.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
               </svg>
             </button>
           </form>
 
-          <div class="group relative">
-            <.link
-              navigate="/cart"
-              class="relative flex items-center gap-2 text-ink transition hover:text-brand"
-              aria-label="Cart"
+          <%!-- Admin entry point. The storefront itself needs no account, so
+                this goes straight to the log-in page. --%>
+          <a
+            href="/users/log_in"
+            class="text-ink transition hover:text-brand"
+            aria-label="Admin log in"
+            title="Admin log in"
+          >
+            <svg
+              class="h-6 w-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
             >
-              <svg
-                class="h-6 w-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <circle cx="9" cy="21" r="1" />
-                <circle cx="20" cy="21" r="1" />
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-              </svg>
-              <span class="absolute -right-2 -top-2 grid h-4 w-4 place-items-center rounded-full bg-brand text-[10px] font-bold text-white">
-                0
-              </span>
-            </.link>
-            <div class="invisible absolute right-0 top-full z-40 w-56 translate-y-1 rounded-md border border-line bg-white p-4 text-[14px] opacity-0 shadow-xl transition group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-              No products in the cart.
-            </div>
-          </div>
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </a>
+
+          <%!-- Opens the cart drawer (see cart_drawer/1); falls through to
+                /cart on the cart and checkout pages, where CartHook disables
+                the drawer. --%>
+          <button
+            type="button"
+            onclick="(window.location.pathname==='/cart'||window.location.pathname==='/checkout') ? window.location='/cart' : window.CartDrawer && window.CartDrawer.open()"
+            class="relative flex items-center gap-2 text-ink transition hover:text-brand"
+            aria-label="Cart"
+          >
+            <svg
+              class="h-6 w-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="9" cy="21" r="1" />
+              <circle cx="20" cy="21" r="1" />
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+            </svg>
+            <span
+              id="cart-count-badge"
+              style="display:none;"
+              class="absolute -right-2 -top-2 grid h-4 w-4 place-items-center rounded-full bg-brand text-[10px] font-bold text-white"
+            >
+              0
+            </span>
+          </button>
         </div>
       </div>
     </div>
@@ -205,57 +251,15 @@ defmodule DansunautoWeb.AutoComponents do
     <!-- Desktop nav -->
         <nav aria-label="Primary" class="hidden lg:block">
           <ul class="flex items-stretch text-[14px] font-medium uppercase tracking-wide text-white">
-            <li class="group relative">
-              <a
-                href="#top"
-                class="flex items-center gap-1.5 px-5 py-5 text-brand transition group-hover:text-brand"
-              >
+            <li>
+              <a href="/" class="flex items-center px-5 py-5 text-brand transition hover:text-brand">
                 Home
-                <svg
-                  class="h-3.5 w-3.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
               </a>
-              <ul class="invisible absolute left-0 top-full z-40 w-52 translate-y-1 border-t-2 border-brand bg-white py-2 normal-case text-ink opacity-0 shadow-xl transition group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-                <li>
-                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="#top">
-                    Home 1
-                  </a>
-                </li>
-                <li>
-                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="#top">
-                    Home 2
-                  </a>
-                </li>
-                <li>
-                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="#top">
-                    Home 3
-                  </a>
-                </li>
-                <li>
-                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="#top">
-                    Home 4
-                  </a>
-                </li>
-                <li>
-                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="#top">
-                    Home 5
-                  </a>
-                </li>
-              </ul>
             </li>
 
             <li class="group relative">
               <a
-                href="#services"
+                href="/#services"
                 class="flex items-center gap-1.5 px-5 py-5 transition group-hover:text-brand"
               >
                 Services
@@ -276,7 +280,7 @@ defmodule DansunautoWeb.AutoComponents do
                 <li>
                   <a
                     class="block px-5 py-2 transition hover:bg-line hover:text-brand"
-                    href="#services"
+                    href="/#services"
                   >
                     Engine Repairs
                   </a>
@@ -284,7 +288,7 @@ defmodule DansunautoWeb.AutoComponents do
                 <li>
                   <a
                     class="block px-5 py-2 transition hover:bg-line hover:text-brand"
-                    href="#services"
+                    href="/#services"
                   >
                     Brake Servicing
                   </a>
@@ -292,7 +296,7 @@ defmodule DansunautoWeb.AutoComponents do
                 <li>
                   <a
                     class="block px-5 py-2 transition hover:bg-line hover:text-brand"
-                    href="#services"
+                    href="/#services"
                   >
                     Brakes
                   </a>
@@ -300,7 +304,7 @@ defmodule DansunautoWeb.AutoComponents do
                 <li>
                   <a
                     class="block px-5 py-2 transition hover:bg-line hover:text-brand"
-                    href="#services"
+                    href="/#services"
                   >
                     General Servicing
                   </a>
@@ -308,7 +312,7 @@ defmodule DansunautoWeb.AutoComponents do
                 <li>
                   <a
                     class="block px-5 py-2 transition hover:bg-line hover:text-brand"
-                    href="#services"
+                    href="/#services"
                   >
                     Clutch Repairs
                   </a>
@@ -316,7 +320,7 @@ defmodule DansunautoWeb.AutoComponents do
                 <li>
                   <a
                     class="block px-5 py-2 transition hover:bg-line hover:text-brand"
-                    href="#services"
+                    href="/#services"
                   >
                     Oil &amp; Filter Changes
                   </a>
@@ -324,7 +328,7 @@ defmodule DansunautoWeb.AutoComponents do
                 <li>
                   <a
                     class="block px-5 py-2 transition hover:bg-line hover:text-brand"
-                    href="#services"
+                    href="/#services"
                   >
                     Vehicle Diagnostics
                   </a>
@@ -332,7 +336,7 @@ defmodule DansunautoWeb.AutoComponents do
                 <li>
                   <a
                     class="block px-5 py-2 transition hover:bg-line hover:text-brand"
-                    href="#services"
+                    href="/#services"
                   >
                     Battery Replacement
                   </a>
@@ -342,7 +346,7 @@ defmodule DansunautoWeb.AutoComponents do
 
             <li class="group relative">
               <a
-                href="#brands"
+                href="/#brands"
                 class="flex items-center gap-1.5 px-5 py-5 transition group-hover:text-brand"
               >
                 Vehicle Makes
@@ -361,39 +365,39 @@ defmodule DansunautoWeb.AutoComponents do
               </a>
               <ul class="invisible absolute left-0 top-full z-40 w-52 translate-y-1 border-t-2 border-brand bg-white py-2 normal-case text-ink opacity-0 shadow-xl transition group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
                 <li>
-                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="#brands">
+                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="/#brands">
                     Nissan
                   </a>
                 </li>
                 <li>
-                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="#brands">
+                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="/#brands">
                     Subaru
                   </a>
                 </li>
                 <li>
-                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="#brands">
+                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="/#brands">
                     Mazda
                   </a>
                 </li>
                 <li>
-                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="#brands">
+                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="/#brands">
                     Honda
                   </a>
                 </li>
                 <li>
-                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="#brands">
+                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="/#brands">
                     Mitsubishi
                   </a>
                 </li>
                 <li>
-                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="#brands">
+                  <a class="block px-5 py-2 transition hover:bg-line hover:text-brand" href="/#brands">
                     Toyota
                   </a>
                 </li>
                 <li class="mt-1 border-t border-line pt-1">
                   <a
                     class="block px-5 py-2 font-medium text-brand transition hover:bg-line"
-                    href="#brands"
+                    href="/#brands"
                   >
                     All Vehicle Makes
                   </a>
@@ -407,7 +411,7 @@ defmodule DansunautoWeb.AutoComponents do
 
             <li class="group relative">
               <a
-                href="#about"
+                href="/#about"
                 class="flex items-center gap-1.5 px-5 py-5 transition group-hover:text-brand"
               >
                 Pages
@@ -431,16 +435,18 @@ defmodule DansunautoWeb.AutoComponents do
                   </p>
                   <ul class="space-y-1">
                     <li>
-                      <a class="block py-1 transition hover:text-brand" href="#about">About Us</a>
+                      <a class="block py-1 transition hover:text-brand" href="/#about">About Us</a>
                     </li>
                     <li>
-                      <a class="block py-1 transition hover:text-brand" href="#services">Services</a>
+                      <a class="block py-1 transition hover:text-brand" href="/#services">Services</a>
                     </li>
                     <li>
-                      <a class="block py-1 transition hover:text-brand" href="#faq">FAQ</a>
+                      <a class="block py-1 transition hover:text-brand" href="/#faq">FAQ</a>
                     </li>
                     <li>
-                      <a class="block py-1 transition hover:text-brand" href="#contact">Contact Us</a>
+                      <a class="block py-1 transition hover:text-brand" href="/#contact">
+                        Contact Us
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -450,18 +456,18 @@ defmodule DansunautoWeb.AutoComponents do
                   </p>
                   <ul class="space-y-1">
                     <li>
-                      <a class="block py-1 transition hover:text-brand" href="#services">Services</a>
+                      <a class="block py-1 transition hover:text-brand" href="/#services">Services</a>
                     </li>
                     <li>
-                      <a class="block py-1 transition hover:text-brand" href="#coupons">
+                      <a class="block py-1 transition hover:text-brand" href="/#coupons">
                         Pricing &amp; Coupons
                       </a>
                     </li>
                     <li>
-                      <a class="block py-1 transition hover:text-brand" href="#steps">FAQs</a>
+                      <a class="block py-1 transition hover:text-brand" href="/#steps">FAQs</a>
                     </li>
                     <li>
-                      <a class="block py-1 transition hover:text-brand" href="#reviews">
+                      <a class="block py-1 transition hover:text-brand" href="/#reviews">
                         Testimonials
                       </a>
                     </li>
@@ -471,7 +477,7 @@ defmodule DansunautoWeb.AutoComponents do
             </li>
 
             <li>
-              <a href="#parts" class="block px-5 py-5 transition hover:text-brand">Spare Parts</a>
+              <a href="/#parts" class="block px-5 py-5 transition hover:text-brand">Spare Parts</a>
             </li>
           </ul>
         </nav>
@@ -504,32 +510,7 @@ defmodule DansunautoWeb.AutoComponents do
           class="order-last hidden w-full border-t border-white/10 pb-4 peer-checked:block lg:!hidden"
         >
           <ul class="divide-y divide-white/10 text-[15px] text-white">
-            <li>
-              <details class="group">
-                <summary class="flex cursor-pointer list-none items-center justify-between py-3">
-                  Home
-                  <svg
-                    class="h-4 w-4 transition group-open:rotate-180"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
-                </summary>
-                <ul class="pb-2 pl-4 text-white/70">
-                  <li><a class="block py-1.5" href="#top">Home 1</a></li>
-                  <li><a class="block py-1.5" href="#top">Home 2</a></li>
-                  <li><a class="block py-1.5" href="#top">Home 3</a></li>
-                  <li><a class="block py-1.5" href="#top">Home 4</a></li>
-                  <li><a class="block py-1.5" href="#top">Home 5</a></li>
-                </ul>
-              </details>
-            </li>
+            <li><a class="block py-3" href="/">Home</a></li>
             <li>
               <details class="group">
                 <summary class="flex cursor-pointer list-none items-center justify-between py-3">
@@ -549,26 +530,26 @@ defmodule DansunautoWeb.AutoComponents do
                 </summary>
                 <ul class="pb-2 pl-4 text-white/70">
                   <li>
-                    <a class="block py-1.5" href="#services">Engine Repairs</a>
+                    <a class="block py-1.5" href="/#services">Engine Repairs</a>
                   </li>
                   <li>
-                    <a class="block py-1.5" href="#services">Brake Servicing</a>
+                    <a class="block py-1.5" href="/#services">Brake Servicing</a>
                   </li>
-                  <li><a class="block py-1.5" href="#services">Suspension &amp; Steering</a></li>
+                  <li><a class="block py-1.5" href="/#services">Suspension &amp; Steering</a></li>
                   <li>
-                    <a class="block py-1.5" href="#services">General Servicing</a>
-                  </li>
-                  <li>
-                    <a class="block py-1.5" href="#services">Clutch Repairs</a>
+                    <a class="block py-1.5" href="/#services">General Servicing</a>
                   </li>
                   <li>
-                    <a class="block py-1.5" href="#services">Oil &amp; Filter Changes</a>
+                    <a class="block py-1.5" href="/#services">Clutch Repairs</a>
                   </li>
                   <li>
-                    <a class="block py-1.5" href="#services">Vehicle Diagnostics</a>
+                    <a class="block py-1.5" href="/#services">Oil &amp; Filter Changes</a>
                   </li>
                   <li>
-                    <a class="block py-1.5" href="#services">Battery Replacement</a>
+                    <a class="block py-1.5" href="/#services">Vehicle Diagnostics</a>
+                  </li>
+                  <li>
+                    <a class="block py-1.5" href="/#services">Battery Replacement</a>
                   </li>
                 </ul>
               </details>
@@ -591,16 +572,16 @@ defmodule DansunautoWeb.AutoComponents do
                   </svg>
                 </summary>
                 <ul class="pb-2 pl-4 text-white/70">
-                  <li><a class="block py-1.5" href="#brands">Nissan</a></li>
-                  <li><a class="block py-1.5" href="#brands">Subaru</a></li>
-                  <li><a class="block py-1.5" href="#brands">Mazda</a></li>
+                  <li><a class="block py-1.5" href="/#brands">Nissan</a></li>
+                  <li><a class="block py-1.5" href="/#brands">Subaru</a></li>
+                  <li><a class="block py-1.5" href="/#brands">Mazda</a></li>
                   <li>
-                    <a class="block py-1.5" href="#brands">Honda</a>
+                    <a class="block py-1.5" href="/#brands">Honda</a>
                   </li>
-                  <li><a class="block py-1.5" href="#brands">Mitsubishi</a></li>
-                  <li><a class="block py-1.5" href="#brands">Toyota</a></li>
+                  <li><a class="block py-1.5" href="/#brands">Mitsubishi</a></li>
+                  <li><a class="block py-1.5" href="/#brands">Toyota</a></li>
                   <li>
-                    <a class="block py-1.5 text-brand" href="#brands">All Vehicle Makes</a>
+                    <a class="block py-1.5 text-brand" href="/#brands">All Vehicle Makes</a>
                   </li>
                 </ul>
               </details>
@@ -624,28 +605,139 @@ defmodule DansunautoWeb.AutoComponents do
                   </svg>
                 </summary>
                 <ul class="pb-2 pl-4 text-white/70">
-                  <li><a class="block py-1.5" href="#about">About Us</a></li>
-                  <li><a class="block py-1.5" href="#services">Services</a></li>
+                  <li><a class="block py-1.5" href="/#about">About Us</a></li>
+                  <li><a class="block py-1.5" href="/#services">Services</a></li>
                   <li>
-                    <a class="block py-1.5" href="#contact">Contact Us</a>
+                    <a class="block py-1.5" href="/#contact">Contact Us</a>
                   </li>
                   <li>
-                    <a class="block py-1.5" href="#coupons">Pricing &amp; Coupons</a>
+                    <a class="block py-1.5" href="/#coupons">Pricing &amp; Coupons</a>
                   </li>
                   <li>
-                    <a class="block py-1.5" href="#estimate">Estimated</a>
+                    <a class="block py-1.5" href="/#estimate">Estimated</a>
                   </li>
                   <li>
-                    <a class="block py-1.5" href="#reviews">Testimonials</a>
+                    <a class="block py-1.5" href="/#reviews">Testimonials</a>
                   </li>
                 </ul>
               </details>
             </li>
-            <li><a class="block py-3" href="#parts">Spare Parts</a></li>
+            <li><a class="block py-3" href="/#parts">Spare Parts</a></li>
           </ul>
         </nav>
       </div>
     </header>
+    """
+  end
+
+  @doc """
+  Cart drawer plus the CartHook root that drives it.
+
+  Cart state lives in localStorage (`assets/js/cart.js`); CartHook renders this
+  drawer from it and keeps `#cart-count-badge` in sync. The element ids here are
+  the contract with that hook — renaming one silently breaks the drawer.
+  """
+  def cart_drawer(assigns) do
+    ~H"""
+    <div id="cart-hook-root" phx-hook="CartHook" class="hidden"></div>
+
+    <div
+      id="cart-drawer-backdrop"
+      class="pointer-events-none fixed inset-0 z-40 bg-black/40 opacity-0 backdrop-blur-sm transition-opacity duration-300"
+      onclick="window.CartDrawer && window.CartDrawer.close()"
+    >
+    </div>
+
+    <div
+      id="cart-drawer"
+      class="fixed right-0 top-0 z-50 flex h-full w-full max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-out"
+      style="transform: translateX(100%);"
+    >
+      <div class="flex items-center justify-between border-b border-line px-5 py-4">
+        <div class="flex items-center gap-2">
+          <svg
+            class="h-5 w-5 text-brand"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <h2 class="font-display text-base font-extrabold text-ink">
+            Your Cart (<span id="drawer-item-count">0</span>)
+          </h2>
+        </div>
+        <button
+          type="button"
+          onclick="window.CartDrawer && window.CartDrawer.close()"
+          class="p-1.5 text-mute transition hover:bg-line hover:text-ink"
+          aria-label="Close cart"
+        >
+          <svg
+            class="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="cart-drawer-items" class="flex-1 overflow-y-auto px-5 py-4">
+        <div
+          id="cart-drawer-empty"
+          class="flex flex-col items-center justify-center py-16 text-center"
+        >
+          <svg
+            class="h-14 w-14 text-line"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <p class="mt-4 text-[15px] font-medium text-ink">Your cart is empty</p>
+          <p class="mt-1 text-[13px] text-mute">Add a part to get started</p>
+        </div>
+        <div id="cart-drawer-list" class="hidden space-y-4"></div>
+      </div>
+
+      <div id="cart-drawer-footer" class="hidden border-t border-line px-5 py-5">
+        <div class="mb-4 flex justify-between text-[15px]">
+          <span class="text-body">Subtotal</span>
+          <span class="font-semibold text-ink">KES <span id="drawer-total">0</span></span>
+        </div>
+        <a
+          href="/checkout"
+          class="block w-full bg-brand py-3.5 text-center text-[13px] font-semibold uppercase tracking-wide text-white transition hover:bg-ink"
+        >
+          Checkout
+        </a>
+        <a
+          href="/cart"
+          class="mt-2 block w-full border border-line py-3.5 text-center text-[13px] font-semibold uppercase tracking-wide text-ink transition hover:border-ink"
+        >
+          View Cart
+        </a>
+      </div>
+    </div>
     """
   end
 
@@ -691,10 +783,10 @@ defmodule DansunautoWeb.AutoComponents do
 
           <div class="mt-9 flex flex-wrap items-center gap-4">
             <a
-              href="tel:+254724335924"
+              href="/#featured-parts"
               class="inline-flex items-center gap-2 bg-brand px-7 py-4 text-[14px] font-semibold uppercase tracking-wide text-white transition hover:bg-white hover:text-ink"
             >
-              Call Now
+              Shop Spare Parts
               <svg
                 class="h-4 w-4"
                 viewBox="0 0 24 24"
@@ -708,6 +800,12 @@ defmodule DansunautoWeb.AutoComponents do
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
               </svg>
+            </a>
+            <a
+              href="tel:+254724335924"
+              class="inline-flex items-center gap-2 border border-white/30 px-7 py-4 text-[14px] font-semibold uppercase tracking-wide text-white transition hover:border-white hover:bg-white hover:text-ink"
+            >
+              Call Now
             </a>
             <a
               href="https://wa.me/254724335924"
@@ -945,7 +1043,7 @@ defmodule DansunautoWeb.AutoComponents do
                 Oil and filter changes, fluid top-ups, engine checks and preventive maintenance.
               </p>
               <a
-                href="#services"
+                href="/#services"
                 class="inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-wide text-brand transition hover:text-ink"
               >
                 Find out More
@@ -983,7 +1081,7 @@ defmodule DansunautoWeb.AutoComponents do
                 Engine, brakes, suspension, steering, cooling, clutch and battery work.
               </p>
               <a
-                href="#services"
+                href="/#services"
                 class="inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-wide text-brand transition hover:text-ink"
               >
                 Find out More
@@ -1038,7 +1136,7 @@ defmodule DansunautoWeb.AutoComponents do
               </p>
             </div>
             <a
-              href="#contact"
+              href="/#contact"
               class="mt-8 inline-flex items-center justify-center gap-2 bg-brand px-5 py-3.5 text-[13px] font-semibold uppercase tracking-wide text-white transition hover:bg-white hover:text-ink"
             >
               Schedule Appointment
@@ -1063,7 +1161,7 @@ defmodule DansunautoWeb.AutoComponents do
         <ul class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
           <li>
             <a
-              href="#brands"
+              href="/#brands"
               class="font-display text-2xl font-extrabold uppercase tracking-[0.18em] text-mute transition hover:text-ink"
             >
               Nissan
@@ -1071,7 +1169,7 @@ defmodule DansunautoWeb.AutoComponents do
           </li>
           <li>
             <a
-              href="#brands"
+              href="/#brands"
               class="font-display text-2xl font-extrabold uppercase tracking-[0.18em] text-mute transition hover:text-ink"
             >
               Subaru
@@ -1079,7 +1177,7 @@ defmodule DansunautoWeb.AutoComponents do
           </li>
           <li>
             <a
-              href="#brands"
+              href="/#brands"
               class="font-display text-2xl font-extrabold uppercase tracking-[0.18em] text-mute transition hover:text-ink"
             >
               Mazda
@@ -1087,7 +1185,7 @@ defmodule DansunautoWeb.AutoComponents do
           </li>
           <li>
             <a
-              href="#brands"
+              href="/#brands"
               class="font-display text-2xl font-extrabold uppercase tracking-[0.18em] text-mute transition hover:text-ink"
             >
               Honda
@@ -1095,7 +1193,7 @@ defmodule DansunautoWeb.AutoComponents do
           </li>
           <li>
             <a
-              href="#brands"
+              href="/#brands"
               class="font-display text-2xl font-extrabold uppercase tracking-[0.18em] text-mute transition hover:text-ink"
             >
               Mitsubishi
@@ -1103,7 +1201,7 @@ defmodule DansunautoWeb.AutoComponents do
           </li>
           <li>
             <a
-              href="#brands"
+              href="/#brands"
               class="font-display text-2xl font-extrabold uppercase tracking-[0.18em] text-mute transition hover:text-ink"
             >
               Toyota
@@ -1126,7 +1224,7 @@ defmodule DansunautoWeb.AutoComponents do
           <div class="aspect-[4/3] overflow-hidden bg-ink">
             <img
               src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=1400&q=80&auto=format&fit=crop"
-              alt="The Dansun Auto Garage workshop in Umoja I"
+              alt="The Dansun Auto Care workshop in Umoja I"
               loading="lazy"
               class="h-full w-full object-cover"
             />
@@ -1143,7 +1241,7 @@ defmodule DansunautoWeb.AutoComponents do
 
         <div>
           <p class="mb-3 text-[13px] font-semibold uppercase tracking-[0.2em] text-brand">
-            Dansun Auto Garage
+            Dansun Auto Care
           </p>
           <h2 class="font-display text-4xl font-extrabold leading-tight text-ink sm:text-5xl">
             Umoja I, Nairobi.
@@ -1544,7 +1642,7 @@ defmodule DansunautoWeb.AutoComponents do
             Find the right part for your vehicle.
           </h2>
           <p class="mt-4 max-w-xl text-[17px]">
-            Dansun Auto Garage supplies and sources spare parts for different
+            Dansun Auto Care supplies and sources spare parts for different
             vehicle makes and models. Common parts we handle:
           </p>
 
@@ -1642,6 +1740,285 @@ defmodule DansunautoWeb.AutoComponents do
     """
   end
 
+  attr :collections, :list, required: true
+
+  @doc """
+  Shop by part category. Each tile links into the existing category page.
+  """
+  def part_categories(assigns) do
+    ~H"""
+    <section :if={@collections != []} id="shop" class="border-b border-line py-24">
+      <div class="mx-auto max-w-wrap px-4">
+        <div class="mb-14 flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p class="mb-3 text-[13px] font-semibold uppercase tracking-[0.2em] text-brand">
+              Shop
+            </p>
+            <h2 class="font-display text-3xl font-extrabold text-ink sm:text-4xl">
+              Browse parts by category
+            </h2>
+          </div>
+          <.link
+            navigate="/collections"
+            class="inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-wide text-brand transition hover:text-ink"
+          >
+            All Categories
+            <svg
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </.link>
+        </div>
+
+        <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <li :for={collection <- @collections}>
+            <.link navigate={collection.href} class="group block">
+              <div class="relative aspect-[4/3] overflow-hidden bg-ink">
+                <img
+                  src={collection.image}
+                  alt={collection.name}
+                  loading="lazy"
+                  class="h-full w-full object-cover opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-90"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent">
+                </div>
+                <div class="absolute inset-x-0 bottom-0 p-6">
+                  <h3 class="font-display text-xl font-extrabold text-white">
+                    {collection.name}
+                  </h3>
+                  <p class="mt-1 text-[13px] uppercase tracking-widest text-white/70">
+                    {collection.item_count} {if collection.item_count == 1, do: "part", else: "parts"}
+                  </p>
+                </div>
+              </div>
+            </.link>
+          </li>
+        </ul>
+      </div>
+    </section>
+    """
+  end
+
+  attr :products, :list, required: true
+  attr :eyebrow, :string, default: "In Stock"
+  attr :title, :string, default: "Parts ready to go"
+  attr :id, :string, default: "featured-parts"
+  attr :class, :string, default: ""
+
+  @doc """
+  Product grid with prices and add-to-cart.
+
+  The add button carries the cart payload as JSON on `data-product` and is
+  driven by the AddSingleToCart hook, matching the rest of the storefront.
+  """
+  def part_grid(assigns) do
+    ~H"""
+    <section :if={@products != []} id={@id} class={["py-24", @class]}>
+      <div class="mx-auto max-w-wrap px-4">
+        <div class="mb-14 flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p class="mb-3 text-[13px] font-semibold uppercase tracking-[0.2em] text-brand">
+              {@eyebrow}
+            </p>
+            <h2 class="font-display text-3xl font-extrabold text-ink sm:text-4xl">
+              {@title}
+            </h2>
+          </div>
+          <.link
+            navigate="/collections"
+            class="inline-flex items-center gap-2 bg-brand px-6 py-3.5 text-[13px] font-semibold uppercase tracking-wide text-white transition hover:bg-ink"
+          >
+            Shop All Parts
+            <svg
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </.link>
+        </div>
+
+        <ul class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <li
+            :for={product <- @products}
+            class="group flex flex-col border border-line bg-white transition hover:-translate-y-1 hover:border-brand hover:shadow-2xl"
+          >
+            <.link navigate={product.href} class="block">
+              <div class="relative aspect-square overflow-hidden bg-[#F7F7F7]">
+                <img
+                  src={product.main_image}
+                  alt={product.name}
+                  loading="lazy"
+                  class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                />
+                <span
+                  :if={product.badge}
+                  class="absolute left-0 top-4 bg-brand px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-white"
+                >
+                  {product.badge}
+                </span>
+              </div>
+            </.link>
+
+            <div class="flex flex-1 flex-col p-6">
+              <.link navigate={product.href} class="block">
+                <h3 class="font-display text-[17px] font-extrabold leading-snug text-ink transition group-hover:text-brand">
+                  {product.name}
+                </h3>
+              </.link>
+              <p class="mt-3 font-display text-xl font-extrabold text-brand">
+                {product.currency} {format_price(product.price)}
+              </p>
+
+              <button
+                type="button"
+                id={"add-to-cart-#{product.id}"}
+                phx-hook="AddSingleToCart"
+                data-product={cart_payload(product)}
+                class="mt-auto w-full border border-ink px-5 py-3 pt-3 text-[13px] font-semibold uppercase tracking-wide text-ink transition hover:bg-ink hover:text-white"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+    """
+  end
+
+  attr :bundle, :map, default: nil
+
+  @doc """
+  The active bundle — one click adds every part in it to the cart.
+  """
+  def service_kit(assigns) do
+    ~H"""
+    <section :if={@bundle} id="service-kit" class="bg-ink py-24 text-white">
+      <div class="mx-auto grid max-w-wrap items-center gap-14 px-4 lg:grid-cols-2">
+        <div class="relative">
+          <img
+            src={@bundle.image}
+            alt={@bundle.title}
+            loading="lazy"
+            class="aspect-[4/3] w-full object-cover"
+          />
+          <p class="absolute -bottom-5 left-6 bg-brand px-6 py-3 font-display text-[13px] font-extrabold uppercase tracking-widest">
+            Save when you buy the kit
+          </p>
+        </div>
+
+        <div>
+          <p class="mb-3 text-[13px] font-semibold uppercase tracking-[0.2em] text-brand">
+            Bundle
+          </p>
+          <h2 class="font-display text-3xl font-extrabold sm:text-4xl">
+            {@bundle.title}
+          </h2>
+          <p class="mt-5 max-w-lg text-[17px] text-white/70">
+            {@bundle.description}
+          </p>
+
+          <ul
+            :if={@bundle.products != []}
+            class="mt-8 divide-y divide-white/10 border-y border-white/10"
+          >
+            <li
+              :for={product <- @bundle.products}
+              class="flex items-center justify-between gap-4 py-3.5"
+            >
+              <span class="text-[15px]">{product.name}</span>
+              <span class="shrink-0 font-semibold">
+                {product.currency} {format_price(product.price)}
+              </span>
+            </li>
+          </ul>
+
+          <p :if={@bundle.products != []} class="mt-6 flex items-baseline gap-3">
+            <span class="text-[13px] uppercase tracking-widest text-white/60">Kit total</span>
+            <span class="font-display text-3xl font-extrabold text-brand">
+              KES {format_price(bundle_total(@bundle.products))}
+            </span>
+          </p>
+
+          <button
+            :if={@bundle.products != []}
+            type="button"
+            id="add-service-kit"
+            phx-hook="AddBundleToCart"
+            data-products={cart_payload(@bundle.products)}
+            class="mt-9 inline-flex items-center gap-2 bg-brand px-7 py-4 text-[13px] font-semibold uppercase tracking-wide text-white transition hover:bg-white hover:text-ink"
+          >
+            Add Kit to Cart
+            <svg
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+    """
+  end
+
+  # ── Helpers ────────────────────────────────────────────────────────────────
+
+  # Thousands-separated, no decimals — part prices are whole shillings.
+  defp format_price(amount) do
+    amount
+    |> trunc()
+    |> Integer.to_string()
+    |> String.graphemes()
+    |> Enum.reverse()
+    |> Enum.chunk_every(3)
+    |> Enum.map_join(",", &Enum.join/1)
+    |> String.reverse()
+  end
+
+  defp bundle_total(products), do: Enum.reduce(products, 0, &(&1.price + &2))
+
+  # The shape assets/js/cart.js expects for a cart line.
+  defp cart_payload(products) when is_list(products) do
+    products |> Enum.map(&cart_item/1) |> Jason.encode!()
+  end
+
+  defp cart_payload(product), do: product |> cart_item() |> Jason.encode!()
+
+  defp cart_item(product) do
+    %{
+      id: product.id,
+      slug: product.slug,
+      name: product.name,
+      image: product.main_image,
+      price: product.price
+    }
+  end
+
   @doc """
   Frequently asked questions.
   """
@@ -1653,8 +2030,8 @@ defmodule DansunautoWeb.AutoComponents do
         {"How do I ask for a specific spare part?",
          "Send the vehicle make, model, year, and the name or part number of the component. A photo can also help identify the correct part."},
         {"Do you repair vehicles?",
-         "Yes. Dansun Auto Garage provides automotive repair and maintenance services, including servicing and diagnostics."},
-        {"Where are you located?", "Dansun Auto Garage is located in Umoja I, Nairobi, Kenya."},
+         "Yes. Dansun Auto Care provides automotive repair and maintenance services, including servicing and diagnostics."},
+        {"Where are you located?", "Dansun Auto Care is located in Umoja I, Nairobi, Kenya."},
         {"Can I contact you through WhatsApp?",
          "Yes. Use the business number +254 724 335924 to enquire about services and spare parts."}
       ])
@@ -1795,6 +2172,51 @@ defmodule DansunautoWeb.AutoComponents do
   end
 
   @doc """
+  Four buying promises — the parts-shop counterpart to a generic
+  "free shipping / free returns" retail strip.
+  """
+  def promises(assigns) do
+    ~H"""
+    <section class="border-y border-line bg-[#F7F7F7] py-16">
+      <ul class="mx-auto grid max-w-wrap gap-10 px-4 sm:grid-cols-2 lg:grid-cols-4">
+        <li
+          :for={
+            {title, copy, path} <- [
+              {"Genuine &amp; OEM Parts", "Sourced from trusted suppliers",
+               "M9 12l2 2 4-4M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7z"},
+              {"Fitting At Our Garage", "Buy the part, we install it",
+               "M14.7 6.3a4 4 0 01-5 5L4 17v3h3l5.7-5.7a4 4 0 015-5l2-2-3-3-2 2z"},
+              {"Pay On Delivery or M-Pesa", "Whatever is easiest for you",
+               "M2 7h20v10a2 2 0 01-2 2H4a2 2 0 01-2-2V7zm0 4h20M6 15h4"},
+              {"Can&#8217;t Find It? We Source It", "Send the details, we&#8217;ll hunt it down",
+               "M11 19a8 8 0 100-16 8 8 0 000 16zm10 2l-4.35-4.35"}
+            ]
+          }
+          class="text-center"
+        >
+          <svg
+            class="mx-auto mb-4 h-9 w-9 text-brand"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d={path} />
+          </svg>
+          <h3 class="font-display text-[16px] font-extrabold uppercase tracking-wide text-ink">
+            {Phoenix.HTML.raw(title)}
+          </h3>
+          <p class="mt-1.5 text-[14px]">{Phoenix.HTML.raw(copy)}</p>
+        </li>
+      </ul>
+    </section>
+    """
+  end
+
+  @doc """
   Full-bleed coupon banner.
   """
   def coupons(assigns) do
@@ -1907,7 +2329,7 @@ defmodule DansunautoWeb.AutoComponents do
 
         <div class="mt-12 flex flex-wrap items-center justify-center gap-6 border border-line bg-[#F7F7F7] px-8 py-7 text-center">
           <p class="font-display text-lg font-extrabold text-ink">
-            Dansun Auto Garage &#183; Umoja I, Nairobi
+            Dansun Auto Care &#183; Umoja I, Nairobi
           </p>
           <a
             href="https://wa.me/254724335924"
@@ -1946,7 +2368,7 @@ defmodule DansunautoWeb.AutoComponents do
       <div class="mx-auto grid max-w-wrap items-center gap-14 px-4 lg:grid-cols-2">
         <div>
           <p class="mb-3 text-[13px] font-semibold uppercase tracking-[0.2em] text-brand">
-            Dansun Auto Garage
+            Dansun Auto Care
           </p>
           <h2 class="font-display text-4xl font-extrabold leading-tight sm:text-5xl">
             Talk to us today.
@@ -2019,14 +2441,19 @@ defmodule DansunautoWeb.AutoComponents do
     <footer class="bg-[#1E1E1E] text-white/70">
       <div class="mx-auto grid max-w-wrap gap-12 px-4 py-20 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <a href="#top" class="mb-6 flex items-center gap-3">
+          <a href="/" class="mb-6 flex items-center gap-3">
             <img
               src="/images/dansunauto-logo.png"
-              alt="Dansunauto"
+              alt="Dansun Auto Care"
               class="h-10 w-10 rounded-[10px] object-cover"
             />
-            <span class="font-display text-2xl font-extrabold tracking-tight text-white">
-              Dansun<span class="text-brand">auto</span>
+            <span class="leading-none">
+              <span class="block font-display text-2xl font-black uppercase tracking-tight text-white">
+                Dansun Auto <span class="text-brand">Care</span>
+              </span>
+              <span class="mt-1 block text-[10px] font-medium uppercase tracking-[0.28em] text-white/50">
+                Volkswagen &ndash; Audi
+              </span>
             </span>
           </a>
           <p class="mb-6 text-[15px]">
@@ -2035,7 +2462,7 @@ defmodule DansunautoWeb.AutoComponents do
           <ul class="flex gap-3">
             <li>
               <a
-                href="#top"
+                href="/"
                 class="grid h-10 w-10 place-items-center border border-white/15 transition hover:border-brand hover:bg-brand hover:text-white"
                 aria-label="Dansunauto on Facebook"
               >
@@ -2055,7 +2482,7 @@ defmodule DansunautoWeb.AutoComponents do
             </li>
             <li>
               <a
-                href="#top"
+                href="/"
                 class="grid h-10 w-10 place-items-center border border-white/15 transition hover:border-brand hover:bg-brand hover:text-white"
                 aria-label="Dansunauto on Twitter"
               >
@@ -2075,7 +2502,7 @@ defmodule DansunautoWeb.AutoComponents do
             </li>
             <li>
               <a
-                href="#top"
+                href="/"
                 class="grid h-10 w-10 place-items-center border border-white/15 transition hover:border-brand hover:bg-brand hover:text-white"
                 aria-label="Dansunauto on Instagram"
               >
@@ -2097,7 +2524,7 @@ defmodule DansunautoWeb.AutoComponents do
             </li>
             <li>
               <a
-                href="#top"
+                href="/"
                 class="grid h-10 w-10 place-items-center border border-white/15 transition hover:border-brand hover:bg-brand hover:text-white"
                 aria-label="Dansunauto on YouTube"
               >
@@ -2125,28 +2552,28 @@ defmodule DansunautoWeb.AutoComponents do
           </h2>
           <ul class="space-y-2.5 text-[15px]">
             <li>
-              <a href="#services" class="transition hover:text-brand">Engine Repairs</a>
+              <a href="/#services" class="transition hover:text-brand">Engine Repairs</a>
             </li>
             <li>
-              <a href="#services" class="transition hover:text-brand">Brake Servicing</a>
+              <a href="/#services" class="transition hover:text-brand">Brake Servicing</a>
             </li>
             <li>
-              <a href="#services" class="transition hover:text-brand">Suspension &amp; Steering</a>
+              <a href="/#services" class="transition hover:text-brand">Suspension &amp; Steering</a>
             </li>
             <li>
-              <a href="#services" class="transition hover:text-brand">Clutch Repairs</a>
+              <a href="/#services" class="transition hover:text-brand">Clutch Repairs</a>
             </li>
             <li>
-              <a href="#services" class="transition hover:text-brand">Oil &amp; Filter Changes</a>
+              <a href="/#services" class="transition hover:text-brand">Oil &amp; Filter Changes</a>
             </li>
             <li>
-              <a href="#services" class="transition hover:text-brand">Vehicle Diagnostics</a>
+              <a href="/#services" class="transition hover:text-brand">Vehicle Diagnostics</a>
             </li>
             <li>
-              <a href="#services" class="transition hover:text-brand">Battery Replacement</a>
+              <a href="/#services" class="transition hover:text-brand">Battery Replacement</a>
             </li>
             <li>
-              <a href="#services" class="transition hover:text-brand">General Servicing</a>
+              <a href="/#services" class="transition hover:text-brand">General Servicing</a>
             </li>
           </ul>
         </div>
@@ -2163,22 +2590,22 @@ defmodule DansunautoWeb.AutoComponents do
               <a href="/collections" class="transition hover:text-brand">Spare Parts</a>
             </li>
             <li>
-              <a href="#faq" class="transition hover:text-brand">FAQ</a>
+              <a href="/#faq" class="transition hover:text-brand">FAQ</a>
             </li>
             <li>
               <a href="/cart" class="transition hover:text-brand">My cart</a>
             </li>
             <li>
-              <a href="#contact" class="transition hover:text-brand">Contact Us</a>
+              <a href="/#contact" class="transition hover:text-brand">Contact Us</a>
             </li>
             <li>
-              <a href="#parts" class="transition hover:text-brand">Request a Part</a>
+              <a href="/#parts" class="transition hover:text-brand">Request a Part</a>
             </li>
             <li>
-              <a href="#brands" class="transition hover:text-brand">Vehicle Makes</a>
+              <a href="/#brands" class="transition hover:text-brand">Vehicle Makes</a>
             </li>
             <li>
-              <a href="#steps" class="transition hover:text-brand">How It Works</a>
+              <a href="/#steps" class="transition hover:text-brand">How It Works</a>
             </li>
           </ul>
         </div>
@@ -2209,8 +2636,8 @@ defmodule DansunautoWeb.AutoComponents do
 
       <div class="border-t border-white/10">
         <div class="mx-auto flex max-w-wrap flex-wrap items-center justify-between gap-4 px-4 py-6 text-[14px]">
-          <p>Copyright © 2026 Dansun Auto Garage. All rights reserved.</p>
-          <a href="#top" class="inline-flex items-center gap-2 transition hover:text-brand">
+          <p>Copyright © 2026 Dansun Auto Care. All rights reserved.</p>
+          <a href="/" class="inline-flex items-center gap-2 transition hover:text-brand">
             Go to Top
             <svg
               class="h-4 w-4"

@@ -4,16 +4,22 @@ defmodule DansunautoWeb.CategoryComponents do
 
   def category_hero(assigns) do
     ~H"""
-    <section class="relative flex min-h-[280px] items-center justify-center bg-black sm:min-h-[320px] lg:min-h-[380px]">
+    <section class="relative flex min-h-[280px] items-center bg-ink sm:min-h-[320px] lg:min-h-[380px]">
       <img
         src={@category.hero_image}
         alt=""
-        class="absolute inset-0 h-full w-full object-cover object-top opacity-50"
+        class="absolute inset-0 h-full w-full object-cover opacity-45"
       />
-      <div class="absolute inset-0 bg-black/40" aria-hidden="true"></div>
-      <div class="relative z-10 px-4 text-center text-white">
-        <p class="text-xs font-semibold uppercase tracking-widest opacity-90">{@category.subtitle}</p>
-        <h1 class="mt-2 text-3xl font-bold sm:text-4xl lg:text-5xl">{@category.title}</h1>
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/30"
+        aria-hidden="true"
+      >
+      </div>
+      <div class="relative z-10 mx-auto w-full max-w-wrap px-4 text-white">
+        <p class="text-[13px] font-semibold uppercase tracking-[0.2em] text-brand">
+          {@category.subtitle}
+        </p>
+        <h1 class="mt-2 font-display text-4xl font-extrabold sm:text-5xl">{@category.title}</h1>
       </div>
     </section>
     """
@@ -76,7 +82,7 @@ defmodule DansunautoWeb.CategoryComponents do
   def product_type_filters(assigns) do
     ~H"""
     <div class={assigns[:class]}>
-      <h3 class="text-sm font-semibold text-black">Product Type</h3>
+      <h3 class="text-sm font-semibold text-black">Part Category</h3>
       <ul class="mt-3 space-y-2" role="list">
         <%= for pt <- @product_types do %>
           <li>
@@ -108,7 +114,7 @@ defmodule DansunautoWeb.CategoryComponents do
   def popular_products_block(assigns) do
     ~H"""
     <div class={assigns[:class]}>
-      <h3 class="text-sm font-semibold text-black">Popular Products</h3>
+      <h3 class="text-sm font-semibold text-black">Popular Parts</h3>
       <ul class="mt-3 space-y-4" role="list">
         <%= for product <- @products do %>
           <li>
@@ -160,7 +166,7 @@ defmodule DansunautoWeb.CategoryComponents do
             type="button"
             phx-click="set_filter_pill"
             phx-value-pill="all"
-            class={"rounded-full border px-4 py-2 text-sm font-medium transition #{if @filter_pill == "all", do: "border-gray-400 bg-gray-100 text-black", else: "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"}"}
+            class={"border px-5 py-2 text-[13px] font-semibold uppercase tracking-wide transition #{if @filter_pill == "all", do: "border-brand bg-brand text-white", else: "border-line bg-white text-body hover:border-ink hover:text-ink"}"}
           >
             All
           </button>
@@ -168,7 +174,7 @@ defmodule DansunautoWeb.CategoryComponents do
             type="button"
             phx-click="set_filter_pill"
             phx-value-pill="on_sale"
-            class={"rounded-full border px-4 py-2 text-sm font-medium transition #{if @filter_pill == "on_sale", do: "border-gray-400 bg-gray-100 text-black", else: "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"}"}
+            class={"border px-5 py-2 text-[13px] font-semibold uppercase tracking-wide transition #{if @filter_pill == "on_sale", do: "border-brand bg-brand text-white", else: "border-line bg-white text-body hover:border-ink hover:text-ink"}"}
           >
             On Sale
           </button>
@@ -176,7 +182,7 @@ defmodule DansunautoWeb.CategoryComponents do
             type="button"
             phx-click="set_filter_pill"
             phx-value-pill="discounts"
-            class={"rounded-full border px-4 py-2 text-sm font-medium transition #{if @filter_pill == "discounts", do: "border-gray-400 bg-gray-100 text-black", else: "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"}"}
+            class={"border px-5 py-2 text-[13px] font-semibold uppercase tracking-wide transition #{if @filter_pill == "discounts", do: "border-brand bg-brand text-white", else: "border-line bg-white text-body hover:border-ink hover:text-ink"}"}
           >
             Discounts
           </button>
@@ -213,50 +219,65 @@ defmodule DansunautoWeb.CategoryComponents do
 
     ~H"""
     <ul class={"grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 #{@class}"} role="list">
-      <%= for product <- @products do %>
-        <li>
-          <a href={"/products/#{product.slug}"} class="group block">
-            <div class="relative overflow-hidden rounded-lg bg-gray-100">
-              <%= if product.badge do %>
-                <span class={"absolute left-3 top-3 z-10 rounded px-2 py-1 text-xs font-semibold text-white #{if product.badge == "Sale", do: "bg-green-600", else: "bg-red-500"}"}>
-                  {product.badge}
-                </span>
-              <% end %>
-              <img
-                src={product.main_image}
-                alt={product.name}
-                class="aspect-[3/4] w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-            <div class="mt-4 flex gap-2">
-              <%= for color <- product.colors do %>
-                <span
-                  class={"inline-block h-5 w-5 rounded-full border-2 #{if color.selected, do: "border-black", else: "border-transparent"}"}
-                  style={"background-color: #{color.hex}"}
-                  aria-hidden="true"
-                >
-                </span>
-              <% end %>
-            </div>
-            <h3 class="mt-3 text-sm font-medium text-black">{product.name}</h3>
-            <div class="mt-1 flex items-center gap-2">
-              <span class={
-                if product.original_price,
-                  do: "font-semibold text-red-500",
-                  else: "font-semibold text-black"
-              }>
-                KES {DansunautoWeb.Format.price(product.price)}
-              </span>
-              <%= if product.original_price do %>
-                <span class="text-sm text-gray-400 line-through">
-                  KES {DansunautoWeb.Format.price(product.original_price)}
-                </span>
-              <% end %>
-            </div>
+      <li
+        :for={product <- @products}
+        class="group flex flex-col border border-line bg-white transition hover:-translate-y-1 hover:border-brand hover:shadow-2xl"
+      >
+        <a href={"/products/#{product.slug}"} class="block">
+          <div class="relative aspect-square overflow-hidden bg-[#F7F7F7]">
+            <span
+              :if={product.badge}
+              class="absolute left-0 top-4 z-10 bg-brand px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-white"
+            >
+              {product.badge}
+            </span>
+            <img
+              src={product.main_image}
+              alt={product.name}
+              loading="lazy"
+              class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            />
+          </div>
+        </a>
+
+        <div class="flex flex-1 flex-col p-6">
+          <a href={"/products/#{product.slug}"} class="block">
+            <h3 class="font-display text-[17px] font-extrabold leading-snug text-ink transition group-hover:text-brand">
+              {product.name}
+            </h3>
           </a>
-        </li>
-      <% end %>
+          <p class="mt-3 flex items-baseline gap-2">
+            <span class="font-display text-xl font-extrabold text-brand">
+              KES {DansunautoWeb.Format.price(product.price)}
+            </span>
+            <span :if={product.original_price} class="text-[14px] text-mute line-through">
+              KES {DansunautoWeb.Format.price(product.original_price)}
+            </span>
+          </p>
+
+          <button
+            type="button"
+            id={"category-add-to-cart-#{product.id}"}
+            phx-hook="AddSingleToCart"
+            data-product={cart_payload(product)}
+            class="mt-auto w-full border border-ink px-5 py-3 pt-3 text-[13px] font-semibold uppercase tracking-wide text-ink transition hover:bg-ink hover:text-white"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </li>
     </ul>
     """
+  end
+
+  # The shape assets/js/cart.js expects for a cart line.
+  defp cart_payload(product) do
+    Jason.encode!(%{
+      id: product.id,
+      slug: product.slug,
+      name: product.name,
+      image: product.main_image,
+      price: product.price
+    })
   end
 end

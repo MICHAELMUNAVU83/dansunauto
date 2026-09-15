@@ -27,9 +27,11 @@ defmodule DansunautoWeb.HelpLive.Index do
       path: "/admin",
       summary: "Your command centre — get a live snapshot of the store at a glance.",
       items: [
-        {"Revenue & Orders", "Today's revenue, total orders, and pending fulfilment count update in real time."},
+        {"Revenue & Orders",
+         "Today's revenue, total orders, and pending fulfilment count update in real time."},
         {"Quick Stats", "Counts for products, collections, customers, and active promo codes."},
-        {"Recent Orders", "The 5 most recent orders with status badges. Click any row to open the full order detail."},
+        {"Recent Orders",
+         "The 5 most recent orders with status badges. Click any row to open the full order detail."},
         {"Top Products", "Best-selling products ranked by units sold this month."}
       ]
     },
@@ -44,10 +46,14 @@ defmodule DansunautoWeb.HelpLive.Index do
       path: "/admin/orders",
       summary: "View and manage every customer order placed through the store.",
       items: [
-        {"Order List", "All orders sorted newest-first. Filter by status (pending / paid / fulfilled / cancelled). Each row shows the reference, customer name, total, and date."},
-        {"Order Detail", "Click an order to see full item breakdown, delivery address, payment reference, and a timeline of status changes."},
-        {"Status Updates", "Use the status dropdown on the detail page to mark an order as fulfilled or cancelled. The customer receives an email on each change."},
-        {"Search", "Filter orders by reference number or customer email using the search bar at the top."}
+        {"Order List",
+         "All orders sorted newest-first. Filter by status (pending / paid / fulfilled / cancelled). Each row shows the reference, customer name, total, and date."},
+        {"Order Detail",
+         "Click an order to see full item breakdown, delivery address, payment reference, and a timeline of status changes."},
+        {"Status Updates",
+         "Use the status dropdown on the detail page to mark an order as fulfilled or cancelled. The customer receives an email on each change."},
+        {"Search",
+         "Filter orders by reference number or customer email using the search bar at the top."}
       ]
     },
     %{
@@ -61,12 +67,18 @@ defmodule DansunautoWeb.HelpLive.Index do
       path: "/admin/products",
       summary: "Create and maintain the full product catalogue.",
       items: [
-        {"Product List", "Grid view of all products with name, price, collection, and stock status. Use the search bar or collection filter to narrow results."},
-        {"New Product", "Click 'New Product' to open the creation form. Required fields: name, slug (auto-generated from name), price, and at least one image."},
-        {"Product Detail", "Click a product name to open its detail page where you can edit description, size advice, shipping & returns text, SEO meta tags, and manage its images."},
-        {"Variants", "Each product can have multiple colour/size variants managed from the product detail page under the Variants tab. Set stock count per variant."},
-        {"Images", "Upload images from the product detail page. The first image is used as the listing thumbnail. Drag to reorder."},
-        {"Collections", "Assign a product to one or more collections using the collection selector on the edit form."}
+        {"Product List",
+         "Grid view of all products with name, price, collection, and stock status. Use the search bar or collection filter to narrow results."},
+        {"New Product",
+         "Click 'New Product' to open the creation form. Required fields: name, slug (auto-generated from name), price, and at least one image."},
+        {"Product Detail",
+         "Click a product name to open its detail page where you can edit description, size advice, shipping & returns text, SEO meta tags, and manage its images."},
+        {"Variants",
+         "Each product can have multiple colour/size variants managed from the product detail page under the Variants tab. Set stock count per variant."},
+        {"Images",
+         "Upload images from the product detail page. The first image is used as the listing thumbnail. Drag to reorder."},
+        {"Collections",
+         "Assign a product to one or more collections using the collection selector on the edit form."}
       ]
     },
     %{
@@ -80,10 +92,14 @@ defmodule DansunautoWeb.HelpLive.Index do
       path: "/admin/collections",
       summary: "Group products into themed collections displayed on the storefront.",
       items: [
-        {"Collection List", "All collections with product count and active/inactive status. Collections marked inactive are hidden from the public store."},
-        {"Create Collection", "Provide a name, slug, description, and cover image. The slug becomes the public URL path (e.g. /collections/summer-edit)."},
-        {"Edit Collection", "Update name, description, cover image, and toggle visibility at any time."},
-        {"Homepage Display", "Active collections appear in the collections grid and can be randomly selected for the hero banner and countdown section on each page load."}
+        {"Collection List",
+         "All collections with product count and active/inactive status. Collections marked inactive are hidden from the public store."},
+        {"Create Collection",
+         "Provide a name, slug, description, and cover image. The slug becomes the public URL path (e.g. /collections/summer-edit)."},
+        {"Edit Collection",
+         "Update name, description, cover image, and toggle visibility at any time."},
+        {"Homepage Display",
+         "Active collections appear in the collections grid and can be randomly selected for the hero banner and countdown section on each page load."}
       ]
     },
     %{
@@ -97,9 +113,12 @@ defmodule DansunautoWeb.HelpLive.Index do
       path: "/admin/bundles",
       summary: "Create 'Bundle & Save' deals that group multiple products at a discounted price.",
       items: [
-        {"Bundle List", "All bundles with name, price, and active status. Only one bundle can be active (displayed on the homepage) at a time."},
-        {"Create Bundle", "Set a name, bundle price, and description. Then add items by linking existing products."},
-        {"Bundle Items", "Manage the individual products included in a bundle from the bundle detail page. Minimum 2 items are recommended for display."},
+        {"Bundle List",
+         "All bundles with name, price, and active status. Only one bundle can be active (displayed on the homepage) at a time."},
+        {"Create Bundle",
+         "Set a name, bundle price, and description. Then add items by linking existing products."},
+        {"Bundle Items",
+         "Manage the individual products included in a bundle from the bundle detail page. Minimum 2 items are recommended for display."},
         {"Activate", "Toggle a bundle active to show it in the 'Bundle & Save' homepage section."}
       ]
     },
@@ -114,10 +133,14 @@ defmodule DansunautoWeb.HelpLive.Index do
       path: "/admin/promotions",
       summary: "Create and manage discount codes customers can apply at checkout.",
       items: [
-        {"Code List", "All promo codes with type (percentage / fixed), discount value, usage count, and expiry date."},
-        {"Create Code", "Enter the code text, choose discount type, set the value (e.g. 10 for 10% off or 500 for KES 500 off), optional minimum order amount, and expiry date."},
-        {"Usage Tracking", "Each time a code is redeemed the usage counter increments. You can see which orders used a specific code from the order list."},
-        {"Deactivate", "Toggle a code inactive to prevent further redemptions without deleting it."}
+        {"Code List",
+         "All promo codes with type (percentage / fixed), discount value, usage count, and expiry date."},
+        {"Create Code",
+         "Enter the code text, choose discount type, set the value (e.g. 10 for 10% off or 500 for KES 500 off), optional minimum order amount, and expiry date."},
+        {"Usage Tracking",
+         "Each time a code is redeemed the usage counter increments. You can see which orders used a specific code from the order list."},
+        {"Deactivate",
+         "Toggle a code inactive to prevent further redemptions without deleting it."}
       ]
     },
     %{
@@ -131,10 +154,13 @@ defmodule DansunautoWeb.HelpLive.Index do
       path: "/admin/customers",
       summary: "Browse customers who have placed orders through the store.",
       items: [
-        {"Customer List", "All unique customers derived from placed orders, with email, phone, and order count."},
-        {"Customer Detail", "Click a customer to see their full order history, total spend, and delivery addresses."},
+        {"Customer List",
+         "All unique customers derived from placed orders, with email, phone, and order count."},
+        {"Customer Detail",
+         "Click a customer to see their full order history, total spend, and delivery addresses."},
         {"Search", "Filter by name or email using the search bar."},
-        {"Note", "Customer accounts are not required for checkout — customers are tracked by their email at order time."}
+        {"Note",
+         "Customer accounts are not required for checkout — customers are tracked by their email at order time."}
       ]
     },
     %{
@@ -148,10 +174,14 @@ defmodule DansunautoWeb.HelpLive.Index do
       path: "/admin/team",
       summary: "Manage the people who have access to this admin panel.",
       items: [
-        {"Member List", "All admin accounts with their name, email, role, and last sign-in time."},
-        {"Invite Member", "Click 'Add Member', enter their name, email, a temporary password, and assign a role. They will receive a welcome email with login instructions."},
-        {"Roles", "super_admin — full access including team management. admin — can manage catalogue, orders, and content. member — read-only access."},
-        {"Edit / Remove", "Update a member's name or role inline. Use the delete button to revoke access (you cannot delete yourself)."}
+        {"Member List",
+         "All admin accounts with their name, email, role, and last sign-in time."},
+        {"Invite Member",
+         "Click 'Add Member', enter their name, email, a temporary password, and assign a role. They will receive a welcome email with login instructions."},
+        {"Roles",
+         "super_admin — full access including team management. admin — can manage catalogue, orders, and content. member — read-only access."},
+        {"Edit / Remove",
+         "Update a member's name or role inline. Use the delete button to revoke access (you cannot delete yourself)."}
       ]
     },
     %{
@@ -163,12 +193,16 @@ defmodule DansunautoWeb.HelpLive.Index do
       """,
       title: "Info Pages",
       path: "/admin/pages",
-      summary: "Edit the public-facing informational pages like How to Order, Size Guide, and Returns.",
+      summary:
+        "Edit the public-facing informational pages like How to Order, Size Guide, and Returns.",
       items: [
         {"Page List", "All info pages with their slug, title, and active/inactive status."},
-        {"Edit Content", "Click the edit icon on any page to update its title, meta description, and body content. Content supports plain text with line breaks."},
-        {"Activate / Deactivate", "Toggle a page's active status. Inactive pages are hidden from the public /info/:slug route and from the storefront footer links."},
-        {"Public URL", "Each page is accessible at /info/:slug (e.g. /info/spare-parts). Links appear automatically in the storefront footer under Customer Care."}
+        {"Edit Content",
+         "Click the edit icon on any page to update its title, meta description, and body content. Content supports plain text with line breaks."},
+        {"Activate / Deactivate",
+         "Toggle a page's active status. Inactive pages are hidden from the public /info/:slug route and from the storefront footer links."},
+        {"Public URL",
+         "Each page is accessible at /info/:slug (e.g. /info/spare-parts). Links appear automatically in the storefront footer under Customer Care."}
       ]
     }
   ]
@@ -181,16 +215,20 @@ defmodule DansunautoWeb.HelpLive.Index do
     ~H"""
     <div class="flex h-full min-h-screen flex-col">
       <%!-- Header --%>
-      <div class="border-b border-gray-100 bg-white px-6 py-5">
+      <div class="border-b border-line bg-white px-6 py-5">
         <div class="flex items-center gap-3">
-          <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#C8001F]/10">
-            <svg class="h-5 w-5 text-[#C8001F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-brand/10">
+            <svg class="h-5 w-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
           </div>
           <div>
-            <h1 class="text-lg font-semibold text-gray-900">Admin Help & Reference</h1>
+            <h1 class="text-lg font-semibold text-ink">Admin Help & Reference</h1>
             <p class="text-sm text-gray-500">A guide to every section of the admin panel</p>
           </div>
         </div>
@@ -198,7 +236,7 @@ defmodule DansunautoWeb.HelpLive.Index do
 
       <div class="flex flex-1 overflow-hidden">
         <%!-- Section nav --%>
-        <nav class="hidden w-56 shrink-0 border-r border-gray-100 bg-gray-50/50 py-4 lg:block">
+        <nav class="hidden w-56 shrink-0 border-r border-line bg-gray-50/50 py-4 lg:block">
           <p class="px-4 pb-2 text-[10px] font-semibold uppercase tracking-widest text-gray-400">
             Sections
           </p>
@@ -209,13 +247,13 @@ defmodule DansunautoWeb.HelpLive.Index do
               class={[
                 "flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-sm font-medium transition",
                 if(@active_section == section.id,
-                  do: "bg-white text-[#C8001F] shadow-sm border-r-2 border-[#C8001F]",
-                  else: "text-gray-600 hover:bg-white hover:text-gray-900"
+                  do: "bg-white text-brand shadow-sm border-r-2 border-brand",
+                  else: "text-gray-600 hover:bg-white hover:text-ink"
                 )
               ]}
             >
               <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <%= Phoenix.HTML.raw(section.icon) %>
+                {Phoenix.HTML.raw(section.icon)}
               </svg>
               {section.label}
             </button>
@@ -237,8 +275,8 @@ defmodule DansunautoWeb.HelpLive.Index do
                   class={[
                     "rounded-full border px-3 py-1 text-xs font-medium transition",
                     if(@active_section == section.id,
-                      do: "border-[#C8001F] bg-[#C8001F] text-white",
-                      else: "border-gray-200 text-gray-600 hover:border-gray-400"
+                      do: "border-brand bg-brand text-white",
+                      else: "border-line text-gray-600 hover:border-gray-400"
                     )
                   ]}
                 >
@@ -253,21 +291,31 @@ defmodule DansunautoWeb.HelpLive.Index do
             <div class="max-w-2xl">
               <%!-- Section header --%>
               <div class="mb-6 flex items-start gap-4">
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#C8001F]/10">
-                  <svg class="h-6 w-6 text-[#C8001F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <%= Phoenix.HTML.raw(section.icon) %>
+                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand/10">
+                  <svg
+                    class="h-6 w-6 text-brand"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    {Phoenix.HTML.raw(section.icon)}
                   </svg>
                 </div>
                 <div>
-                  <h2 class="text-2xl font-bold text-gray-900">{section.title}</h2>
+                  <h2 class="text-2xl font-bold text-ink">{section.title}</h2>
                   <p class="mt-1 text-sm text-gray-500">{section.summary}</p>
                   <a
                     href={section.path}
-                    class="mt-2 inline-flex items-center gap-1 text-xs font-medium text-[#C8001F] hover:underline"
+                    class="mt-2 inline-flex items-center gap-1 text-xs font-medium text-brand hover:underline"
                   >
                     Go to {section.title}
                     <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </a>
                 </div>
@@ -276,8 +324,8 @@ defmodule DansunautoWeb.HelpLive.Index do
               <%!-- Items --%>
               <div class="space-y-3">
                 <%= for {term, desc} <- section.items do %>
-                  <div class="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-                    <p class="mb-1 text-sm font-semibold text-gray-900">{term}</p>
+                  <div class="rounded-xl border border-line bg-white p-4 shadow-sm">
+                    <p class="mb-1 text-sm font-semibold text-ink">{term}</p>
                     <p class="text-sm leading-relaxed text-gray-600">{desc}</p>
                   </div>
                 <% end %>

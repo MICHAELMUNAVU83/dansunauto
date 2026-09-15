@@ -16,7 +16,7 @@ defmodule DansunautoWeb.SidebarComponents do
       |> assign_new(:current_user, fn -> nil end)
 
     ~H"""
-    <aside class="flex h-screen w-[220px] flex-shrink-0 flex-col border-r border-gray-200 bg-white xl:w-[240px]">
+    <aside class="flex h-screen w-[220px] flex-shrink-0 flex-col border-r border-line bg-white xl:w-[240px]">
       <.sidebar_logo />
 
       <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
@@ -150,21 +150,21 @@ defmodule DansunautoWeb.SidebarComponents do
 
   defp sidebar_logo(assigns) do
     ~H"""
-    <div class="flex items-center gap-2.5 border-b border-gray-200 px-4 py-3.5">
+    <div class="flex items-center gap-2.5 border-b border-line px-4 py-3.5">
       <img
         src="/images/dansunauto-logo.png"
-        alt="Dansunauto"
-        class="h-8 w-8 flex-shrink-0 rounded-full object-cover object-top ring-2 ring-[#C8001F]/60"
+        alt="Dansun Auto Care"
+        class="h-9 w-9 flex-shrink-0 rounded-full object-cover object-top ring-2 ring-brand/60"
       />
       <div class="min-w-0">
-        <span class="brand-logo block text-[17px] leading-tight text-gray-900">
-          Dansunauto's Closet<span class="text-[#C8001F]">.</span>
+        <span class="block font-display text-[17px] uppercase leading-tight tracking-wide text-ink">
+          Dansun Auto <span class="text-brand">Care</span>
         </span>
-        <span class="block text-[9px] uppercase tracking-widest text-gray-400">
-          Fashion &amp; Function
+        <span class="block text-[9px] uppercase tracking-widest text-mute">
+          Umoja I, Nairobi
         </span>
       </div>
-      <span class="ml-auto flex-shrink-0 rounded-md bg-[#C8001F]/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#C8001F]">
+      <span class="ml-auto flex-shrink-0 rounded-md bg-brand/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand">
         Admin
       </span>
     </div>
@@ -175,7 +175,7 @@ defmodule DansunautoWeb.SidebarComponents do
 
   defp nav_section(assigns) do
     ~H"""
-    <p class="mb-1 mt-2 px-2 text-[10px] font-semibold uppercase tracking-widest text-gray-400">
+    <p class="mb-1 mt-3 px-2 font-display text-[10px] uppercase tracking-[0.18em] text-mute">
       {@label}
     </p>
     """
@@ -185,7 +185,7 @@ defmodule DansunautoWeb.SidebarComponents do
 
   defp nav_divider(assigns) do
     ~H"""
-    <div class="my-2 h-px bg-gray-100"></div>
+    <div class="my-2 h-px bg-line"></div>
     """
   end
 
@@ -215,12 +215,12 @@ defmodule DansunautoWeb.SidebarComponents do
       class={[
         "group flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-[13px] font-medium transition-all",
         if(@active,
-          do: "bg-[#C8001F] text-white shadow-sm shadow-[#C8001F]/30",
-          else: "text-gray-600 hover:bg-[#C8001F]/8 hover:text-[#C8001F]"
+          do: "bg-brand text-white shadow-sm shadow-brand/30",
+          else: "text-body hover:bg-brand/5 hover:text-brand"
         )
       ]}
     >
-      <span class={if @active, do: "text-white", else: "text-gray-400 group-hover:text-[#C8001F]"}>
+      <span class={if @active, do: "text-white", else: "text-mute group-hover:text-brand"}>
         <.nav_icon name={@icon} />
       </span>
 
@@ -231,7 +231,7 @@ defmodule DansunautoWeb.SidebarComponents do
           "ml-auto rounded-full px-2 py-0.5 text-[10px] font-semibold tabular-nums",
           if(@active,
             do: "bg-white/20 text-white",
-            else: "bg-[#C8001F]/10 text-[#C8001F]"
+            else: "bg-brand/10 text-brand"
           )
         ]}>
           {@badge}
@@ -241,34 +241,29 @@ defmodule DansunautoWeb.SidebarComponents do
     """
   end
 
-  defp badge_class(:alert), do: "bg-red-100 text-red-600"
-  defp badge_class(:count), do: "bg-gray-100 text-gray-500"
-  defp badge_class(:default), do: "bg-gray-100 text-gray-600"
-  defp badge_class(_), do: "bg-gray-100 text-gray-500"
-
   # ── Footer / User ─────────────────────────────────────────────────
 
   defp sidebar_footer(assigns) do
     assigns = assign_new(assigns, :current_user, fn -> nil end)
 
     ~H"""
-    <div class="border-t border-gray-100 p-3 space-y-1">
+    <div class="border-t border-line p-3 space-y-1">
       <!-- User row -->
       <a
         href={~p"/admin/team"}
-        class="group flex items-center gap-2.5 rounded-xl px-2 py-2 transition hover:bg-gray-50"
+        class="group flex items-center gap-2.5 rounded-xl px-2 py-2 transition hover:bg-[#f9f9f7]"
       >
         <div class={"flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold text-white shadow-sm #{user_avatar_color(@current_user)}"}>
           {user_initials(@current_user)}
         </div>
         <div class="min-w-0 flex-1">
-          <p class="truncate text-[13px] font-semibold text-gray-900">
+          <p class="truncate text-[13px] font-semibold text-ink">
             {user_display_name(@current_user)}
           </p>
-          <p class="text-[11px] text-gray-400">{user_role_label(@current_user)}</p>
+          <p class="text-[11px] text-mute">{user_role_label(@current_user)}</p>
         </div>
         <svg
-          class="h-3.5 w-3.5 flex-shrink-0 text-gray-300 group-hover:text-gray-500"
+          class="h-3.5 w-3.5 flex-shrink-0 text-mute group-hover:text-brand"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -281,10 +276,10 @@ defmodule DansunautoWeb.SidebarComponents do
     <!-- Back to website -->
       <a
         href="/"
-        class="group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-[13px] font-medium text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
+        class="group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-[13px] font-medium text-body transition hover:bg-[#f9f9f7] hover:text-brand"
       >
         <svg
-          class="h-4 w-4 text-gray-400 group-hover:text-gray-600"
+          class="h-4 w-4 text-mute group-hover:text-brand"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -305,10 +300,10 @@ defmodule DansunautoWeb.SidebarComponents do
         <input type="hidden" name="_csrf_token" value={Plug.CSRFProtection.get_csrf_token()} />
         <button
           type="submit"
-          class="group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-[13px] font-medium text-gray-500 transition hover:bg-red-50 hover:text-[#C8001F]"
+          class="group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-[13px] font-medium text-body transition hover:bg-brand/5 hover:text-brand"
         >
           <svg
-            class="h-4 w-4 text-gray-400 group-hover:text-[#C8001F]"
+            class="h-4 w-4 text-mute group-hover:text-brand"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -351,11 +346,11 @@ defmodule DansunautoWeb.SidebarComponents do
     email |> String.slice(0, 2) |> String.upcase()
   end
 
-  defp user_avatar_color(nil), do: "bg-[#C8001F]"
+  defp user_avatar_color(nil), do: "bg-brand"
 
   defp user_avatar_color(%{id: id}) do
     colors = [
-      "bg-[#C8001F]",
+      "bg-brand",
       "bg-blue-500",
       "bg-violet-500",
       "bg-teal-500",
@@ -519,7 +514,11 @@ defmodule DansunautoWeb.SidebarComponents do
   defp nav_icon(%{name: "message-circle"} = assigns) do
     ~H"""
     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+      />
     </svg>
     """
   end
@@ -531,23 +530,4 @@ defmodule DansunautoWeb.SidebarComponents do
     </svg>
     """
   end
-
-  # ── Helpers ───────────────────────────────────────────────────────
-
-  defp initials(nil), do: "A"
-
-  defp initials(%{name: name}) when is_binary(name) do
-    name
-    |> String.split()
-    |> Enum.take(2)
-    |> Enum.map(&String.first/1)
-    |> Enum.join()
-    |> String.upcase()
-  end
-
-  defp initials(_), do: "A"
-
-  defp admin_name(nil), do: "Admin"
-  defp admin_name(%{name: name}), do: name
-  defp admin_name(_), do: "Admin"
 end

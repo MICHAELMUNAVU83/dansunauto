@@ -52,16 +52,23 @@ defmodule DansunautoWeb.TestimonialLive.Index do
   def render(assigns) do
     ~H"""
     <%!-- Page header --%>
-    <div class="relative mb-6 overflow-hidden rounded-3xl bg-gradient-to-r from-[#C8001F] to-[#8b0014] px-7 py-6 text-white shadow-md">
-      <div class="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/5"></div>
+    <div class="relative mb-6 overflow-hidden rounded-3xl bg-gradient-to-r from-brand to-[#8b0014] px-7 py-6 text-white shadow-md">
+      <div class="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/5">
+      </div>
       <div class="flex items-center justify-between">
         <div>
           <p class="text-xs font-medium uppercase tracking-widest text-red-200">Store</p>
-          <h1 class="mt-0.5 font-serif text-2xl font-bold">Testimonials</h1>
+          <h1 class="mt-0.5 font-display uppercase tracking-wide text-2xl font-bold">Testimonials</h1>
         </div>
         <.link patch={~p"/admin/testimonials/new"}>
-          <button class="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-[#C8001F] transition hover:bg-red-50 shadow-sm">
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <button class="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-brand transition hover:bg-red-50 shadow-sm">
+            <svg
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
             </svg>
             New Testimonial
@@ -71,15 +78,17 @@ defmodule DansunautoWeb.TestimonialLive.Index do
     </div>
 
     <%!-- Table card --%>
-    <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
-      <div class="border-b border-gray-100 px-5 py-4">
-        <p class="font-serif text-sm font-semibold text-gray-700">All Testimonials</p>
+    <div class="overflow-hidden rounded-3xl border border-line bg-white shadow-sm">
+      <div class="border-b border-line px-5 py-4">
+        <p class="font-display uppercase tracking-wide text-sm font-semibold text-gray-700">
+          All Testimonials
+        </p>
       </div>
 
       <div class="overflow-x-auto">
         <table class="w-full">
           <thead>
-            <tr class="border-b border-gray-100 bg-gray-50/80">
+            <tr class="border-b border-line bg-gray-50/80">
               <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-gray-400">
                 Customer
               </th>
@@ -108,7 +117,7 @@ defmodule DansunautoWeb.TestimonialLive.Index do
             <tr
               :for={{id, t} <- @streams.testimonials}
               id={id}
-              class="group border-b border-gray-100 transition-colors last:border-0 hover:bg-gray-50"
+              class="group border-b border-line transition-colors last:border-0 hover:bg-gray-50"
             >
               <%!-- Customer --%>
               <td class="px-5 py-3.5">
@@ -117,14 +126,14 @@ defmodule DansunautoWeb.TestimonialLive.Index do
                     <img
                       src={t.image}
                       alt={t.name}
-                      class="h-9 w-9 flex-shrink-0 rounded-full border border-gray-200 object-cover"
+                      class="h-9 w-9 flex-shrink-0 rounded-full border border-line object-cover"
                     />
                   <% else %>
                     <div class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-gray-100 text-sm font-semibold text-gray-500">
                       {String.first(t.name || "?")}
                     </div>
                   <% end %>
-                  <span class="text-sm font-semibold text-gray-900">{t.name}</span>
+                  <span class="text-sm font-semibold text-ink">{t.name}</span>
                 </div>
               </td>
 
@@ -138,7 +147,10 @@ defmodule DansunautoWeb.TestimonialLive.Index do
                 <div class="flex items-center gap-0.5">
                   <%= for i <- 1..5 do %>
                     <svg
-                      class={["h-3.5 w-3.5", if(i <= (t.rating || 0), do: "text-amber-400", else: "text-gray-200")]}
+                      class={[
+                        "h-3.5 w-3.5",
+                        if(i <= (t.rating || 0), do: "text-amber-400", else: "text-gray-200")
+                      ]}
                       viewBox="0 0 24 24"
                       fill="currentColor"
                     >
@@ -153,11 +165,17 @@ defmodule DansunautoWeb.TestimonialLive.Index do
                 <%= if t.product do %>
                   <.link navigate={~p"/admin/products/#{t.product}"} class="flex items-center gap-2">
                     <%= if t.product.image && t.product.image != "" do %>
-                      <img src={t.product.image} alt={t.product.name} class="h-7 w-7 flex-shrink-0 rounded-lg border border-gray-200 object-cover" />
+                      <img
+                        src={t.product.image}
+                        alt={t.product.name}
+                        class="h-7 w-7 flex-shrink-0 rounded-lg border border-line object-cover"
+                      />
                     <% else %>
-                      <div class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-sm">👗</div>
+                      <div class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-sm">
+                        🔧
+                      </div>
                     <% end %>
-                    <span class="text-sm text-gray-700 hover:text-gray-900">{t.product.name}</span>
+                    <span class="text-sm text-gray-700 hover:text-ink">{t.product.name}</span>
                   </.link>
                 <% else %>
                   <span class="text-xs text-gray-300">—</span>
@@ -190,8 +208,14 @@ defmodule DansunautoWeb.TestimonialLive.Index do
               <td class="px-5 py-3.5">
                 <div class="flex items-center justify-end gap-1 opacity-0 transition-opacity group-hover:opacity-100">
                   <.link navigate={~p"/admin/testimonials/#{t}"}>
-                    <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
-                      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
+                      <svg
+                        class="h-3.5 w-3.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                         <circle cx="12" cy="12" r="3" />
                       </svg>
@@ -199,8 +223,14 @@ defmodule DansunautoWeb.TestimonialLive.Index do
                   </.link>
 
                   <.link patch={~p"/admin/testimonials/#{t}/edit"}>
-                    <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
-                      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-gray-400 transition hover:border-gray-300 hover:text-gray-700">
+                      <svg
+                        class="h-3.5 w-3.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                       </svg>
@@ -210,9 +240,15 @@ defmodule DansunautoWeb.TestimonialLive.Index do
                   <button
                     phx-click={JS.push("delete", value: %{id: t.id}) |> hide("##{id}")}
                     data-confirm="Delete this testimonial?"
-                    class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 text-gray-400 transition hover:border-red-200 hover:bg-red-50 hover:text-red-500"
+                    class="flex h-8 w-8 items-center justify-center rounded-lg border border-line text-gray-400 transition hover:border-red-200 hover:bg-red-50 hover:text-red-500"
                   >
-                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg
+                      class="h-3.5 w-3.5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
                       <polyline points="3 6 5 6 21 6" />
                       <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
                       <path d="M10 11v6m4-6v6" />
@@ -232,7 +268,13 @@ defmodule DansunautoWeb.TestimonialLive.Index do
         class="flex flex-col items-center justify-center py-20 text-center"
       >
         <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-100">
-          <svg class="h-6 w-6 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <svg
+            class="h-6 w-6 text-gray-400"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
             <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
             <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" />
           </svg>

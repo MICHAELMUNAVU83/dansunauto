@@ -1,5 +1,8 @@
 defmodule DansunautoWeb.SuccessLive.Index do
   use DansunautoWeb, :live_view
+
+  # Module-qualified: HomeComponents (imported via `use`) defines a clashing footer/1.
+  alias DansunautoWeb.AutoComponents
   import DansunautoWeb.HomeComponents
   require Logger
 
@@ -18,7 +21,8 @@ defmodule DansunautoWeb.SuccessLive.Index do
        |> assign(:status, :no_reference)
        |> assign(:order, nil)}
     else
-      socket = assign(socket, page_title: "Order Confirmed | Dansunauto", status: :verifying, order: nil)
+      socket =
+        assign(socket, page_title: "Order Confirmed | Dansunauto", status: :verifying, order: nil)
 
       if connected?(socket) do
         send(self(), {:verify_payment, reference})
@@ -52,19 +56,28 @@ defmodule DansunautoWeb.SuccessLive.Index do
               try do
                 case OrderNotifier.send_confirmation(paid_order) do
                   {:ok, _} ->
-                    Logger.info("[Email] Order confirmation sent to #{paid_order.email} for #{paid_order.reference}")
+                    Logger.info(
+                      "[Email] Order confirmation sent to #{paid_order.email} for #{paid_order.reference}"
+                    )
+
                   {:error, reason} ->
-                    Logger.error("[Email] Failed to send confirmation to #{paid_order.email}: #{inspect(reason)}")
+                    Logger.error(
+                      "[Email] Failed to send confirmation to #{paid_order.email}: #{inspect(reason)}"
+                    )
                 end
 
                 case OrderNotifier.send_admin_notification(paid_order) do
-                  {:ok, _} -> :ok
+                  {:ok, _} ->
+                    :ok
+
                   {:error, reason} ->
                     Logger.error("[Email] Failed to send admin notification: #{inspect(reason)}")
                 end
               rescue
                 e ->
-                  Logger.error("[Email] Exception sending order emails for #{paid_order.reference}: #{Exception.message(e)}\n#{Exception.format_stacktrace(__STACKTRACE__)}")
+                  Logger.error(
+                    "[Email] Exception sending order emails for #{paid_order.reference}: #{Exception.message(e)}\n#{Exception.format_stacktrace(__STACKTRACE__)}"
+                  )
               end
             end)
 
@@ -88,8 +101,10 @@ defmodule DansunautoWeb.SuccessLive.Index do
   @impl true
   def render(assigns) do
     ~H"""
-    <div id="success-page" class="min-h-screen bg-white" phx-hook="CartHook">
-      <.navbar cart_items={[]} />
+    <div id="success-page" class="min-h-screen bg-white">
+      <AutoComponents.top_bar />
+      <AutoComponents.header_info />
+      <AutoComponents.primary_nav />
 
       <div class="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
         <%= case @status do %>
@@ -155,7 +170,7 @@ defmodule DansunautoWeb.SuccessLive.Index do
                             class="h-full w-full object-cover"
                           />
                         <% else %>
-                          <div class="flex h-full items-center justify-center text-lg">👗</div>
+                          <div class="flex h-full items-center justify-center text-lg">🔧</div>
                         <% end %>
                       </div>
                       <div class="flex-1">
@@ -165,7 +180,9 @@ defmodule DansunautoWeb.SuccessLive.Index do
                         </p>
                       </div>
                       <span class="text-sm font-semibold">
-                        KES {DansunautoWeb.Format.price((item["price"] || 0) * (item["quantity"] || 1))}
+                        KES {DansunautoWeb.Format.price(
+                          (item["price"] || 0) * (item["quantity"] || 1)
+                        )}
                       </span>
                     </div>
                   <% end %>
@@ -229,7 +246,9 @@ defmodule DansunautoWeb.SuccessLive.Index do
         <% end %>
       </div>
 
-      <.footer />
+      <AutoComponents.footer />
+      <AutoComponents.back_to_top />
+      <AutoComponents.cart_drawer />
     </div>
     """
   end

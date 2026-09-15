@@ -65,7 +65,7 @@ defmodule Dansunauto.Shop.DummyData do
       background_image: "/images/main.jpeg",
       # Slides for the banner carousel (big image changes when dots are clicked)
       slides: [
-        %{image: "/images/main.jpeg", alt: "Fashion model"},
+        %{image: "/images/main.jpeg", alt: "Dansun Auto Care workshop"},
         %{image: "/images/main.jpeg", alt: "Spring collection"},
         %{image: "/images/main.jpeg", alt: "Modern dress"},
         %{image: "/images/main.jpeg", alt: "Denim jacket"},
@@ -766,7 +766,7 @@ defmodule Dansunauto.Shop.DummyData do
   # =============================================================================
   def marquee_items do
     [
-      %{icon: "👗", text: "New Arrivals Every Week"},
+      %{icon: "🔧", text: "New Arrivals Every Week"},
       %{icon: "👚", text: "Limited Edition Styles"},
       %{icon: "👒", text: "Shop the Latest Trends"},
       %{icon: "👜", text: "Cute. Comfy. Cool."}
@@ -835,7 +835,7 @@ defmodule Dansunauto.Shop.DummyData do
         %{name: "TikTok", href: "#", icon: "tiktok"},
         %{name: "Twitter", href: "#", icon: "twitter"}
       ],
-      copyright: "Copyright © Dansunauto's Closet 2026",
+      copyright: "Copyright © Dansun Auto Care 2026",
       designed_by: %{name: "Michael Munavu", href: "www.michaelmunavu.com"},
       powered_by: %{name: "Virgil Africa", href: "www.virgil.africa"}
     }
