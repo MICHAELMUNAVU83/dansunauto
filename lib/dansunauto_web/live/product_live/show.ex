@@ -572,15 +572,15 @@ defmodule DansunautoWeb.ProductLive.Show do
             class="space-y-4"
           >
             <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-              <%!-- Color name --%>
+              <%!-- Variant name --%>
               <div>
-                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Color Name</label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Variant Name</label>
                 <input
                   type="text"
                   name={@variant_form[:color_name].name}
                   value={@variant_form[:color_name].value}
                   id={@variant_form[:color_name].id}
-                  placeholder="e.g. Midnight Black"
+                  placeholder="e.g. OEM, Aftermarket"
                   class="w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
                 />
                 <.error :for={msg <- Enum.map(@variant_form[:color_name].errors, &translate_error/1)}>
@@ -588,9 +588,9 @@ defmodule DansunautoWeb.ProductLive.Show do
                 </.error>
               </div>
 
-              <%!-- Color hex --%>
+              <%!-- Swatch colour --%>
               <div>
-                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Color</label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Swatch Colour</label>
                 <div
                   id="variant-color-picker-add"
                   phx-hook="SyncColorPicker"
@@ -615,15 +615,15 @@ defmodule DansunautoWeb.ProductLive.Show do
                 </.error>
               </div>
 
-              <%!-- Size --%>
+              <%!-- Vehicle model --%>
               <div>
-                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Size</label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Vehicle Model</label>
                 <input
                   type="text"
                   name={@variant_form[:size].name}
                   value={@variant_form[:size].value}
                   id={@variant_form[:size].id}
-                  placeholder="e.g. S, M, L, XL"
+                  placeholder="e.g. Toyota Premio/Allion"
                   class="w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
                 />
                 <.error :for={msg <- Enum.map(@variant_form[:size].errors, &translate_error/1)}>
@@ -694,15 +694,15 @@ defmodule DansunautoWeb.ProductLive.Show do
             class="space-y-4"
           >
             <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-              <%!-- Color name --%>
+              <%!-- Variant name --%>
               <div>
-                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Color Name</label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Variant Name</label>
                 <input
                   type="text"
                   name={@edit_variant_form[:color_name].name}
                   value={@edit_variant_form[:color_name].value}
                   id={@edit_variant_form[:color_name].id}
-                  placeholder="e.g. Midnight Black"
+                  placeholder="e.g. OEM, Aftermarket"
                   class="w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
                 />
                 <.error :for={
@@ -712,9 +712,9 @@ defmodule DansunautoWeb.ProductLive.Show do
                 </.error>
               </div>
 
-              <%!-- Color hex --%>
+              <%!-- Swatch colour --%>
               <div>
-                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Color</label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Swatch Colour</label>
                 <div
                   id="variant-color-picker-edit"
                   phx-hook="SyncColorPicker"
@@ -741,15 +741,15 @@ defmodule DansunautoWeb.ProductLive.Show do
                 </.error>
               </div>
 
-              <%!-- Size --%>
+              <%!-- Vehicle model --%>
               <div>
-                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Size</label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Vehicle Model</label>
                 <input
                   type="text"
                   name={@edit_variant_form[:size].name}
                   value={@edit_variant_form[:size].value}
                   id={@edit_variant_form[:size].id}
-                  placeholder="e.g. S, M, L, XL"
+                  placeholder="e.g. Toyota Premio/Allion"
                   class="w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-sm text-ink placeholder-gray-400 transition focus:border-gray-400 focus:outline-none"
                 />
                 <.error :for={msg <- Enum.map(@edit_variant_form[:size].errors, &translate_error/1)}>
@@ -816,10 +816,10 @@ defmodule DansunautoWeb.ProductLive.Show do
             <thead>
               <tr class="border-b border-line bg-gray-50">
                 <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
-                  Color
+                  Variant
                 </th>
                 <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
-                  Size
+                  Vehicle Model
                 </th>
                 <th class="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-400">
                   Stock
