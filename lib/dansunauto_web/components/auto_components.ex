@@ -13,17 +13,19 @@ defmodule DansunautoWeb.AutoComponents do
   def top_bar(assigns) do
     ~H"""
     <div class="bg-ink text-white">
-      <div class="mx-auto flex max-w-wrap flex-col gap-2 px-4 py-2.5 text-[13px] sm:flex-row sm:items-center sm:justify-between">
+      <div class="mx-auto flex max-w-wrap flex-col gap-2 px-4 py-2.5 text-[12px] sm:flex-row sm:items-center sm:justify-between sm:text-[13px]">
         <p class="flex flex-wrap items-center gap-x-2 gap-y-1">
           <span class="font-medium text-white">
             <span class="text-brand">Repairs, servicing &amp; spare parts</span> for Nairobi motorists
           </span>
           <span class="hidden text-white/45 sm:inline">|</span>
-          <span class="text-white/65">
+          <%!-- The number is repeated in the header and the sticky Call Now
+                button, so this line only earns its space on wider screens. --%>
+          <span class="hidden text-white/65 sm:inline">
             Call or WhatsApp +254 724 335924 — we will confirm availability.
           </span>
         </p>
-        <nav aria-label="Secondary">
+        <nav aria-label="Secondary" class="hidden sm:block">
           <ul class="flex flex-wrap items-center gap-x-5 gap-y-1 text-white/75">
             <li>
               <a class="transition hover:text-brand" href="/#parts">Spare Parts</a>
@@ -50,25 +52,27 @@ defmodule DansunautoWeb.AutoComponents do
   def header_info(assigns) do
     ~H"""
     <div class="border-b border-line bg-white">
-      <div class="mx-auto flex max-w-wrap flex-wrap items-center justify-between gap-6 px-4 py-6">
-        <a href="/" class="flex shrink-0 items-center gap-3">
+      <div class="mx-auto flex max-w-wrap flex-wrap items-center justify-between gap-x-6 gap-y-4 px-4 py-4 lg:py-6">
+        <a href="/" class="flex shrink-0 items-center gap-2.5 sm:gap-3">
           <img
             src="/images/dansunauto-logo.png"
             alt="Dansun Auto Care"
-            class="h-11 w-11 rounded-[10px] object-cover"
+            class="h-10 w-10 rounded-[10px] object-cover sm:h-11 sm:w-11"
           />
           <span class="leading-none">
-            <span class="block font-display text-3xl font-black uppercase tracking-tight text-ink">
+            <span class="block font-display text-xl font-black uppercase tracking-tight text-ink sm:text-2xl lg:text-3xl">
               Dansun Auto <span class="text-brand">Care</span>
             </span>
-            <span class="mt-1 block text-[11px] font-medium uppercase tracking-[0.28em] text-mute">
+            <span class="mt-1 block text-[9px] font-medium uppercase tracking-[0.2em] text-mute sm:text-[11px] sm:tracking-[0.28em]">
               Repairs &ndash; Servicing &ndash; Spare Parts
             </span>
           </span>
         </a>
 
-        <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
-          <div class="flex items-start gap-3">
+        <%!-- Account and cart sit beside the logo on mobile; the search field
+              drops to its own full-width row below them. --%>
+        <div class="flex flex-1 flex-wrap items-center justify-end gap-x-6 gap-y-4 lg:gap-x-8">
+          <div class="hidden items-start gap-3 lg:flex">
             <svg
               class="mt-0.5 h-6 w-6 shrink-0 text-brand"
               viewBox="0 0 24 24"
@@ -88,7 +92,7 @@ defmodule DansunautoWeb.AutoComponents do
             </div>
           </div>
 
-          <div class="flex items-start gap-3">
+          <div class="hidden items-start gap-3 lg:flex">
             <svg
               class="mt-0.5 h-6 w-6 shrink-0 text-brand"
               viewBox="0 0 24 24"
@@ -110,7 +114,7 @@ defmodule DansunautoWeb.AutoComponents do
           </div>
 
           <form
-            class="group flex items-center gap-2.5 rounded-full bg-[#f5f5f3] py-1.5 pl-4 pr-1.5 transition focus-within:bg-white focus-within:shadow-sm focus-within:ring-2 focus-within:ring-brand/15"
+            class="group order-last flex w-full items-center gap-2.5 rounded-full bg-[#f5f5f3] py-1.5 pl-4 pr-1.5 transition focus-within:bg-white focus-within:shadow-sm focus-within:ring-2 focus-within:ring-brand/15 lg:order-0 lg:w-auto"
             role="search"
             onsubmit="return false;"
           >
@@ -132,7 +136,7 @@ defmodule DansunautoWeb.AutoComponents do
               id="site-search"
               type="search"
               placeholder="Search spare parts"
-              class="w-40 bg-transparent text-[14px] text-ink outline-none placeholder:text-mute focus:w-52 motion-safe:transition-all [&::-webkit-search-cancel-button]:appearance-none"
+              class="w-full min-w-0 flex-1 bg-transparent text-[14px] text-ink outline-none placeholder:text-mute motion-safe:transition-all lg:w-40 lg:flex-none lg:focus:w-52 [&::-webkit-search-cancel-button]:appearance-none"
             />
             <%!-- Arrow, not a second magnifier: the leading icon already
                   labels the field, so the button reads as "go". --%>
@@ -484,7 +488,7 @@ defmodule DansunautoWeb.AutoComponents do
 
         <a
           href="tel:+254724335924"
-          class="my-2.5 inline-flex shrink-0 items-center gap-2 bg-brand px-5 py-3 text-[13px] font-semibold uppercase tracking-wide text-white transition hover:bg-white hover:text-ink lg:my-0 lg:self-stretch lg:py-0"
+          class="my-2.5 inline-flex shrink-0 items-center gap-2 bg-brand px-4 py-2.5 text-[12px] font-semibold uppercase tracking-wide text-white transition hover:bg-white hover:text-ink sm:px-5 sm:py-3 sm:text-[13px] lg:my-0 lg:self-stretch lg:py-0"
         >
           <svg
             class="h-4 w-4"
@@ -496,10 +500,7 @@ defmodule DansunautoWeb.AutoComponents do
             stroke-linejoin="round"
             aria-hidden="true"
           >
-            <rect x="3" y="4" width="18" height="18" rx="2" />
-            <line x1="16" y1="2" x2="16" y2="6" />
-            <line x1="8" y1="2" x2="8" y2="6" />
-            <line x1="3" y1="10" x2="21" y2="10" />
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
           </svg>
           Call Now
         </a>
@@ -746,7 +747,7 @@ defmodule DansunautoWeb.AutoComponents do
   """
   def hero(assigns) do
     ~H"""
-    <section class="relative isolate min-h-[520px] overflow-hidden bg-ink lg:min-h-[680px]">
+    <section class="relative isolate min-h-[460px] overflow-hidden bg-ink sm:min-h-[520px] lg:min-h-[680px]">
       <!-- Slide 1 -->
       <div class="hero-slide absolute inset-0">
         <img
@@ -769,22 +770,22 @@ defmodule DansunautoWeb.AutoComponents do
         <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/25"></div>
       </div>
 
-      <div class="relative mx-auto flex min-h-[520px] max-w-wrap items-center px-4 py-20 lg:min-h-[680px]">
+      <div class="relative mx-auto flex min-h-[460px] max-w-wrap items-center px-4 py-14 sm:min-h-[520px] sm:py-20 lg:min-h-[680px]">
         <div class="max-w-2xl">
           <p class="mb-5 inline-flex items-center gap-2 border-l-4 border-brand bg-white/5 py-1.5 pl-3 pr-4 text-[13px] font-semibold uppercase tracking-[0.2em] text-white">
             Umoja I · Nairobi, Kenya
           </p>
-          <h1 class="font-display text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl lg:text-6xl">
+          <h1 class="font-display text-[34px] font-extrabold leading-[1.08] text-white sm:text-5xl lg:text-6xl">
             Reliable Auto Repairs &amp; Quality Spare Parts.
           </h1>
-          <p class="mt-6 max-w-xl text-lg text-white/70">
+          <p class="mt-5 max-w-xl text-base text-white/70 sm:mt-6 sm:text-lg">
             Keeping Nairobi moving — one vehicle at a time. Repairs, servicing, diagnostics and quality spare parts for a wide range of makes and models.
           </p>
 
-          <div class="mt-9 flex flex-wrap items-center gap-4">
+          <div class="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
             <a
               href="/#featured-parts"
-              class="inline-flex items-center gap-2 bg-brand px-7 py-4 text-[14px] font-semibold uppercase tracking-wide text-white transition hover:bg-white hover:text-ink"
+              class="inline-flex items-center justify-center gap-2 bg-brand px-7 py-4 text-[14px] font-semibold uppercase tracking-wide text-white transition hover:bg-white hover:text-ink"
             >
               Shop Spare Parts
               <svg
@@ -803,19 +804,19 @@ defmodule DansunautoWeb.AutoComponents do
             </a>
             <a
               href="tel:+254724335924"
-              class="inline-flex items-center gap-2 border border-white/30 px-7 py-4 text-[14px] font-semibold uppercase tracking-wide text-white transition hover:border-white hover:bg-white hover:text-ink"
+              class="inline-flex items-center justify-center gap-2 border border-white/30 px-7 py-4 text-[14px] font-semibold uppercase tracking-wide text-white transition hover:border-white hover:bg-white hover:text-ink"
             >
               Call Now
             </a>
             <a
               href="https://wa.me/254724335924"
-              class="inline-flex items-center gap-2 border border-white/30 px-7 py-4 text-[14px] font-semibold uppercase tracking-wide text-white transition hover:border-white hover:bg-white hover:text-ink"
+              class="inline-flex items-center justify-center gap-2 border border-white/30 px-7 py-4 text-[14px] font-semibold uppercase tracking-wide text-white transition hover:border-white hover:bg-white hover:text-ink"
             >
               WhatsApp Us
             </a>
           </div>
 
-          <div class="mt-10 flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] text-white/70">
+          <div class="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 sm:mt-10 text-[14px] text-white/70">
             <strong class="font-semibold text-white">We work on</strong>
             <span>Toyota · Nissan · Mazda · Subaru · Honda · Mitsubishi</span>
           </div>
