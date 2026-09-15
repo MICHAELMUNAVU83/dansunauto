@@ -10,11 +10,11 @@ defmodule Dansunauto.AppConfig do
   Returns the public site URL (no trailing slash).
 
   Configurable via:
-    - `config :dansunauto, site_url: \"https://dansunautoscloset.com\"` in config files
+    - `config :dansunauto, site_url: \"https://dansunauto.com\"` in config files
     - `SITE_URL` environment variable at runtime (prod)
   """
   def site_url do
-    Application.get_env(:dansunauto, :site_url, "https://dansunautoscloset.com")
+    Application.get_env(:dansunauto, :site_url, "https://dansunauto.com")
     |> String.trim_trailing("/")
   end
 
