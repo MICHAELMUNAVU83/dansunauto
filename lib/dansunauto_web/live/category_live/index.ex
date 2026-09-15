@@ -22,7 +22,13 @@ defmodule DansunautoWeb.CategoryLive.Index do
 
       {:ok,
        socket
-       |> assign(:page_title, "#{category.name} | Dansun Auto Care")
+       |> assign(:page_title, "#{category.name} Spare Parts")
+       |> assign(
+         :meta_description,
+         "#{category.name} spare parts for Toyota, Nissan, Mazda, Subaru, Honda and " <>
+           "Mitsubishi at Dansun Auto Care, Umoja I, Nairobi. Fitting available at the " <>
+           "garage — call or WhatsApp +254 724 335924 to confirm availability."
+       )
        |> assign(:category, category)
        |> assign(:product_types, product_types)
        |> assign(:selected_types, [slug])

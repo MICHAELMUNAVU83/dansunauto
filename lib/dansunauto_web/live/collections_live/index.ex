@@ -13,7 +13,13 @@ defmodule DansunautoWeb.CollectionsLive.Index do
 
     {:ok,
      socket
-     |> assign(:page_title, "Spare Part Categories — Dansun Auto Care")
+     |> assign(:page_title, "Spare Part Categories")
+     |> assign(
+       :meta_description,
+       "Browse spare parts by category at Dansun Auto Care, Umoja I, Nairobi — brakes, " <>
+         "filters and service parts, engine components, suspension and steering, " <>
+         "electrical and batteries, belts and ignition."
+     )
      |> assign(:collections, collections)}
   end
 

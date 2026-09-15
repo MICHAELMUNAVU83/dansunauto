@@ -38,6 +38,11 @@ defmodule DansunautoWeb.BundleShowLive.Index do
         {:ok,
          socket
          |> assign(:page_title, "#{bundle.title} — Bundle & Save")
+         |> assign(
+           :meta_description,
+           "#{bundle.title} service kit from Dansun Auto Care, Umoja I, Nairobi. " <>
+             "Buy the parts together and save — call or WhatsApp +254 724 335924."
+         )
          |> assign(:bundle, bundle)
          |> assign(:bundle_total, total)
          |> assign(:variants_by_product, variants_by_product)

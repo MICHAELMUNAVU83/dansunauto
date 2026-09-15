@@ -13,7 +13,9 @@ defmodule DansunautoWeb.CheckoutLive.Index do
   def mount(_params, _session, socket) do
     {:ok,
      socket
-     |> assign(:page_title, "Checkout | Dansun Auto Care")
+     |> assign(:page_title, "Checkout")
+     |> assign(:robots, "noindex, nofollow")
+     |> assign(:meta_description, "Complete your spare parts order from Dansun Auto Care.")
      |> assign(:cart_items, [])
      |> assign(:cart_loaded, false)
      |> assign(:submitting, false)

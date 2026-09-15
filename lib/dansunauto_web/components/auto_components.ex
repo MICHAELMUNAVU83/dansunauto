@@ -62,7 +62,7 @@ defmodule DansunautoWeb.AutoComponents do
               Dansun Auto <span class="text-brand">Care</span>
             </span>
             <span class="mt-1 block text-[11px] font-medium uppercase tracking-[0.28em] text-mute">
-              Volkswagen &ndash; Audi
+              Repairs &ndash; Servicing &ndash; Spare Parts
             </span>
           </span>
         </a>
@@ -2452,7 +2452,7 @@ defmodule DansunautoWeb.AutoComponents do
                 Dansun Auto <span class="text-brand">Care</span>
               </span>
               <span class="mt-1 block text-[10px] font-medium uppercase tracking-[0.28em] text-white/50">
-                Volkswagen &ndash; Audi
+                Repairs &ndash; Servicing &ndash; Spare Parts
               </span>
             </span>
           </a>

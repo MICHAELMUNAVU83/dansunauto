@@ -17,12 +17,18 @@ defmodule DansunautoWeb.SuccessLive.Index do
     if reference == "" do
       {:ok,
        socket
-       |> assign(:page_title, "Order | Dansunauto")
+       |> assign(:page_title, "Order")
+       |> assign(:robots, "noindex, nofollow")
        |> assign(:status, :no_reference)
        |> assign(:order, nil)}
     else
       socket =
-        assign(socket, page_title: "Order Confirmed | Dansunauto", status: :verifying, order: nil)
+        assign(socket,
+          page_title: "Order Confirmed",
+          robots: "noindex, nofollow",
+          status: :verifying,
+          order: nil
+        )
 
       if connected?(socket) do
         send(self(), {:verify_payment, reference})

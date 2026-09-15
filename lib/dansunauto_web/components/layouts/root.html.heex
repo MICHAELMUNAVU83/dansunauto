@@ -5,52 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
 
+    <% site_url = Dansunauto.AppConfig.site_url() %>
+    <% default_title = "Dansun Auto Care | Car Repairs & Spare Parts in Umoja, Nairobi" %>
+    <% default_description =
+      "Dansun Auto Care is an auto garage and spare parts shop in Umoja I, Nairobi. " <>
+        "Vehicle repairs, servicing and diagnostics, plus brake pads, filters, spark plugs, " <>
+        "belts, suspension parts and batteries for Toyota, Nissan, Mazda, Subaru, Honda and " <>
+        "Mitsubishi. Call or WhatsApp +254 724 335924." %>
+    <% description = assigns[:meta_description] || default_description %>
+    <% title = assigns[:page_title] || default_title %>
+    <% canonical = assigns[:canonical_url] || site_url %>
+    <% og_image = site_url <> (assigns[:og_image] || "/images/dansunauto-logo.png") %>
+
     <%!-- Page title --%>
-    <.live_title default="Dansunauto | Auto Repair and Parts Store" suffix=" | Dansunauto">
+    <.live_title default={default_title} suffix=" | Dansun Auto Care">
       {assigns[:page_title]}
     </.live_title>
 
     <%!-- Primary SEO --%>
+    <meta name="description" content={description} />
     <meta
-      name="description"
-      content={assigns[:meta_description] || "Dansunauto — family-owned auto repair shop and maintenance experts. Honest work, fair quotes and a worry-free 24K/24 month warranty. Genuine parts in stock."}
+      name="keywords"
+      content="auto garage Umoja, car repair Nairobi, spare parts Nairobi, brake pads Nairobi, oil filter, car service Umoja, vehicle diagnostics Nairobi, car battery Nairobi, Toyota Nissan Mazda Subaru Honda Mitsubishi parts"
     />
-    <meta name="keywords" content="Dansunauto, auto repair, car service, car parts, brakes, oil change, tire services, suspension, car maintenance" />
-    <meta name="author" content="Dansunauto" />
-    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Dansun Auto Care" />
+    <meta name="robots" content={assigns[:robots] || "index, follow"} />
+    <link rel="canonical" href={canonical} />
+
+    <%!-- Local search: the shop serves walk-in customers at one address --%>
+    <meta name="geo.region" content="KE-110" />
+    <meta name="geo.placename" content="Umoja I, Nairobi" />
 
     <%!-- Open Graph (Facebook / WhatsApp previews) --%>
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Dansunauto" />
-    <meta
-      property="og:title"
-      content={assigns[:page_title] || "Dansunauto | Auto Repair and Parts Store"}
-    />
-    <meta
-      property="og:description"
-      content={assigns[:meta_description] || "Family-owned auto repair shop and maintenance experts. Honest work, fair quotes, genuine parts."}
-    />
-    <meta
-      property="og:image"
-      content={assigns[:og_image] || "/images/dansunauto-logo.png"}
-    />
-    <meta property="og:url" content={assigns[:canonical_url] || "https://dansunauto.com"} />
+    <meta property="og:site_name" content="Dansun Auto Care" />
+    <meta property="og:locale" content="en_KE" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={og_image} />
+    <meta property="og:url" content={canonical} />
 
     <%!-- Twitter / X Card --%>
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@dansunauto" />
-    <meta
-      name="twitter:title"
-      content={assigns[:page_title] || "Dansunauto | Auto Repair and Parts Store"}
-    />
-    <meta
-      name="twitter:description"
-      content={assigns[:meta_description] || "Family-owned auto repair shop and maintenance experts."}
-    />
-    <meta
-      name="twitter:image"
-      content={assigns[:og_image] || "/images/dansunauto-logo.png"}
-    />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={og_image} />
+
+    <%!-- Structured data: an AutoRepair business is what Google shows in the
+          local pack, so address, hours and phone are all spelled out. --%>
+    <script type="application/ld+json">
+      <%= Phoenix.HTML.raw(Jason.encode!(%{
+        "@context" => "https://schema.org",
+        "@type" => "AutoRepair",
+        "name" => "Dansun Auto Care",
+        "alternateName" => "Dansun Auto Garage & Spare Shop",
+        "description" => default_description,
+        "url" => site_url,
+        "image" => og_image,
+        "logo" => og_image,
+        "telephone" => "+254724335924",
+        "priceRange" => "KES",
+        "address" => %{
+          "@type" => "PostalAddress",
+          "streetAddress" => "Umoja I",
+          "addressLocality" => "Nairobi",
+          "addressRegion" => "Nairobi",
+          "addressCountry" => "KE"
+        },
+        "areaServed" => %{"@type" => "City", "name" => "Nairobi"},
+        "openingHoursSpecification" => [
+          %{
+            "@type" => "OpeningHoursSpecification",
+            "dayOfWeek" => ~w(Monday Tuesday Wednesday Thursday Friday Saturday),
+            "opens" => "08:00",
+            "closes" => "18:00"
+          }
+        ],
+        "makesOffer" => Enum.map(
+          ["Vehicle repairs", "Vehicle servicing", "Vehicle diagnostics", "Spare parts"],
+          &%{"@type" => "Offer", "itemOffered" => %{"@type" => "Service", "name" => &1}}
+        )
+      })) %>
+    </script>
 
     <%!-- Favicon --%>
     <link rel="icon" type="image/png" href="/images/dansunauto-logo.png" />

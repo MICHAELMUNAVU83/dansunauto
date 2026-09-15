@@ -11,7 +11,8 @@ defmodule DansunautoWeb.CartLive.Index do
   def mount(_params, _session, socket) do
     {:ok,
      socket
-     |> assign(:page_title, "Your Cart | Dansunauto")
+     |> assign(:page_title, "Your Cart")
+     |> assign(:robots, "noindex, nofollow")
      |> assign(:cart_items, [])
      |> assign(:cart_loaded, false)
      |> assign(:variants_by_product, %{})}

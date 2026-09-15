@@ -13,6 +13,13 @@ defmodule DansunautoWeb.HomeLive.Index do
     {:ok,
      socket
      |> assign(:page_title, "Auto Repairs & Spare Parts in Umoja, Nairobi")
+     |> assign(
+       :meta_description,
+       "Vehicle repairs, servicing and diagnostics plus quality spare parts at Dansun Auto " <>
+         "Care in Umoja I, Nairobi. Brake pads, filters, spark plugs, belts, suspension parts " <>
+         "and batteries for Toyota, Nissan, Mazda, Subaru, Honda and Mitsubishi. " <>
+         "Call or WhatsApp +254 724 335924."
+     )
      |> assign(:collections, Enum.take(Shop.list_collections_for_display(), 6))
      |> assign(:featured_products, featured_products())
      |> assign(:bundle, Shop.get_active_bundle_with_products())
